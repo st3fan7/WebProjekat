@@ -172,13 +172,13 @@ ul li.active a{
 }
 
 .dropbtn {
-    background: #ffeb3b;
+    background: whitesmoke;
     border: none;
     color: black;
     border-radius: 25px;
   }
   
-  .dropdown {
+.dropdown {
     position: absolute;
     top: 2.5%;
     left: 90%;
@@ -215,7 +215,7 @@ ul li.active a{
 .dropdown:hover .dropdown-content {display: block;}
   
 .dropdown:hover .dropbtn {
-    background: #ffc107;
+    background: lightgray;
     cursor: pointer;
     }
 
