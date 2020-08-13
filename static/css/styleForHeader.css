@@ -1,0 +1,133 @@
+ul {
+    float: right;
+    list-style-type: none;
+    margin-top: 25px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+ul li {
+    display: inline-block;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: large;
+    padding: 5px 35px;
+    border: 1px solid white;
+    border-radius: 25px;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+ul li a:hover {
+    background-color: white;
+    color: black;
+
+    transform: scale(1.6);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+}
+
+ul li.active a{
+    background-color: white;
+    color: black;
+}
+
+.main {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.logo img {
+    float: left;
+    width: 80px;
+    height: 60px;
+    position: relative;
+}
+
+.webName {
+    position: relative;
+}
+
+.webName h3 {
+    color: black;
+    font-size: 18px;
+    margin-left: -10%; 
+}
+
+.logoAndName {
+    position: absolute;
+    margin-left: 4%;
+    margin-top: 1%;
+}
+
+.dropbtn {
+    background: whitesmoke;
+    border: none;
+    color: black;
+    border-radius: 25px;
+    transition: 0.5s ease;
+    cursor: pointer;
+  }
+
+.dropdown {
+    position: absolute;
+    top: 2.5%;
+    left: 90%;
+    display: inline-block;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: relative;
+    background-color: #f1f1f1;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    margin-left: -8px;
+    border-radius: 25px;
+
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 16px 12px;
+    text-decoration: none;
+    display: block;
+    border-radius: 25px;
+
+  }
+
+  .dropdown-content a:hover { 
+    background-color: lightgray;
+    color: black;
+    border:1px solid black;
+}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {
+    background: lightgray;
+    cursor: pointer;
+    transform: scale(1.05);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+    }
+
+#menuIcon{
+    width: 50px;
+    height: 50px;
+}
+
+#userIcon{
+    width: 50px;
+    height: 46px;
+    padding-right: 5px;
+}
+
+#onlyHomePage{
+    margin-left: -5%;
+}
