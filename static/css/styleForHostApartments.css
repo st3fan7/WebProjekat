@@ -6,18 +6,18 @@
 
 body{
     background: #054f5294;
-    height: 90vh;
+    height: 100%;
     background-size: cover;
     background-position: center;
 }
 
 ul {
-    z-index: 100;
+    z-index: 5;
     float: right;
     list-style-type: none;
-    margin-top: -195px;
+    margin-top: 0.5%;
     position: fixed;
-    left: 50%;
+    left: 50.6%;
     transform: translateX(-50%);
 }
 
@@ -56,18 +56,18 @@ ul li.active a{
     list-style-type: none;
     position: fixed;
     left: 7%;
-    top: 49%;
+    top: 25%;
     transform: translateX(-50%);
     align-content: center;
 }
 
-.ulForSideComponents ul div li {
+.ulForSideComponents div li {
     display: block;
     align-items: center;
     
 }
 
-.ulForSideComponents ul div li a {
+.ulForSideComponents div li a {
     text-decoration: none;
     color: white;
     font-size: large;
@@ -78,7 +78,7 @@ ul li.active a{
     cursor: pointer; 
 }
 
-.ulForSideComponents ul div li a:hover {
+.ulForSideComponents div li a:hover {
     background-color: white;
     color: black;
 
@@ -86,25 +86,14 @@ ul li.active a{
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
 }
 
-.ulForSideComponents ul div li.active a{
+.ulForSideComponents div li.active a{
     background-color: white;
     color: black;
 }
 
-.logo img {
-    float: left;
-    width: 80px;
-    height: 60px;
-    position: fixed;
-    padding-left: 4.5%;
-    padding-top: 0.5%;
-    margin-top: -219px;
-    z-index: 5;
-}
-
 .main {
     max-width: 1200px;
-    margin: auto;
+    
     position: fixed;
     z-index: 5;
 }
@@ -121,19 +110,34 @@ ul li.active a{
     font-size: 20px;
 }
 
-.webName {
+
+.logo img {
+    float: left;
+    width: 80px;
+    height: 60px;
+    position: relative;
     z-index: 5;
-    position: fixed;
-    top: 8%;
-    left: 4%;
+}
+
+.webName {
+    position: relative; 
+    z-index: 5; 
 }
 
 .webName h3 {
     color: black;
-    font-size: 18px; 
+    font-size: 18px;
+    margin-left: -10%;
+    z-index: 5; 
+}
+
+.logoAndName {
     position: fixed;
+    margin-left: 2.9%;
+    margin-top: 0%;
     z-index: 5;
 }
+
 
 
 .dropbtn {
@@ -421,7 +425,7 @@ span {
     width: 100%;
     height: 185px;
     padding: 20px;
-    margin-top: -12%;
+    margin-top: -220px;
     background-color: #6d989a ;
     z-index: 4;  
 }
