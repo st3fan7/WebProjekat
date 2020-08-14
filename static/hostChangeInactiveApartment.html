@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>WEBSITE FOR VACACTION</title>
+    <link rel="stylesheet" type="text/css" href="css/styleForHostApartments.css">
+</head>
+
+<body>
+    <div class="boundaryForScroll">
+        <div class="logoAndName">
+            <div class="logo">        
+                <img src="pictures/clipart302388.png"/>
+            </div>
+            <div class="webName">
+                <h3>BookingApp</h3>
+            </div>  
+        </div>
+    
+        <div class="main">     
+            <ul class="menu-contents">
+                <li><a href="#">Početna</a></li>
+                <li class="active"><a href="#">Moji apartmani</a></li>
+                <li><a href="#">Rezervacije</a></li>
+                <li><a href="#">Komentari</a></li>
+            </ul>
+        </div>
+    
+        <div class="dropdown">
+            <button class="dropbtn"><img id="menuIcon" src="pictures/menuIcon.png" />
+                <img id="userIcon" src="pictures/user.png" />
+            </button>
+            <div class="dropdown-content">
+                <a href="#">Moj Nalog</a>
+                <a href="#">Odjavi se</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="confirm-cancel-field">
+        <div class="price-title">
+            <h1>Želite da izmenite podatke o apartmanu?</h1>
+            <div class="add-btn">
+                <button type="submit">Izmeni</button>
+            </div>
+            <div class="cancel-btn">
+                <button type="button">Odustani</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="verticalLine"></div>
+
+    <div class="sideComponents">      
+        <ul class="ulForSideComponents">
+            <div><li><a href="#">AKTIVNI</a></li></div><br/>         
+            <div><li class="active"><a href="#">NEAKTIVNI</a></li></div><br/>
+            <div><li><a href="#">DODAJ APARTMAN</a></li></div><br/>
+        </ul>
+    </div>
+
+    <div class="title">
+        <h1>Izmena podataka o apartmanu</h1>
+    </div> 
+    <!-- Apartmani -->
+
+    <div class="listOfApartments">
+
+        <div class="wrapper-form">
+            <div class="data-for-apartment">
+                <div class="text-for-adding-apartment">
+                    <h1>Obavezni podaci:</h1>
+                    <form action="#">
+                        <label for="apartmentName">Naziv apartmana (ID):</label>
+                        <input type="text" id="aName" name="apartmentname" placeholder="Unesite naziv apartmana...">
+                    
+                        <label for="typeOfApartment">Tip apartmana:</label>
+                        <select id="typeOfApartmentID" name="typeOfApartmentName">
+                          <option value="allApartment">Ceo apartman</option>
+                          <option value="room">Soba</option>
+                        </select>
+
+                        <label for="status">Status:</label>
+                        <select id="statusID" name="statusName">
+                          <option value="active">Neaktivan</option>
+                          <option value="inactive">Aktivan</option>
+                        </select>
+
+                        <label for="numberOfRooms">Broj soba:</label>
+                        <input type="text" id="numberOfRoomsID" name="numberOfRoomsName" placeholder="Unesite broj soba...">
+
+                        <label for="numberOfGuest">Broj gostiju:</label>
+                        <input type="text" id="numberOfGuestID" name="numberOfGuestName" placeholder="Unesite maksimalan broj gostiju...">
+
+                        <label for="priceForNight">Cena po noći:</label>
+                        <input type="text" id="priceForNightID" name="priceForNightName" placeholder="Unesite cenu po noći...">
+
+                        <label for="location">Lokacija:</label>
+                        <input type="text" id="locationID" name="locationName" placeholder="Unesite GPS koordinate (lokacija)...">
+
+                        <label for="dateFromPublishing">Datum od kojeg se izdaje:</label><br/>
+                        <input type="date" id="dateFromPublishingID" name="dateFromPublishingName" placeholder="Izaberite datum od kog se izdaje...">
+
+                        <label for="dateToPublishing">Datum do kojeg se izdaje:</label><br/>
+                        <input type="date" id="dateToPublishingID" name="dateToPublishingName" placeholder="Izaberite datum do kog se izdaje...">
+
+                        <label for="check-inTime">Vreme za prijavu:</label><br/>
+                        <input type="time" id="check-inTimeID" name="check-inTimeName" placeholder="Izaberite inicijalno vreme za prijavu...">
+
+                        <label for="check-outTime">Vreme za odjavu:</label><br/>
+                        <input type="time" id="check-outTimeID" name="check-outTimeName" placeholder="Izaberite inicijalno vreme za odjavu...">
+
+                        <label for="imagesForApartment">Slike:</label><br/>
+                        <input type="image" id="imagesForApartmentID" name="imagesForApartmentName">
+
+                        <h1>Ostali podaci:</h1>
+
+                        <label class="container">
+                                <div class="text-checkbox">Internet</div>
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                            </label>
+                        <label class="container"> 
+                            <div class="text-checkbox">TV</div>
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">
+                            <div class="text-checkbox">Klima uređaj</div>
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">
+                            <div class="text-checkbox">Pegla</div>
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">
+                                <div class="text-checkbox">Veš mašina</div>
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                        </label>
+                        <label class="container">
+                            <div class="text-checkbox">Mašina za sudove</div>
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">
+                            <div class="text-checkbox">Grejanje</div>
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">
+                            <div class="text-checkbox">Tuš kabina</div>
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">
+                            <div class="text-checkbox">Kada</div>
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">
+                            <div class="text-checkbox">Peškiri</div>
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">
+                            <div class="text-checkbox">Terasa</div>
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">
+                            <div class="text-checkbox">Krevetac</div>
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="container">
+                            <div class="text-checkbox">Pomoćni krevet</div>
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+
+                        <h1>KRAJ</h1>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
