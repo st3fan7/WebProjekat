@@ -226,12 +226,12 @@ ul li.active a{
     position: fixed;
 }
 
-.wrapper:hover {
+.wrapper:hover{
     transform: scale(1.02);
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
 }
 
-.wrapper {
+.wrapper, .wrapper-form {
     z-index: -100;
     height: 420px;
     width: 854px;
@@ -244,8 +244,9 @@ ul li.active a{
     
     transition: 2.3 ease;
     cursor: pointer;
-  }
-  
+}
+
+
 .product-img {
     float: left;
     height: 420px;
@@ -256,7 +257,7 @@ ul li.active a{
     border-radius: 7px 0 0 7px;
 }
 
-.product-info {
+.product-info, .data-for-apartment {
     float: left;
     height: 420px;
     width: 527px;
@@ -264,21 +265,42 @@ ul li.active a{
     background-color: #ffffff;
 }
 
-.product-text {
+.data-for-apartment {
+    width: 854px;
+}
+
+.product-text, .text-for-adding-apartment {
     height: 300px;
     width: 527px;
 }
 
-.product-text h1 {
+.text-for-adding-apartment  {
+    width: 454px;
+    text-align: center;
+    margin-left: 190px;
+}
+
+.product-text h1, .text-for-adding-apartment h1 {
     margin: 0 0 0 38px;
     padding-top: 52px;
     font-size: 34px;
     color: #474747;
 }
 
+.text-for-adding-apartment h1 {
+    margin: 0 0 47px 8px; 
+}
+
+label,
 .product-text h1,
-.product-price-btn p, .rasing-price-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p {
+.text-for-adding-apartment h1,
+.product-price-btn p, .rasing-price-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p {
     font-family: 'Bentham', serif;
+}
+
+label {
+    font-size: 18px;
+    font-weight: 400;
 }
 
 .product-price-btn2 p {
@@ -306,7 +328,7 @@ ul li.active a{
     overflow: hidden;
 }
 
-.product-price-btn, .rasing-price-btn, .falling-price-btn, .type-filter-btn, .content-filter-btn {
+.product-price-btn, .rasing-price-btn, .falling-price-btn, .type-filter-btn, .content-filter-btn, .add-btn, .cancel-btn {
     height: 103px;
     width: 327px;
     margin-top: 17px;
@@ -320,7 +342,7 @@ ul li.active a{
     position: relative;
 }
 
-.product-price-btn p, .rasing-price-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p {
+.product-price-btn p, .rasing-price-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p  {
     display: inline-block;
     position: absolute;
     top: 7px;
@@ -351,7 +373,7 @@ span {
     font-size: 34px;
 }
 
-.product-price-btn button, .rasing-price-btn button, .falling-price-btn button, .type-filter-btn button, .content-filter-btn button {
+.product-price-btn button, .rasing-price-btn button, .falling-price-btn button, .type-filter-btn button, .content-filter-btn button, .add-btn button, .cancel-btn button  {
     float: right;
     display: inline-block;
     height: 50px;
@@ -388,6 +410,14 @@ span {
     margin: -20px 35px 0 16px; 
 }
 
+.add-btn button {
+    margin: 20px 35px 0 16px; 
+}
+
+.cancel-btn {
+    margin: -20px 35px 0 -160px;  
+}
+
 .product-price-btn2 button {
     float: right;
     display: inline-block;
@@ -408,7 +438,7 @@ span {
     outline: none;
 }
 
-.product-price-btn button:hover, .rasing-price-btn button:hover, .falling-price-btn button:hover, .content-filter-btn button:hover, .type-filter-btn button:hover{
+.product-price-btn button:hover, .rasing-price-btn button:hover, .falling-price-btn button:hover, .content-filter-btn button:hover, .type-filter-btn button:hover, .add-btn button:hover, .cancel-btn button:hover{
     background-color: #054f5294;
 }
 
@@ -430,7 +460,7 @@ span {
     z-index: 4;  
 }
 
-.sortAndFilter {
+.sortAndFilter, .confirm-cancel-field {
     position: fixed;
     width: 400px;
     height: 650px;
@@ -448,7 +478,11 @@ span {
     cursor: pointer;
 }
 
-.sortAndFilter:hover {
+.confirm-cancel-field {
+    height: 400px;
+}
+
+.sortAndFilter:hover, .confirm-cancel-field:hover {
     transform: scale(1.02);
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
 }
@@ -463,3 +497,167 @@ span {
 .filter-title h1 {
     padding-top: 12px;
 }
+
+
+/* NOVO */
+
+
+.wrapper-form {
+    height: 2200px;
+}
+
+
+.data-for-apartment {
+    height: 2200px;
+    width: 854px;
+    border-radius: 0 7px 10px 7px;
+    background-color: #afd0c7;
+}
+
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 16px;
+  }
+
+input[type="text"]::placeholder {  
+    text-align: center; 
+} 
+  
+
+input[type=date]  {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 16px;
+}
+
+input[type=time]  {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 16px;
+}
+
+input[type=image]  {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 16px;
+    background-attachment: fixed;
+    background: white;
+}
+
+
+select {
+    text-align-last: center;
+}
+
+option { 
+    direction: ltr;
+}
+
+/* The container */
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;    
+  }
+  
+  /* Hide the browser's default checkbox */
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .container input:checked ~ .checkmark {
+    background-color: #054f5294;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+  .text-checkbox {
+    font-size: 20px;
+    font-weight: 400;
+    font-family: 'Bentham', serif;
+    text-align: left;
+    padding-bottom: 20px;
+  }
+
+  .basic {
+    font-size: 24px;
+    font-weight: 400;
+    font-family: 'Bentham', serif;
+    text-align: left;
+    margin-left: -294px;
+  }
