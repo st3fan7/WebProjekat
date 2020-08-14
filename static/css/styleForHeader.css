@@ -1,9 +1,9 @@
 ul {
     float: right;
     list-style-type: none;
-    margin-top: 25px;
+    margin-top: 11px;
     position: absolute;
-    left: 50%;
+    left: 49.7%;
     transform: translateX(-50%);
 }
 
@@ -61,7 +61,13 @@ ul li.active a{
 
 .logoAndName {
     position: absolute;
-    margin-left: 4%;
+    margin-left: 2.8%;
+    margin-top: 0%;
+}
+
+.logoAndNameForLogin {
+    position: absolute;
+    margin-left: 3.8%;
     margin-top: 1%;
 }
 
@@ -76,8 +82,8 @@ ul li.active a{
 
 .dropdown {
     position: absolute;
-    top: 2.5%;
-    left: 90%;
+    top: 10.9%;
+    left: 88.2%;
     display: inline-block;
   }
 
@@ -130,4 +136,9 @@ ul li.active a{
 
 #onlyHomePage{
     margin-left: -5%;
+}
+
+#onlyHomePageInLogin {
+    margin-left: -11%;
+    margin-top: 8%;
 }
