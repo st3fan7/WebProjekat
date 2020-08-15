@@ -71,6 +71,10 @@ body{
     margin-left: 6%;
 }
 
+#hostReservations {
+    margin-left: 13%;
+}
+
 
 .verticalLine {
     position: fixed;
