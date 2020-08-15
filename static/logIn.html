@@ -11,42 +11,41 @@
 
 <body>
     <div class="logoAndNameForLogin">
-    <div class="logo">        
-        <img src="pictures/clipart302388.png"/>
-    </div>
-    <div class="webName">
-        <h3>BookingApp</h3>
-    </div>  
+        <div class="logo">        
+            <img src="pictures/clipart302388.png"/>
+        </div>
+        <div class="webName">
+            <h3>BookingApp</h3>
+        </div>  
     </div>
 
 
-<div class="main">
+    <div class="main">
+            
+        <ul>
+            <li id="onlyHomePageInLogin"><a href="#">Početna</a></li>               
+        </ul>
+    </div>   
+
+    <div class="signIn">
+        <div class="form-container sign-in-container">
+            <form action="#">
+                <h1>Prijava</h1>
+                <input type="text" placeholder="Korisničko ime" />
+                <input type="password" placeholder="Lozinka" />
+                <button>Prijavi se</button>
+            </form>
+        </div>
         
-    <ul>
-        <li id="onlyHomePageInLogin"><a href="#">Početna</a></li>               
-    </ul>
-</div>   
-
-
-    <div class="login-box">
-        <h2>Prijava</h2>
-        <form>
-        <div class="user-box">
-            <input type="text" name="" required="">
-            <label>Korisničko ime</label>
+        <div class="overlay-container">
+            <div class="overlay">               
+                <div class="overlay-panel overlay-right">
+                    <h1>Nemaš nalog?</h1>
+                    <p>Klikni ovde za registraciju!</p>
+                    <button class="ghost" id="signUp">Registruj se</button>
+                </div>
+            </div>
         </div>
-        <div class="user-box">
-            <input type="password" name="" required="">
-            <label>Lozinka</label>
-        </div>
-        <a href="#">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Prijavite se
-        </a>
-        </form>
     </div>
 </body>
 </html>
