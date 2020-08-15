@@ -48,6 +48,10 @@ html {
     text-transform: uppercase;
     transition: transform 80ms ease-in;
   }
+
+  #signInButton{
+    margin-top: 17px;
+  }
   
   button:active {
     transform: scale(0.95);
@@ -75,14 +79,40 @@ html {
     margin-top: 20%;
     text-align: center;
   }
+
+  .radio{
+  position: relative;
+  cursor: pointer;
+  float: left;
+  font-size: 20px;
+  }
+
+  .divv{
+    display: inline-block;
+  }
+
+  .formReg{
+    background-color: #FFFFFF;
+    padding: 0px 0px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 70%;
+    display: flex;
+    width: 50%;
+    margin-left: 50%;
+    margin-top: 20%;
+    text-align: center;
+  }
   
   input {
     background-color: #eee;
     border: none;
     padding: 12px 15px;
-    margin: 8px 0;
+    margin: 20px 0;
     width: 60%;
     font-size: 19px;
+    
   }
   
   .container {
