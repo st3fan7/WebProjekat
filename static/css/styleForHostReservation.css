@@ -159,7 +159,7 @@ label {
     font-weight: 400;
 }
 
-.review-btn p {
+.review-btn p, .search-btn p {
     font-family: 'Bentham', serif;
 }
 
@@ -184,14 +184,19 @@ label {
     overflow: hidden;
 }
 
-.review-btn{
+.review-btn, .search-btn {
     height: 103px;
     width: 327px;
     margin-top: 17px;
     position: relative;
 }
 
-.review-btn p {
+.search-btn {
+    margin-left: -75px;
+    margin-top: 40px;
+}
+
+.review-btn p, .search-btn p {
     display: inline-block;
     position: absolute;
     top: 7px;
@@ -211,7 +216,7 @@ span {
 }
 
 
-.review-btn button {
+.review-btn button, .search-btn button {
     float: right;
     display: inline-block;
     height: 50px;
@@ -231,7 +236,7 @@ span {
     outline: none;
 }
 
-.review-btn button:hover {
+.review-btn button:hover, .search-btn button:hover {
     background-color: #054f5294;
 }
 
@@ -249,3 +254,261 @@ span {
     z-index: 4;  
 }
 
+.wrapper-form {
+    z-index: -100;
+    height: 420px;
+    width: 854px;
+    margin: 50px auto;
+    margin-left: 21%;
+    border-radius: 7px 7px 7px 7px;
+    -webkit-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+    
+    transition: 2.3 ease;
+    cursor: pointer;
+}
+
+.wrapper-form {
+    height: 2200px;
+}
+
+
+.data-for-apartment {
+    height: 2200px;
+    width: 854px;
+    border-radius: 0 7px 10px 7px;
+    background-color: #afd0c7;
+}
+
+/* Deo za pretragu i sortiranje */
+
+.sortAndFilter, .sortAndFilterForUserOverview {
+    position: fixed;
+    width: 400px;
+    height: 650px;
+    padding: 20px;
+    margin-top: 0%;
+    margin-left: 73%;
+    background-color: #afd0c7;
+    z-index: 4;
+    border-radius: 30px 30px 30px 30px;
+    -webkit-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+
+    transition: 0.5 ease;
+    cursor: pointer;
+}
+
+.sortAndFilterForUserOverview {
+    height: 550px;
+}
+
+.sortAndFilter:hover{
+    transform: scale(1.02);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+}
+
+.price-title h1, .filter-title h1 {
+    padding-top: 22px;
+    font-size: 30px;
+    color: #474747;
+    text-align: center
+}
+
+label,
+.product-text h1,
+.text-for-adding-apartment h1,
+.product-price-btn p, .rasing-price-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p {
+    font-family: 'Bentham', serif;
+}
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 16px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 16px;
+    font-family: 'Bentham', serif;
+}
+
+input[type="text"]::placeholder {  
+    text-align: center; 
+} 
+
+select {
+    text-align-last: center;
+}
+
+option { 
+    direction: ltr;
+}
+
+#formForSearch {
+    margin-top: 30px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#labelForUsername {
+    position: relative;
+    margin-left: 90px;
+}
+
+/* ------------------------------- */
+
+
+#nameOfApartment {
+    margin-left: 340px;
+}
+
+#labelForRole {
+    margin-left: 120px;
+}
+
+#labelForGender {
+    margin-left: 130px;
+}
+
+
+.previous {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 25px;
+    color: white;
+    border: 1px solid white;
+    margin-left: -40px;
+    transition: 0.5 ease;
+    cursor: pointer;
+    position: fixed;
+  }
+  
+.previous:hover {
+    background-color: #f1f1f1;
+    color: black;
+
+    transform: scale(1.06);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+}
+  
+
+/* TABELA */
+
+.table-wrapper{
+    margin-left: 400px;
+    width: 900px;
+    box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+}
+
+.fl-table {
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    background-color: white;
+}
+
+.fl-table td, .fl-table th {
+    text-align: center;
+    padding: 8px;
+}
+
+.fl-table td {
+    border-right: 1px solid #204264c0;
+    font-size: 16px;
+}
+
+.fl-table thead th {
+    color: #ffffff;
+    background: #204264c0;
+}
+
+
+.fl-table thead th:nth-child(odd) {
+    color: #ffffff;
+    background: #324960;
+}
+
+.fl-table tr:nth-child(even) {
+    background: rgb(230, 227, 227);
+}
+
+/* Responsive */
+
+@media (max-width: 767px) {
+    .fl-table {
+        display: block;
+        width: 100%;
+    }
+    .table-wrapper:before{
+        content: "Scroll horizontally >";
+        display: block;
+        text-align: right;
+        font-size: 11px;
+        color: white;
+        padding: 0 0 10px;
+    }
+    .fl-table thead, .fl-table tbody, .fl-table thead th {
+        display: block;
+    }
+    .fl-table thead th:last-child{
+        border-bottom: none;
+    }
+    .fl-table thead {
+        float: left;
+    }
+    .fl-table tbody {
+        width: auto;
+        position: relative;
+        overflow-x: auto;
+    }
+    .fl-table td, .fl-table th {
+        padding: 20px .625em .625em .625em;
+        height: 60px;
+        vertical-align: middle;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 120px;
+        font-size: 13px;
+        text-overflow: ellipsis;
+    }
+    .fl-table thead th {
+        text-align: left;
+        border-bottom: 1px solid #f7f7f9;
+    }
+    .fl-table tbody tr {
+        display: table-cell;
+    }
+    .fl-table tbody tr:nth-child(odd) {
+        background: none;
+    }
+    .fl-table tr:nth-child(even) {
+        background: transparent;
+    }
+    .fl-table tr td:nth-child(odd) {
+        background: #F8F8F8;
+        border-right: 1px solid #E6E4E4;
+    }
+    .fl-table tr td:nth-child(even) {
+        border-right: 1px solid #E6E4E4;
+    }
+    .fl-table tbody td {
+        display: block;
+        text-align: center;
+    }
+}
+
+
+
+/* -------------- */
