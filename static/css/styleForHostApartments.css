@@ -294,7 +294,7 @@ ul li.active a{
 label,
 .product-text h1,
 .text-for-adding-apartment h1,
-.product-price-btn p, .rasing-price-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p {
+.product-price-btn p, .rasing-price-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p, .sort-price-btn p, .filter-btn-active-apartment p {
     font-family: 'Bentham', serif;
 }
 
@@ -328,7 +328,7 @@ label {
     overflow: hidden;
 }
 
-.product-price-btn, .rasing-price-btn, .falling-price-btn, .type-filter-btn, .content-filter-btn, .add-btn, .cancel-btn {
+.product-price-btn, .rasing-price-btn, .falling-price-btn, .type-filter-btn, .content-filter-btn, .add-btn, .cancel-btn, .sort-price-btn, .filter-btn-active-apartment {
     height: 103px;
     width: 327px;
     margin-top: 17px;
@@ -342,7 +342,7 @@ label {
     position: relative;
 }
 
-.product-price-btn p, .rasing-price-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p  {
+.product-price-btn p, .rasing-price-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p, .sort-price-btn p, .filter-btn-active-apartment p  {
     display: inline-block;
     position: absolute;
     top: 7px;
@@ -373,7 +373,7 @@ span {
     font-size: 34px;
 }
 
-.product-price-btn button, .rasing-price-btn button, .falling-price-btn button, .type-filter-btn button, .content-filter-btn button, .add-btn button, .cancel-btn button  {
+.product-price-btn button, .rasing-price-btn button, .falling-price-btn button, .type-filter-btn button, .content-filter-btn button, .add-btn button, .cancel-btn button, .sort-price-btn button, .filter-btn-active-apartment button  {
     float: right;
     display: inline-block;
     height: 50px;
@@ -398,6 +398,14 @@ span {
     background-color: #054f5294;
 }
 
+.filter-btn-active-apartment button {
+    margin: -20px 85px 0 16px;
+}
+
+.sort-price-btn button {
+    margin: 0px 85px 0 16px;  
+}
+
 .falling-price-btn button {
     margin: -20px 35px 0 16px;  
 }
@@ -407,7 +415,9 @@ span {
 }
 
 .content-filter-btn button {
-    margin: -20px 35px 0 16px; 
+    margin: 0px 85px 0 16px; 
+    background-color: white;
+    color: black;
 }
 
 .add-btn button {
@@ -438,8 +448,12 @@ span {
     outline: none;
 }
 
-.product-price-btn button:hover, .rasing-price-btn button:hover, .falling-price-btn button:hover, .content-filter-btn button:hover, .type-filter-btn button:hover, .add-btn button:hover, .cancel-btn button:hover{
+.product-price-btn button:hover, .rasing-price-btn button:hover, .falling-price-btn button:hover, .type-filter-btn button:hover, .add-btn button:hover, .cancel-btn button:hover, .sort-price-btn button:hover, .filter-btn-active-apartment button:hover{
     background-color: #054f5294;
+}
+
+.content-filter-btn button:hover {
+    background-color: lightgrey;
 }
 
 .product-price-btn2 button:hover {
@@ -494,8 +508,25 @@ span {
     text-align: center
 }
 
+
+.price-title h1 {
+    margin-top: -25px;
+}
+
+#formForSort {
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
 .filter-title h1 {
     padding-top: 12px;
+}
+
+#formForFilter {
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 

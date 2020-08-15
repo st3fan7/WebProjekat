@@ -159,7 +159,7 @@ label {
     font-weight: 400;
 }
 
-.review-btn p, .search-btn p {
+.review-btn p, .search-btn p, .search-btn-user-reservation p, .rasing-price-btn p, .falling-price-btn p {
     font-family: 'Bentham', serif;
 }
 
@@ -184,7 +184,7 @@ label {
     overflow: hidden;
 }
 
-.review-btn, .search-btn {
+.review-btn, .search-btn, .search-btn-user-reservation, .rasing-price-btn p {
     height: 103px;
     width: 327px;
     margin-top: 17px;
@@ -196,7 +196,23 @@ label {
     margin-top: 40px;
 }
 
-.review-btn p, .search-btn p {
+.search-btn-user-reservation  {
+    margin-left: -75px;
+    margin-top: -5px;
+}
+
+.rasing-price-btn {
+    margin-right: 100px;
+    margin-top: 15px;
+}
+
+.falling-price-btn {
+    margin-right: 100px;
+    margin-top: 80px;
+    margin-bottom: 20px;
+}
+
+.review-btn p, .search-btn p, .search-btn-user-reservation  p, .rasing-price-btn p, .falling-price-btn p {
     display: inline-block;
     position: absolute;
     top: 7px;
@@ -216,7 +232,7 @@ span {
 }
 
 
-.review-btn button, .search-btn button {
+.review-btn button, .search-btn button, .search-btn-user-reservation button, .rasing-price-btn button, .falling-price-btn button {
     float: right;
     display: inline-block;
     height: 50px;
@@ -236,7 +252,7 @@ span {
     outline: none;
 }
 
-.review-btn button:hover, .search-btn button:hover {
+.review-btn button:hover, .search-btn button:hover, .search-btn-user-reservation button:hover, .rasing-price-btn button:hover, .falling-price-btn button:hover{
     background-color: #054f5294;
 }
 
@@ -283,7 +299,7 @@ span {
 
 /* Deo za pretragu i sortiranje */
 
-.sortAndFilter, .sortAndFilterForUserOverview {
+.sortAndFilter, .sortAndFilterForUserOverview, .sortAndFilterForUserReservation {
     position: fixed;
     width: 400px;
     height: 650px;
@@ -305,16 +321,23 @@ span {
     height: 550px;
 }
 
+.sortAndFilterForUserReservation {
+    height: 650px; 
+}
+
 .sortAndFilter:hover{
     transform: scale(1.02);
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
 }
 
-.price-title h1, .filter-title h1 {
-    padding-top: 22px;
+.price-title h1, .filter-title h1, .search-title h1 {
     font-size: 30px;
     color: #474747;
     text-align: center
+}
+
+.price-title h1 {
+    margin-top: -25px;
 }
 
 label,
@@ -350,7 +373,19 @@ option {
 }
 
 #formForSearch {
-    margin-top: 30px;
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#formForFilter {
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#formForSort {
+    margin-top: 10px;
     margin-left: 50px;
     margin-right: 50px;
 }
@@ -374,7 +409,6 @@ option {
 #labelForGender {
     margin-left: 130px;
 }
-
 
 .previous {
     text-decoration: none;
@@ -407,7 +441,7 @@ option {
 }
 
 .fl-table {
-    border-radius: 25px;
+    border-radius: 5px;
     font-size: 16px;
     font-weight: normal;
     border: none;
@@ -512,3 +546,4 @@ option {
 
 
 /* -------------- */
+

@@ -39,23 +39,36 @@
 
     <div class="sortAndFilter">
         <div class="price-title">
-            <h1>Sortiraj po ceni:</h1>
-            <div class="rasing-price-btn">
-                <button type="button">Rastuća</button>
-            </div>
-            <div class="falling-price-btn">
-                <button type="button">Opadajuća</button>
-            </div>
+            <h1 id="sort-text-in-user-reservation">Sortiraj po ceni:</h1>
+            <form id="formForSort" action="#">
+                
+                    <select id="statusID" name="statusName">
+                            <option value="rising">Rastuća</option>
+                            <option value="falling">Opadajuća</option>
+                        </select>
+    
+                    <div class="sort-price-btn">
+                        <button id="searchInUserReservation" type="submit">Sortiraj</button>
+                    </div>
+                </form>
         </div>
         <div class="filter-title">
                 <h1>Filtriraj po:</h1>
-                <div class="type-filter-btn">
-                    <button type="button">Tipu</button>
-                </div>
-                <div class="content-filter-btn">
-                    <button type="button">Sadržaju</button>
-                </div>
-        </div>
+                <form id="formForFilter" action="#">
+                
+                    <select id="statusID" name="statusName">
+                            <option value="created">Tip</option>
+                            <option value="created">Soba</option>
+                            <option value="rejected">Ceo apartman</option>
+                        </select>
+                    <div class="content-filter-btn">
+                        <button type="button">Sadržaju</button>
+                    </div>
+                    <div class="filter-btn-active-apartment">
+                        <button id="searchInUserReservation" type="submit">Filtriraj</button>
+                    </div>
+                </form>           
+            </div>
     </div>
 
 
