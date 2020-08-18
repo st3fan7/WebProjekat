@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8"/>
     <title>WEBSITE FOR VACACTION</title>
-    <link rel="stylesheet" type="text/css" href="css/logInStyle.css">
-    <link rel="stylesheet" type="text/css" href="css/styleForHeader.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     
 </head>
 
 
-<body>
+<body class="bodyForBackground">
     <div class="logoAndNameForLogin">
         <div class="logo">        
             <img src="pictures/clipart302388.png"/>
@@ -23,13 +22,13 @@
     <div class="main">
             
         <ul>
-            <li id="onlyHomePageInLogin"><a href="#">Početna</a></li>               
+            <li id="onlyHomePageInLogin"><a id="loginA" href="#">Početna</a></li>               
         </ul>
     </div>   
 
     <div class="signIn">
         <div class="form-container sign-in-container">
-            <form action="#">
+            <form class="formForLogin" action="#">
                 <h1>Prijava</h1>
                 <input type="text" placeholder="Korisničko ime" />
                 <input type="password" placeholder="Lozinka" />
@@ -41,7 +40,7 @@
             <div class="overlay">               
                 <div class="overlay-panel overlay-right">
                     <h1>Nemaš nalog?</h1>
-                    <p>Klikni ovde za registraciju!</p>
+                    <p id="loginP">Klikni ovde za registraciju!</p>
                     <button class="ghost" id="signUp">Registruj se</button>
                 </div>
             </div>
