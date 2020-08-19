@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>WEBSITE FOR VACACTION</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body class="bodyForBackground">
+    <div class="boundaryForScroll">
+        <div class="logoAndName">
+            <div class="logo">        
+                <img src="pictures/clipart302388.png"/>
+            </div>
+            <div class="webName">
+                <h3>BookingApp</h3>
+            </div>  
+        </div>
+    
+        <div class="main">     
+            <ul>
+                <li><a href="../static/homePageForGuest.html">Početna</a></li>
+                <li><a href="#">Moje rezervacije</a></li>
+            </ul>
+        </div>
+    
+        <div class="dropdown">
+            <button class="dropbtn"><img id="menuIcon" src="pictures/menuIcon.png" />
+                <img id="userIcon" src="pictures/user.png" />
+            </button>
+            <div class="dropdown-content">
+                <a href="#">Moj Nalog</a>
+                <a href="#">Odjavi se</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="sortAndFilter">
+        <div class="price-title">
+            <h1 id="sort-text-in-user-reservation">Sortiraj po ceni:</h1>
+            <form id="formForSort" action="#">
+                
+                    <select id="statusID" name="statusName">
+                            <option value="rising">Rastuća</option>
+                            <option value="falling">Opadajuća</option>
+                        </select>
+    
+                    <div class="sort-price-btn">
+                        <button id="searchInUserReservation" type="submit">Sortiraj</button>
+                    </div>
+                </form>
+        </div>
+        <div class="filter-title">
+                <h1>Filtriraj po tipu:</h1>
+                <form id="formForFilter" action="#">
+                
+                    <select id="statusID" name="statusName">                          
+                            <option value="created">Soba</option>
+                            <option value="rejected">Ceo apartman</option>
+                        </select>
+                    <div class="content-filter-btn">
+                        <button type="button">Filtiriraj po sadržaju</button>
+                    </div>
+                    <div class="filter-btn-active-apartment">
+                        <button id="searchInUserReservation" type="submit">Filtriraj</button>
+                    </div>
+                </form>           
+            </div>
+    </div>
+
+
+
+     <!-- <div class="verticalLine"></div>
+
+    <div class="sideComponents">      
+        <ul class="ulForSideComponents">
+            <div><li class="active"><a href="#">AKTIVNI</a></li></div><br/>         
+            <div><li><a href="#">NEAKTIVNI</a></li></div><br/>
+            <div><li><a href="#">DODAJ APARTMAN</a></li></div><br/>
+        </ul>
+    </div>  -->
+
+    <div class="titleForActiveApartments">
+        <h1>Pregled aktivnih apartmana:</h1>
+    </div> 
+    <!-- Apartmani -->
+
+    <div class="listOfApartments">
+
+        <div class="wrapper">
+            <!-- <div class="change-btn">
+                <button class="changeButton"><img id="changeIcon" src="pictures/pencil.png"/></button>
+            </div> -->
+            <div class="product-img">
+                <img src="http://bit.ly/2tMBBTd" height="420" width="327">
+            </div>
+            <div class="product-info">
+                <div class="product-text">
+                    <h1>Harvest Vase</h1>
+                    <h2>by studio and friends</h2>
+                    <p>Harvest Vases are a reinterpretation of peeled fruits and vegetables as<br> functional objects. The surfaces appear to be sliced and pulled aside,<br> allowing room for growth. </p>
+                </div>
+                <div class="product-price-btn">
+                    <button type="button">obriši</button>
+                </div>
+                <div class="product-price-btn2">
+                        <button type="button">izmeni</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrapper">
+                <!-- <div class="change-btn">
+                    <button class="changeButton"><img id="changeIcon" src="pictures/pencil.png"/></button>
+                </div> -->
+                <div class="product-img">
+                    <img src="http://bit.ly/2tMBBTd" height="420" width="327">
+                </div>
+                <div class="product-info">
+                    <div class="product-text">
+                        <h1>Harvest Vase</h1>
+                        <h2>by studio and friends</h2>
+                        <p>Harvest Vases are a reinterpretation of peeled fruits and vegetables as<br> functional objects. The surfaces appear to be sliced and pulled aside,<br> allowing room for growth. </p>
+                    </div>
+                    <div class="product-price-btn">
+                        <button type="button">obriši</button>
+                    </div>
+                    <div class="product-price-btn2">
+                            <button type="button">izmeni</button>
+                    </div>
+                </div>
+        </div>
+
+            <div class="wrapper">
+                    <!-- <div class="change-btn">
+                        <button class="changeButton"><img id="changeIcon" src="pictures/pencil.png"/></button>
+                    </div> -->
+                    <div class="product-img">
+                        <img src="http://bit.ly/2tMBBTd" height="420" width="327">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-text">
+                            <h1>Harvest Vase</h1>
+                            <h2>by studio and friends</h2>
+                            <p>Harvest Vases are a reinterpretation of peeled fruits and vegetables as<br> functional objects. The surfaces appear to be sliced and pulled aside,<br> allowing room for growth. </p>
+                        </div>
+                        <div class="product-price-btn">
+                            <button type="button">obriši</button>
+                        </div>
+                        <div class="product-price-btn2">
+                                <button type="button">izmeni</button>
+                        </div>
+                    </div>
+            </div>
+    </div>
+</body>
+</html>
