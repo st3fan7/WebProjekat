@@ -37,18 +37,6 @@
         </div>
     </div>
 
-    <div class="confirm-cancel-field">
-        <div class="price-title">
-            <h1>Želite da izmenite podatke o apartmanu?</h1>
-            <div class="add-btn">
-                <button type="submit">Izmeni</button>
-            </div>
-            <div class="cancel-btn">
-                <button type="button">Odustani</button>
-            </div>
-        </div>
-    </div>
-
     <div class="verticalLine"></div>
 
     <div class="sideComponents">      
@@ -60,7 +48,8 @@
     </div>
 
     <div class="titleForHostChangeActiveApartments">
-        <h1>Izmena podataka o apartmanu</h1>
+        <h1 id="titleInAdminChangeApartment">Izmena podataka</h1>
+        <a href="#" class="previous">&laquo; Nazad</a>
     </div> 
     <!-- Apartmani -->
 
@@ -181,7 +170,12 @@
                             <span class="checkmark"></span>
                         </label>
 
-                        <h1>KRAJ</h1>
+                        <div class="change-btn-in-admin-change-apartment">
+                            <button type="submit">Izmeni</button>
+                        </div>
+                        <div class="cancel-btn-in-admin-change-apartment">
+                            <button type="button">Odustani</button>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>WEBSITE FOR VACACTION</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body class="bodyForBackground">
+    <div class="boundaryForScroll">
+        <div class="logoAndName">
+            <div class="logo">        
+                <img src="pictures/clipart302388.png"/>
+            </div>
+            <div class="webName">
+                <h3>BookingApp</h3>
+            </div>  
+        </div>
+    
+        <div class="main">     
+            <ul class="menu-contents">
+                <li><a href="#">Početna</a></li>
+                <li><a href="#">Apartmani</a></li>
+                <li class="active"><a href="#">Rezervacije</a></li>
+                <li><a href="#">Komentari</a></li>
+                <li><a href="#">Korisnici</a></li>
+            </ul>
+        </div>
+    
+        <div class="dropdown">
+            <button class="dropbtn"><img id="menuIcon" src="pictures/menuIcon.png" />
+                <img id="userIcon" src="pictures/user.png" />
+            </button>
+            <div class="dropdown-content">
+                <a href="#">Moj Nalog</a>
+                <a href="#">Odjavi se</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="verticalLineReservation"></div>
+
+    <div class="sideComponents">      
+        <ul class="ulForSideComponentsHostReservation">
+            <div><li><a href="#">MOJE REZERVACIJE</a></li></div><br/>         
+            <div><li class="active"><a href="#">KORISNIKOVE REZERVACIJE</a></li></div><br/>
+        </ul>
+    </div>
+
+    <div class="sortAndFilterForUserReservation">
+
+        <div class="search-title2">
+            <h1>Pretraži rezervacije po:</h1>
+            <form id="formForSearch" action="#">
+                <input type="text" id="usernameID" name="usernameName" placeholder="Unesite korisničko ime...">
+        
+                <div class="search-btn-user-reservation">
+                    <button id="searchInUserReservation" type="submit">Pretraži</button>
+                </div>
+            </form>           
+        </div>
+
+        <div class="price-title2">
+            <h1 id="sort-text-in-user-reservation">Sortiraj po ceni:</h1>
+            <form id="formForSort" action="#">
+                
+                    <select id="statusID" name="statusName">
+                            <option value="rising">Rastuća</option>
+                            <option value="falling">Opadajuća</option>
+                        </select>
+    
+                    <div class="search-btn-user-reservation">
+                        <button id="searchInUserReservation" type="submit">Sortiraj</button>
+                    </div>
+                </form>
+        </div>
+
+            <div class="filter-title">
+                <h1>Filtriraj rezervacije po:</h1>
+                <form id="formForFilter" action="#">
+                
+                    <select id="statusID" name="statusName">
+                            <option value="created">Kreirana</option>
+                            <option value="rejected">Odbijena</option>
+                            <option value="accepted">Prihvaćena</option>
+                            <option value="completed">Završena</option>
+                        </select>
+    
+                    <div class="search-btn-user-reservation">
+                        <button id="searchInUserReservation" type="submit">Filtriraj</button>
+                    </div>
+                </form>           
+            </div>
+
+    </div>
+
+    <div class="titleForUserReservationSelectedA">
+        <h1 id="nameOfApartment2">Apartman 1</h1>
+        <a href="#" class="previous">&laquo; Nazad</a>
+    </div> 
+
+    <div class="listOfApartments">
+        <div class="table-wrapper">
+                <table class="fl-table">
+                    <thead>
+                    <tr>
+                        <th>Korisnik</th>
+                        <th>Početni datum</th>
+                        <th>Broj noćenja</th>
+                        <th>Ukupna cena</th>
+                        <th>Status</th>
+                        <th>Poruka pri rezervaciji</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>pera123</td>
+                        <td>01.02.2021.</td>
+                        <td>10</td>
+                        <td>35000.00 RSD</td>
+                        <td>                        
+                            <select id="statusID" name="statusName">
+                                <option value="created">Kreirana</option>
+                                <option value="rejected">Odbijena</option>
+                                <option value="accepted">Prihvaćena</option>
+                                <option value="completed">Završena</option>
+                            </select>
+                        </td>
+                        <td>Nemojte dolaziti pre 10 ujutru.</td>
+                    </tr>
+                    <tr>
+                        <td>mika123</td>
+                        <td>11.02.2021.</td>
+                        <td>7</td>
+                        <td>25000.00 RSD</td>
+                        <td>                        
+                            <select id="statusID" name="statusName">
+                                <option value="created">Kreirana</option>
+                                <option value="rejected">Odbijena</option>
+                                <option value="accepted">Prihvaćena</option>
+                                <option value="completed">Završena</option>
+                            </select>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>sonja123</td>
+                        <td>18.02.2021.</td>
+                        <td>10</td>
+                        <td>33000.00 RSD</td>
+                        <td>                        
+                            <select id="statusID" name="statusName">
+                                <option value="created">Kreirana</option>
+                                <option value="rejected">Odbijena</option>
+                                <option value="accepted">Prihvaćena</option>
+                                <option value="completed">Završena</option>
+                            </select>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>zika123</td>
+                        <td>28.02.2021.</td>
+                        <td>10</td>
+                        <td>34000.00 RSD</td>
+                        <td>                        
+                            <select id="statusID" name="statusName">
+                                <option value="created">Kreirana</option>
+                                <option value="rejected">Odbijena</option>
+                                <option value="accepted">Prihvaćena</option>
+                                <option value="completed">Završena</option>
+                            </select>
+                        </td>
+                        <td></td>
+                    </tr>
+                    
+                    <tbody>
+                </table>
+            </div>
+    </div>
+</body>
+</html>

@@ -130,6 +130,10 @@ ul li.active a{
     font-size: 26px;
 }
 
+#titleInAdminChangeApartment {
+    margin-left: 80px;
+}
+
 .titleForActiveApartments {
     margin-top: -3%;
     margin-left: 34%;
@@ -453,7 +457,7 @@ ul li.active a{
 label,
 .product-text h1,
 .text-for-adding-apartment h1,
-.product-price-btn p, .rasing-price-btn p, .search-btn-user-reservation p, .search-btn-user-overview p, .review-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p, .sort-price-btn p, .filter-btn-active-apartment p, .change-btn p {
+.product-price-btn p, .rasing-price-btn p, .change-btn-in-admin-change-apartment p, .cancel-btn-in-admin-change-apartment p,  .search-btn-user-reservation p, .search-btn-user-overview p, .review-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p, .sort-price-btn p, .filter-btn-active-apartment p, .change-btn p {
     font-family: 'Bentham', serif;
 }
 
@@ -487,7 +491,7 @@ label {
     overflow: hidden;
 }
 
-.product-price-btn, .rasing-price-btn,  .search-btn-user-reservation, .search-btn-user-overview, .review-btn, .falling-price-btn, .type-filter-btn, .content-filter-btn, .add-btn, .cancel-btn, .sort-price-btn, .filter-btn-active-apartment, .change-btn {
+.product-price-btn, .rasing-price-btn, .change-btn-in-admin-change-apartment, .cancel-btn-in-admin-change-apartment,  .search-btn-user-reservation, .search-btn-user-overview, .review-btn, .falling-price-btn, .type-filter-btn, .content-filter-btn, .add-btn, .cancel-btn, .sort-price-btn, .filter-btn-active-apartment, .change-btn {
     height: 103px;
     width: 327px;
     margin-top: 17px;
@@ -501,7 +505,7 @@ label {
     position: relative;
 }
 
-.product-price-btn p, .rasing-price-btn p,  .search-btn-user-reservation p, .search-btn-user-overview p, .review-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p, .sort-price-btn p, .filter-btn-active-apartment p, .change-btn p  {
+.product-price-btn p, .rasing-price-btn p, .change-btn-in-admin-change-apartment p, .cancel-btn-in-admin-change-apartment p,  .search-btn-user-reservation p, .search-btn-user-overview p, .review-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p, .sort-price-btn p, .filter-btn-active-apartment p, .change-btn p  {
     display: inline-block;
     position: absolute;
     top: 7px;
@@ -532,7 +536,7 @@ span {
     font-size: 34px;
 }
 
-.product-price-btn button, .rasing-price-btn button, .search-btn-user-reservation button, .search-btn-user-overview button, .review-btn button, .falling-price-btn button, .type-filter-btn button, .content-filter-btn button, .add-btn button, .cancel-btn button, .sort-price-btn button, .filter-btn-active-apartment button, .change-btn button  {
+.product-price-btn button, .rasing-price-btn button, .change-btn-in-admin-change-apartment button, .cancel-btn-in-admin-change-apartment button, .search-btn-user-reservation button, .search-btn-user-overview button, .review-btn button, .falling-price-btn button, .type-filter-btn button, .content-filter-btn button, .add-btn button, .cancel-btn button, .sort-price-btn button, .filter-btn-active-apartment button, .change-btn button  {
     float: right;
     display: inline-block;
     height: 50px;
@@ -555,6 +559,14 @@ span {
 .rasing-price-btn button {
     margin: 20px 35px 0 16px; 
     background-color: #054f5294;
+}
+
+.change-btn-in-admin-change-apartment button {
+    margin: 40px 125px 0 16px; 
+}
+
+.cancel-btn-in-admin-change-apartment button {
+    margin: -80px -85px 0 16px; 
 }
 
 .search-btn-user-reservation button {
@@ -623,7 +635,7 @@ span {
     outline: none;
 }
 
-.product-price-btn button:hover, .rasing-price-btn button:hover, .search-btn-user-reservation button:hover,  .search-btn-user-overview button:hover, .review-btn button:hover, .falling-price-btn button:hover, .type-filter-btn button:hover, .add-btn button:hover, .cancel-btn button:hover, .sort-price-btn button:hover, .filter-btn-active-apartment button:hover, .change-btn button:hover{
+.product-price-btn button:hover, .rasing-price-btn button:hover,  .change-btn-in-admin-change-apartment button:hover, .cancel-btn-in-admin-change-apartment button:hover, .search-btn-user-reservation button:hover,  .search-btn-user-overview button:hover, .review-btn button:hover, .falling-price-btn button:hover, .type-filter-btn button:hover, .add-btn button:hover, .cancel-btn button:hover, .sort-price-btn button:hover, .filter-btn-active-apartment button:hover, .change-btn button:hover{
     background-color: #054f5294;
 }
 

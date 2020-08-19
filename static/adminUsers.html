@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>WEBSITE FOR VACACTION</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body class="bodyForBackground">
+    <div class="boundaryForScroll">
+        <div class="logoAndName">
+            <div class="logo">        
+                <img src="pictures/clipart302388.png"/>
+            </div>
+            <div class="webName">
+                <h3>BookingApp</h3>
+            </div>  
+        </div>
+    
+        <div class="main">     
+            <ul class="menu-contents">
+                <li><a href="#">Početna</a></li>
+                <li><a href="#">Apartmani</a></li>
+                <li><a href="#">Rezervacije</a></li>
+                <li><a href="#">Komentari</a></li>
+                <li class="active"><a href="#">Korisnici</a></li>
+            </ul>
+        </div>
+    
+        <div class="dropdown">
+            <button class="dropbtn"><img id="menuIcon" src="pictures/menuIcon.png" />
+                <img id="userIcon" src="pictures/user.png" />
+            </button>
+            <div class="dropdown-content">
+                <a href="#">Moj Nalog</a>
+                <a href="#">Odjavi se</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="verticalLineReservation"></div>
+
+    <div class="sideComponents">      
+        <ul class="ulForSideComponentsHostReservation">
+            <div><li class="active"><a href="#">PREGLED KORISNIKA</a></li></div><br/>
+        </ul>
+    </div>
+
+    <div class="sortAndFilterForUserOverview">
+        <div class="filter-title">
+            <h1>Pretraži po:</h1>
+            <form id="formForSearch" action="#">
+                <label for="username" id="labelForUsername">Korisničko ime:</label>
+                <input type="text" id="usernameID" name="usernameName" placeholder="Unesite korisničko ime...">
+            
+                <label id="labelForRole" for="role">Uloga:</label>
+                <select id="roleID" name="roleName">
+                    <option value="guest">Gost</option>
+                    <option value="host">Domaćin</option>
+                    <option value="admin">Administrator</option>
+                </select>
+
+                <label id="labelForGender" for="gender">Pol:</label>
+                <select id="genderID" name="genderName">
+                    <option value="male">Muško</option>
+                    <option value="female">Žensko</option>
+                </select>
+
+                <div class="search-btn-user-overview">
+                    <button type="submit">Pretraži</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="listOfApartments">
+        <div class="table-wrapper">
+                <table class="fl-table">
+                    <thead>
+                    <tr>
+                        <th>Korisničko ime</th>
+                        <th>Ime</th>
+                        <th>Prezime</th>
+                        <th>Pol</th>
+                        <th>Uloga</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>pera123</td>
+                        <td>Pera</td>
+                        <td>Perić</td>
+                        <td>Muško</td>
+                        <td>Gost</td>
+                    </tr>
+                    <tr>
+                        <td>mika123</td>
+                        <td>Mika</td>
+                        <td>Mikić</td>
+                        <td>Muško</td>
+                        <td>Domaćin</td>
+                    </tr>
+                    <tr>
+                        <td>sonja123</td>
+                        <td>Sonja</td>
+                        <td>Sonjić</td>
+                        <td>Žensko</td>
+                        <td>Gost</td>
+                    </tr>
+                    <tr>
+                        <td>misa123</td>
+                        <td>Miša</td>
+                        <td>Mišić</td>
+                        <td>Muško</td>
+                        <td>Administrator</td>
+                    </tr>
+                    
+                    <tbody>
+                </table>
+            </div>
+    </div>
+</body>
+</html>
