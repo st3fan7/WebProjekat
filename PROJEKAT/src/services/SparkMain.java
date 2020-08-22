@@ -23,9 +23,15 @@ public class SparkMain {
 		
 		staticFiles.externalLocation(new File("./static").getCanonicalPath());
 		
+		
+		get("/", (reg, res) -> {
+			return "Proba";
+		});
+		
 		get("/login", (reg, res) -> {
 			return "Proba";
 		});
+
 
 	}
 
