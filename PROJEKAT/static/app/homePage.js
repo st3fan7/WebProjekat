@@ -19,7 +19,8 @@ Vue.component("homePage", {
     <div class="main">
             
         <ul>
-            <li id="onlyHomePage"class="active"><a href="#">Početna</a></li>               
+            <li id="onlyHomePage"class="active"><a href="#">Početna</a></li>
+           
         </ul>
     </div>
     
