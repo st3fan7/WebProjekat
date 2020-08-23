@@ -13,7 +13,7 @@ public class Apartment {
 	private Location location;
 	private ArrayList<Date> releaseDates;
 	private ArrayList<Date> freeDates;
-	private User host;
+	private Host host;
 	private ArrayList<Comment> comments;
 	private String pictures;
 	private int pricePerNight;
@@ -28,7 +28,7 @@ public class Apartment {
 	}
 
 	public Apartment(TypeOfApartment typeOfApartment, int numberOfRooms, int numberOfGuests, Location location,
-			User host, String pictures, int pricePerNight, String checkInTime,
+			Host host, String pictures, int pricePerNight, String checkInTime,
 			String checkOutTime, StatusOfApartment statusOfApartment) {
 		super();
 		this.typeOfApartment = typeOfApartment;
@@ -96,11 +96,11 @@ public class Apartment {
 		this.freeDates = freeDates;
 	}
 
-	public User getHost() {
+	public Host getHost() {
 		return host;
 	}
 
-	public void setHost(User host) {
+	public void setHost(Host host) {
 		this.host = host;
 	}
 

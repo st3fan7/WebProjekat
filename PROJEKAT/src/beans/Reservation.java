@@ -11,12 +11,12 @@ public class Reservation {
 	private int numberOfNight = 1;
 	private double totalCost;
 	private String messageForReservation;
-	private User guest;
+	private Guest guest;
 	private StatusOfReservation status;
 	
 	
 	public Reservation(Apartment apartment, Date startDate, int numberOfNight, double totalCost,
-			String messageForReservation, User guest, StatusOfReservation status) {
+			String messageForReservation, Guest guest, StatusOfReservation status) {
 		super();
 		this.apartment = apartment;
 		this.startDate = startDate;
@@ -35,7 +35,7 @@ public class Reservation {
 		this.numberOfNight = 1;
 		this.totalCost = 0;
 		this.messageForReservation = "";
-		this.guest = new User();
+		this.guest = new Guest();
 		
 	}
 
@@ -90,12 +90,12 @@ public class Reservation {
 	}
 
 
-	public User getGuest() {
+	public Guest getGuest() {
 		return guest;
 	}
 
 
-	public void setGuest(User guest) {
+	public void setGuest(Guest guest) {
 		this.guest = guest;
 	}
 
@@ -108,11 +108,5 @@ public class Reservation {
 	public void setStatus(StatusOfReservation status) {
 		this.status = status;
 	}
-	
-	
-	
-	
-	
-	
 	
 }

@@ -2,13 +2,13 @@ package beans;
 
 public class Comment {
 
-	private User guest;
+	private Guest guest;
 	private Apartment apartment;
 	private String text;
 	private int grade;
 	
 	
-	public Comment(User guest, Apartment apartment, String text, int grade) {
+	public Comment(Guest guest, Apartment apartment, String text, int grade) {
 		super();
 		this.guest = guest;
 		this.apartment = apartment;
@@ -19,19 +19,19 @@ public class Comment {
 	
 	public Comment(){
 		super();
-		this.guest = new User();
+		this.guest = new Guest();
 		this.apartment = new Apartment();
 		this.text = "";
 		this.grade = 0;
 	}
 
 
-	public User getGuest() {
+	public Guest getGuest() {
 		return guest;
 	}
 
 
-	public void setGuest(User guest) {
+	public void setGuest(Guest guest) {
 		this.guest = guest;
 	}
 
