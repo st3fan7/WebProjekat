@@ -13,11 +13,13 @@ public class Reservation {
 	private String messageForReservation;
 	private Guest guest;
 	private StatusOfReservation status;
+	private String id;
 	
 	
-	public Reservation(Apartment apartment, Date startDate, int numberOfNight, double totalCost,
+	public Reservation(String id, Apartment apartment, Date startDate, int numberOfNight, double totalCost,
 			String messageForReservation, Guest guest, StatusOfReservation status) {
 		super();
+		this.id = id;
 		this.apartment = apartment;
 		this.startDate = startDate;
 		this.numberOfNight = numberOfNight;
@@ -36,7 +38,18 @@ public class Reservation {
 		this.totalCost = 0;
 		this.messageForReservation = "";
 		this.guest = new Guest();
+		this.id = "";
 		
+	}
+
+
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 

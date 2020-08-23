@@ -1,17 +1,17 @@
 package beans;
 
-public class ApartmentContent {
+public class Amenities {
 	
 	private int id;
 	private String content;
 	
-	public ApartmentContent(int id, String content) {
+	public Amenities(int id, String content) {
 		super();
 		this.id = id;
 		this.content = content;
 	}
 
-	public ApartmentContent() {
+	public Amenities() {
 		super();
 		id = 0;
 		content = "";

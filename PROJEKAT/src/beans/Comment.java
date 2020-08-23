@@ -6,10 +6,12 @@ public class Comment {
 	private Apartment apartment;
 	private String text;
 	private int grade;
+	private String id;
 	
 	
-	public Comment(Guest guest, Apartment apartment, String text, int grade) {
+	public Comment(String id, Guest guest, Apartment apartment, String text, int grade) {
 		super();
+		this.id = id;
 		this.guest = guest;
 		this.apartment = apartment;
 		this.text = text;
@@ -19,6 +21,7 @@ public class Comment {
 	
 	public Comment(){
 		super();
+		this.id = "";
 		this.guest = new Guest();
 		this.apartment = new Apartment();
 		this.text = "";
@@ -64,6 +67,16 @@ public class Comment {
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
+	
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	
 	
 	

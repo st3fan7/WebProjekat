@@ -7,6 +7,7 @@ import enums.StatusOfApartment;
 import enums.TypeOfApartment;
 
 public class Apartment {
+	private String id;
 	private TypeOfApartment typeOfApartment;
 	private int numberOfRooms;
 	private int numberOfGuests;
@@ -20,17 +21,18 @@ public class Apartment {
 	private String checkInTime; //inicijalno 2 PM
 	private String checkOutTime; //inicijalno 10 AM
 	private StatusOfApartment statusOfApartment;
-	private ArrayList<ApartmentContent> amenities;
+	private ArrayList<Amenities> amenities;
 	private ArrayList<Reservation> reservations;
 	
 	public Apartment() {
 		super();
 	}
 
-	public Apartment(TypeOfApartment typeOfApartment, int numberOfRooms, int numberOfGuests, Location location,
+	public Apartment(String id, TypeOfApartment typeOfApartment, int numberOfRooms, int numberOfGuests, Location location,
 			Host host, String pictures, int pricePerNight, String checkInTime,
 			String checkOutTime, StatusOfApartment statusOfApartment) {
 		super();
+		this.id = id;
 		this.typeOfApartment = typeOfApartment;
 		this.numberOfRooms = numberOfRooms;
 		this.numberOfGuests = numberOfGuests;
@@ -44,7 +46,7 @@ public class Apartment {
 		this.releaseDates = new ArrayList<Date>();
 		this.freeDates = new ArrayList<Date>();
 		this.comments = new ArrayList<Comment>();
-		this.amenities = new ArrayList<ApartmentContent>();
+		this.amenities = new ArrayList<Amenities>();
 		this.reservations = new ArrayList<Reservation>();
 	}
 
@@ -152,11 +154,11 @@ public class Apartment {
 		this.statusOfApartment = statusOfApartment;
 	}
 
-	public ArrayList<ApartmentContent> getAmenities() {
+	public ArrayList<Amenities> getAmenities() {
 		return amenities;
 	}
 
-	public void setAmenities(ArrayList<ApartmentContent> amenities) {
+	public void setAmenities(ArrayList<Amenities> amenities) {
 		this.amenities = amenities;
 	}
 
@@ -166,6 +168,16 @@ public class Apartment {
 
 	public void setReservations(ArrayList<Reservation> reservations) {
 		this.reservations = reservations;
+	}
+	
+	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	@Override
