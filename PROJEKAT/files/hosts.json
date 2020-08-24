@@ -1,0 +1,12 @@
+[
+	{
+		"username" : "domacin1",
+		"password" : "domacin1",
+		"name" : "Lana",
+		"surname" : "Lanić",
+		"gender" : "Žensko",
+		"role" : "Domaćin",
+		"apartmentsForRent" : []	
+	}
+
+]

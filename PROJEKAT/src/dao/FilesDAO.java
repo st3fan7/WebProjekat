@@ -1,6 +1,9 @@
 package dao;
 
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
@@ -40,6 +43,94 @@ public class FilesDAO {
 		}
 		
 		return app;
+	}
+	
+	public static void writeAdminInFile(ArrayList<Admin> admins)
+	{
+		try (Writer writer = new FileWriter("./files/admins.json")) {
+		    gson = new GsonBuilder().setPrettyPrinting().create();
+		    gson.toJson(admins, writer);
+		
+		} catch (IOException e) {
+			System.out.println("Error in writing admins in files!");
+		}
+	}
+	
+	public static void writeHostInFile(ArrayList<Host> hosts)
+	{
+		try (Writer writer = new FileWriter("./files/hosts.json")) {
+		    gson = new GsonBuilder().setPrettyPrinting().create();
+		    gson.toJson(hosts, writer);
+		
+		} catch (IOException e) {
+			System.out.println("Error in writing hosts in files!");
+		}
+	}
+	
+	public static void writeGuestsInFile(ArrayList<Guest> guests)
+	{
+		try (Writer writer = new FileWriter("./files/guests.json")) {
+		    gson = new GsonBuilder().setPrettyPrinting().create();
+		    gson.toJson(guests, writer);
+		
+		} catch (IOException e) {
+			System.out.println("Error in writing guests in files!");
+		}
+	}
+	
+	public static void writeAmenitiesInFile(ArrayList<Amenities> amenities)
+	{
+		try (Writer writer = new FileWriter("./files/amenities.json")) {
+		    gson = new GsonBuilder().setPrettyPrinting().create();
+		    gson.toJson(amenities, writer);
+		
+		} catch (IOException e) {
+			System.out.println("Error in writing amenities in files!");
+		}
+	}
+	
+	public static void writeApartmentsInFile(ArrayList<Apartment> apartments)
+	{
+		try (Writer writer = new FileWriter("./files/apartments.json")) {
+		    gson = new GsonBuilder().setPrettyPrinting().create();
+		    gson.toJson(apartments, writer);
+		
+		} catch (IOException e) {
+			System.out.println("Error in writing apartments in files!");
+		}
+	}
+	
+	public static void writeCommentsInFile(ArrayList<Comment> comments)
+	{
+		try (Writer writer = new FileWriter("./files/comments.json")) {
+		    gson = new GsonBuilder().setPrettyPrinting().create();
+		    gson.toJson(comments, writer);
+		
+		} catch (IOException e) {
+			System.out.println("Error in writing comments in files!");
+		}
+	}
+	
+	public static void writeLocationsInFile(ArrayList<Location> locations)
+	{
+		try (Writer writer = new FileWriter("./files/locations.json")) {
+		    gson = new GsonBuilder().setPrettyPrinting().create();
+		    gson.toJson(locations, writer);
+		
+		} catch (IOException e) {
+			System.out.println("Error in writing locations in files!");
+		}
+	}
+	
+	public static void writeReservationsInFile(ArrayList<Reservation> reservations)
+	{
+		try (Writer writer = new FileWriter("./files/reservations.json")) {
+		    gson = new GsonBuilder().setPrettyPrinting().create();
+		    gson.toJson(reservations, writer);
+		
+		} catch (IOException e) {
+			System.out.println("Error in writing reservations in files!");
+		}
 	}
 	
 	

@@ -1,0 +1,13 @@
+[
+	{
+		"username" : "gost1",
+		"password" : "gost1",
+		"name" : "Mika",
+		"surname" : "Mikić",
+		"gender" : "Muško",
+		"role" : "Gost",
+		"rentApartments" : [],
+		"reservations" : []	
+	}
+
+]

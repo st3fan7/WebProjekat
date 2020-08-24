@@ -1,0 +1,11 @@
+[
+	{
+		"username" : "admin1",
+		"password" : "admin1",
+		"name" : "Pera",
+		"surname" : "Perić",
+		"gender" : "Muško",
+		"role" : "Admin"	
+	}
+
+]
