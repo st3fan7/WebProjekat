@@ -4,7 +4,9 @@ Vue.component("login", {
 			usernameInput : false,
 			passwordInput : false,
 			username : '',
-			password : ''
+			password : '',
+			returnData : '',
+			notification : false
 		}
 	},
 	template:`
@@ -28,13 +30,14 @@ Vue.component("login", {
 	
 	<div class="signIn">
 	    <div class="form-container sign-in-container">
-	        <form class="formForLogin" action="#" >
+	        <form id="form" class="formForLogin" action="#/homePage" method = "GET">
 	            <h1>Prijava</h1>
+	            <label v-if="notification">{{returnData}}</label><br><br>
 	            <input type="text" name="username" v-model="username" placeholder="Korisničko ime"></input>
 	            <label v-if="usernameInput">Unesite korisničko ime!</label><br>
 	            <input type="password" name="password" v-model="password" placeholder="Lozinka"></input>
 	            <br><label v-if="passwordInput">Unesite lozinku!</label><br>
-	            <button type="submit" id="signInButton" v-on:click="loginSubmit">Prijavi se</button>
+	            <button type="submit" id="signInButton" v-on:click="onSubmit">Prijavi se</button>
 	        </form>
 	  </div>
 	    
@@ -53,8 +56,8 @@ Vue.component("login", {
 	`	
 	,
 	methods: {
-		loginSubmit : function() {
-			//document.getElementById("form").setAttribute("loginSubmit","return false;");
+		onSubmit : function() {
+			document.getElementById("form").setAttribute("onsubmit","return false;");
 			if(this.username.length === 0 ){
 				this.usernameInput = true;			
 			}
@@ -68,6 +71,30 @@ Vue.component("login", {
 			else{
 				this.passwordInput = false;			
 				}
+			
+			axios.get('/services/users/getUserByUsername', {params:{
+				username : this.username,
+				password : this.password
+
+				}}).then(response =>{
+				if (response.data.toString() === ("200")){
+					this.notification = false;
+					this.returnData = "";
+					this.$router.push({ name: 'homePage' })
+				
+				}
+				else if(response.data.toString() === ("204")){
+					this.notification = false;
+					this.returnData = "";
+				}
+				else{
+					this.notification = true;
+					this.returnData = response.data;
+				}
+			});	
+			
+			
+			
 			}
 		},
 	mounted(){

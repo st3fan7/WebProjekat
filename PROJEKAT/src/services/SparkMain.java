@@ -23,17 +23,18 @@ public class SparkMain {
 		
 		staticFiles.externalLocation(new File("./static").getCanonicalPath());
 		
-		app = FilesDAO.loadFiles();
-		app.fillMaps();
+		//app = FilesDAO.loadFiles();
+		//app.fillMaps();
+		
+		new UserService();
 		
 		
-		get("/", (reg, res) -> {
-			return "Proba";
-		});
-		
+		/*
 		get("/login", (reg, res) -> {
 			return "Proba";
 		});
+		
+		*/
 
 
 	}
