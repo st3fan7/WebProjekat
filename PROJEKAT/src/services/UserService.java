@@ -13,7 +13,8 @@ import spark.Request;
 import spark.Session;
 
 public class UserService {
-
+	
+	private static Gson g = new Gson();
 	HostDAO hostDAO = new HostDAO();
 	
 	public UserService(){
@@ -22,6 +23,7 @@ public class UserService {
 	}
 	
 	public void loginUsers(){
+		
 		get("/services/users/getUserByUsername", (req, res) -> {
 			res.type("application/json");
 			Host h = hostDAO.getHostID(req.queryMap("username").value());
@@ -45,6 +47,14 @@ public class UserService {
 				}
 			}
 								
+		});
+		
+		get("services/users/getActiveUser", (req, res) -> {
+			res.type("application/json");
+			Session ss = req.session(true);
+			Host h = ss.attribute("host");
+			System.out.println("Uloga treba da je domacin: " + h.getRole()+ " a username je : " + h.getUsername());
+			return g.toJson(h);
 		});
 		
 	}
