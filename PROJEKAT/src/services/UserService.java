@@ -53,7 +53,7 @@ public class UserService {
 			res.type("application/json");
 			Session ss = req.session(true);
 			Host h = ss.attribute("host");
-			System.out.println("Uloga treba da je domacin: " + h.getRole()+ " a username je : " + h.getUsername());
+			//System.out.println(h.getName() + " " + h.getGender() + " " + h.getRole());
 			return g.toJson(h);
 		});
 		

@@ -1,9 +1,9 @@
 Vue.component("homePage", {
 	data: function (){
 		return {
-			activeUser : false,
+			activeUser : null,
 			activeAdmin : false,
-			acitveHost : false,
+			activeHost : false,
 			activeGuest : false
 			
 		}
@@ -23,9 +23,9 @@ Vue.component("homePage", {
 	    <div class="main">
 	        <ul>
 	            <li id="onlyHomePage" class="active"><a href="#">Početna</a></li>
-	            <li v-if="acitveHost"><a href="#">Moji apartmani</a></li>
-                <li v-if="acitveHost"><a href="#">Rezervacije</a></li>
-                <li v-if="acitveHost"><a href="#">Komentari</a></li>   
+	            <li v-if="activeHost"><a href="#">Moji apartmani</a></li>
+                <li v-if="activeHost"><a href="#">Rezervacije</a></li>
+                <li v-if="activeHost"><a href="#">Komentari</a></li>   
 	        </ul>
 	    </div>
 	    
@@ -40,10 +40,14 @@ Vue.component("homePage", {
 	        	<img id="menuIcon" src="pictures/menuIcon.png" />
 	        	<img id="userIcon" src="pictures/user.png" />
 	        </button>
-	        <div class="dropdown-content">
-	            <a href="#">Registruj se</a>
-	            <a href="#/login">Prijavi se</a>
+	        <div v-if="activeHost" class="dropdown-content">
+	            <a href="#">Moj nalog</a>
+	            <a href="#">Odjavi se</a>	            
 	        </div>
+		    <div v-else class="dropdown-content">
+		        <a href="#">Registruj se</a>
+	            <a href="#/login">Prijavi se</a>
+		    </div>
 	    </div>
 	
 	    <div class="search">
@@ -71,20 +75,24 @@ Vue.component("homePage", {
 			axios.get('services/users/getActiveUser').then(response => {
 				this.activeUser = response.data;
 				
-				if (this.activeUser.role === "Admin")
+				if (this.activeUser.role === "admin"){
 					this.activeAdmin = true;
-				else
+				}else{
 					this.activeAdmin = false;
+				}		
+													
+				if (this.activeUser.role === "domacin"){
+					this.activeHost = true;
+				}else{
+					this.activeHost = false;
+				}
 				
-				if (this.activeUser.role === "Domaćin")
-					this.acitveHost = true;
-				else
-					this.acitveHost = false;
-				
-				if (this.activeUser.role === "Gost")
+				if (this.activeUser.role === "gost"){
 					this.acitveGuest = true;
-				else
+				}else{
 					this.acitveGuest = false;
+				}
+					
 
 			});	
 			

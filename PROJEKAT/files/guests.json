@@ -4,8 +4,8 @@
 		"password" : "gost1",
 		"name" : "Mika",
 		"surname" : "Mikić",
-		"gender" : "Muško",
-		"role" : "Gost",
+		"gender" : "musko",
+		"role" : "gost",
 		"rentApartments" : [],
 		"reservations" : []	
 	}

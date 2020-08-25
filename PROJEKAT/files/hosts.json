@@ -4,9 +4,10 @@
 		"password" : "domacin1",
 		"name" : "Lana",
 		"surname" : "Lanić",
-		"gender" : "Žensko",
-		"role" : "Domaćin",
-		"apartmentsForRent" : []	
+		"gender" : "zensko",
+		"role" : "domacin",
+		"apartmentsForRent" : []
+	
 	}
 
 ]

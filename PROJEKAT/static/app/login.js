@@ -32,11 +32,11 @@ Vue.component("login", {
 	    <div class="form-container sign-in-container">
 	        <form id="form" class="formForLogin" action="#/homePage" method = "GET">
 	            <h1>Prijava</h1>
-	            <label v-if="notification">{{returnData}}</label><br><br>
+	            <br><label style="color:red;" v-if="notification">{{returnData}}</label><br>
 	            <input type="text" name="username" v-model="username" placeholder="Korisničko ime"></input>
-	            <label v-if="usernameInput">Unesite korisničko ime!</label><br>
+	            <label style="color:red;" v-if="usernameInput">Unesite korisničko ime!</label><br>
 	            <input type="password" name="password" v-model="password" placeholder="Lozinka"></input>
-	            <br><label v-if="passwordInput">Unesite lozinku!</label><br>
+	            <br><label style="color:red;" v-if="passwordInput">Unesite lozinku!</label><br>
 	            <button type="submit" id="signInButton" v-on:click="onSubmit">Prijavi se</button>
 	        </form>
 	  </div>
