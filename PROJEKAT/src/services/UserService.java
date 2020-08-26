@@ -2,45 +2,69 @@ package services;
 
 
 import static spark.Spark.get;
-import static spark.Spark.port;
-import static spark.Spark.staticFiles;
 
 import com.google.gson.Gson;
 
+import beans.Admin;
+import beans.Guest;
 import beans.Host;
+import beans.User;
+import dao.AdminDAO;
+import dao.GuestDAO;
 import dao.HostDAO;
-import spark.Request;
 import spark.Session;
 
 public class UserService {
 	
 	private static Gson g = new Gson();
 	HostDAO hostDAO = new HostDAO();
+	AdminDAO adminDAO = new AdminDAO();
+	GuestDAO guestDAO = new GuestDAO();
 	
 	public UserService(){
 	 loginUsers();	
-	 
+	 logoutUser();
 	}
 	
 	public void loginUsers(){
 		
-		get("/services/users/getUserByUsername", (req, res) -> {
+		get("services/users/getUserByUsername", (req, res) -> {
 			res.type("application/json");
+			
+			User u = null;
 			Host h = hostDAO.getHostID(req.queryMap("username").value());
+			
+			if(h == null) {
+				Admin a = adminDAO.getAdminID(req.queryMap("username").value());
+				
+				if(a == null) {
+					Guest g = guestDAO.getGuestID(req.queryMap("username").value());
+					
+					if(g != null) {
+						u = g;
+					}
+					
+				} else {
+					u = a;
+				}
+			} else {
+				u = h;
+			}
+
 			String password = req.queryMap("password").value();
 			
 			if (password.equals("")) {
 				return ("204");
 			}
 			
-			if(h == null){
+			if(u == null){
 				return ("Korisnik : " + req.queryMap().value("username") + " ne postoji!");
 				
 			}else{
 				
-				if (h.getPassword().equals(password)) {
+				if (u.getPassword().equals(password)) {
 					Session ss = req.session(true);
-					ss.attribute("host", h);
+					ss.attribute("user", u);
 					return ("200");
 				} else {
 					return ("Pogrešna lozinka!");
@@ -52,11 +76,20 @@ public class UserService {
 		get("services/users/getActiveUser", (req, res) -> {
 			res.type("application/json");
 			Session ss = req.session(true);
-			Host h = ss.attribute("host");
-			//System.out.println(h.getName() + " " + h.getGender() + " " + h.getRole());
-			return g.toJson(h);
+			User u = ss.attribute("user");
+			return g.toJson(u);
 		});
 		
+	}
+	
+	public void logoutUser() {
+		get("services/users/logout", (req, res) -> {
+			Session ss = req.session(false);
+			ss.invalidate();
+			res.status(200);
+			return "OK";
+
+		});
 	}
 	
 }

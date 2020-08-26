@@ -5,7 +5,7 @@ const login = {template: '<login></login>'}
 const router = new VueRouter({
 	  mode: 'hash',
 	  routes: [
-		  { path: '/homePage', name:'homePage', component: homePage},	
+		  { path: '/', name:'homePage', component: homePage},	
 		  { path: '/login', name:'login', component: login}
 		  	
 	  ]

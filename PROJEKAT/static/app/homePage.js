@@ -24,8 +24,11 @@ Vue.component("homePage", {
 	        <ul>
 	            <li id="onlyHomePage" class="active"><a href="#">Početna</a></li>
 	            <li v-if="activeHost"><a href="#">Moji apartmani</a></li>
-                <li v-if="activeHost"><a href="#">Rezervacije</a></li>
-                <li v-if="activeHost"><a href="#">Komentari</a></li>   
+	            <li v-if="activeAdmin"><a href="#">Apartmani</a></li>
+                <li v-if="activeHost || activeAdmin"><a href="#">Rezervacije</a></li>
+                <li v-if="activeHost || activeAdmin"><a href="#">Komentari</a></li>   
+                <li v-if="activeAdmin"><a href="#">Korisnici</a></li>   
+                <li v-if="activeGuest"><a href="#">Moje rezervacije</a></li>
 	        </ul>
 	    </div>
 	    
@@ -40,9 +43,9 @@ Vue.component("homePage", {
 	        	<img id="menuIcon" src="pictures/menuIcon.png" />
 	        	<img id="userIcon" src="pictures/user.png" />
 	        </button>
-	        <div v-if="activeHost" class="dropdown-content">
-	            <a href="#">Moj nalog</a>
-	            <a href="#">Odjavi se</a>	            
+	        <div v-if="activeUser" class="dropdown-content">
+	             <router-link to="/" > Moj nalog </router-link>
+	            <router-link to="/login" v-on:click.native="logOut($event)" > Odjavi se </router-link>            
 	        </div>
 		    <div v-else class="dropdown-content">
 		        <a href="#">Registruj se</a>
@@ -69,6 +72,20 @@ Vue.component("homePage", {
 	`	
 	,
 	methods: {
+		
+		logOut : function(event)
+		{
+			if (confirm('Da li ste sigurni da želite da se odjavite?') == true) {
+				axios.get('services/users/logout')
+			}
+			else
+			{
+				//event.preventDefault();
+				this.$router.push({ name: 'homePage' })
+			}
+			
+		}
+	
 		},
 	mounted(){
 
@@ -88,9 +105,9 @@ Vue.component("homePage", {
 				}
 				
 				if (this.activeUser.role === "gost"){
-					this.acitveGuest = true;
+					this.activeGuest = true;
 				}else{
-					this.acitveGuest = false;
+					this.activeGuest = false;
 				}
 					
 

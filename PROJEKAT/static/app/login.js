@@ -24,7 +24,7 @@ Vue.component("login", {
 	<div class="main">
 	        
 	    <ul>
-	        <li id="onlyHomePageInLogin"><a id="loginA" href="#/homePage">Početna</a></li>               
+	        <li id="onlyHomePageInLogin"><a id="loginA" href="#/">Početna</a></li>               
 	    </ul>
 	</div>   
 	
@@ -72,7 +72,7 @@ Vue.component("login", {
 				this.passwordInput = false;			
 				}
 			
-			axios.get('/services/users/getUserByUsername', {params:{
+			axios.get('services/users/getUserByUsername', {params:{
 				username : this.username,
 				password : this.password
 
