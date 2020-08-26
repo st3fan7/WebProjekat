@@ -48,7 +48,7 @@ Vue.component("homePage", {
 	            <router-link to="/login" v-on:click.native="logOut($event)" > Odjavi se </router-link>            
 	        </div>
 		    <div v-else class="dropdown-content">
-		        <a href="#">Registruj se</a>
+		        <a href="#/registration">Registruj se</a>
 	            <a href="#/login">Prijavi se</a>
 		    </div>
 	    </div>

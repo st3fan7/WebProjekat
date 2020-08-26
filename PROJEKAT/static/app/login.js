@@ -46,7 +46,7 @@ Vue.component("login", {
 	            <div class="overlay-panel overlay-right">
 	                <h1>Nemaš nalog?</h1>
 	                <p id="loginP">Klikni ovde za registraciju!</p>
-	                <button class="ghost" id="signUp">Registruj se</button>
+	                <button class="ghost" id="signUp" v-on:click="singUp">Registruj se</button>
 	            </div>
 	        </div>
 	    </div>
@@ -95,7 +95,11 @@ Vue.component("login", {
 			
 			
 			
-			}
+			},
+			
+			singUp : function() {
+				this.$router.push({ name: 'registration' })
+		}
 		},
 	mounted(){
 			this.usernameInput = false;

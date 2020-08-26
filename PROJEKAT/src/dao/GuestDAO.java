@@ -32,7 +32,7 @@ public class GuestDAO {
 		
 	}
 
-	private void fillMapWithGuests() {
+	public void fillMapWithGuests() {
 		if(guestList != null) {
 			for (int i = 0; i < guestList.size(); i++) {
 				guestsMap.put(guestList.get(i).getUsername(), guestList.get(i));

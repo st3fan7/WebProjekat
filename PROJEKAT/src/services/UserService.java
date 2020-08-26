@@ -2,6 +2,9 @@ package services;
 
 
 import static spark.Spark.get;
+import static spark.Spark.post;
+
+import java.util.ArrayList;
 
 import com.google.gson.Gson;
 
@@ -24,12 +27,13 @@ public class UserService {
 	public UserService(){
 	 loginUsers();	
 	 logoutUser();
+	 register();
 	}
 	
 	public void loginUsers(){
 		
 		get("services/users/getUserByUsername", (req, res) -> {
-			res.type("application/json");
+			res.type("guestDAOlication/json");
 			
 			User u = null;
 			Host h = hostDAO.getHostID(req.queryMap("username").value());
@@ -67,14 +71,14 @@ public class UserService {
 					ss.attribute("user", u);
 					return ("200");
 				} else {
-					return ("Pogrešna lozinka!");
+					return ("PogreÅ¡na lozinka!");
 				}
 			}
 								
 		});
 		
 		get("services/users/getActiveUser", (req, res) -> {
-			res.type("application/json");
+			res.type("guestDAOlication/json");
 			Session ss = req.session(true);
 			User u = ss.attribute("user");
 			return g.toJson(u);
@@ -92,5 +96,37 @@ public class UserService {
 		});
 	}
 	
+	
+	public void register() {
+		post("services/users/register", (req, res) -> {
+			res.type("guestDAOlication/json");
+			String payload = req.body();
+			Guest guest;
+			
+			try {
+				guest = g.fromJson(payload, Guest.class);
+			}
+			catch(Exception e) {
+				res.status(400);
+				return g.toJson("Bad request");
+			}
+			
+			if (guestDAO.getGuestID(guest.getUsername()) != null) {
+				res.status(201);
+				return g.toJson("Vec postoji!");
+
+			}
+			
+			
+			ArrayList<Guest> guests = guestDAO.getGuestList();
+			guests.add(guest);
+			guestDAO.setGuestList(guests);
+			GuestDAO.writeGuestInFile(guestDAO.getGuestList());
+			guestDAO.fillMapWithGuests();
+			res.status(200);
+			return g.toJson("Ok");
+
+		});
+	}
 }
 
