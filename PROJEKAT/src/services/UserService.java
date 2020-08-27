@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 
 import beans.Admin;
+import beans.Apartment;
 import beans.Guest;
 import beans.Host;
 import beans.User;
@@ -30,7 +31,7 @@ public class UserService {
 	 register();
 	}
 	
-	public void loginUsers(){
+	public void loginUsers(){//FUNKCIJA 
 		
 		get("services/users/getUserByUsername", (req, res) -> {
 			res.type("guestDAOlication/json");
@@ -79,8 +80,9 @@ public class UserService {
 		
 		get("services/users/getActiveUser", (req, res) -> {
 			res.type("guestDAOlication/json");
-			Session ss = req.session(true);
+			Session ss = req.session(true);			
 			User u = ss.attribute("user");
+
 			return g.toJson(u);
 		});
 		
@@ -124,6 +126,8 @@ public class UserService {
 			GuestDAO.writeGuestInFile(guestDAO.getGuestList());
 			guestDAO.fillMapWithGuests();
 			res.status(200);
+			Session ss = req.session(true);
+			ss.attribute("user", guest);
 			return g.toJson("Ok");
 
 		});

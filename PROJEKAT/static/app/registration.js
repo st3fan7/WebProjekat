@@ -9,7 +9,10 @@ Vue.component("registration", {
 			genderM : null,
 			genderF : null,
 			role : "gost",
-			showNotification : false
+			showNotification : false,
+			passwordCheck : false,
+			gender : null,
+			genderCheck : false
 		}
 	}, 
 	template:`
@@ -41,19 +44,26 @@ Vue.component("registration", {
                 
                 <div class="divv">
                     <label class="radio">
-                        <input type="radio" name="rdo" id="muski" checked="checked" id="genderM" v-model="genderM"/>Muški
+                        <input type="radio" name="rdo" id="muski" checked="checked" value="musko" v-model="gender"/><label for="muski">Muški</label>
                       </label>
                       
                       <label  class="radio">
-                        <input type="radio" name="rdo" id="zenski" v-model="username" id="genderF" v-model="genderF"/>Ženski
+                        <input type="radio" name="rdo" id="zenski" value="zensko" v-model="gender"/><label for="zenski">Ženski</label>
                       </label>
+                      
+                     
                 </div>
+                
+                
                  
                 
                 <input type="password" placeholder="Lozinka" id="password" v-model="password"/>
                 <input type="password" placeholder="Ponovi lozinku" id="password2" v-model="password2"/>
-                <button type="submit" id="signInButton"  v-on:click="register">Registruj se</button>
+                <label v-if="passwordCheck" style="color:red">Lozinke se ne poklapaju!</label><br>
                 <label v-if="showNotification" style="color:red">Korisničko ime već postoji!</label>
+                <label v-if="genderCheck" style="color:red">Odaberite pol!</label>
+                <button type="submit" id="signInButton"  v-on:click="register">Registruj se</button>
+                
             </form>
         </div>
         
@@ -62,7 +72,7 @@ Vue.component("registration", {
                 <div class="overlay-panel overlay-right">
                     <h1>Imaš nalog?</h1>
                     <p>Klikni ovde za prijavu!</p>
-                    <button class="ghost" id="signUp" v-on:click="singIn">Prijavi se</button>
+                    <button class="ghost" id="signUp" v-on:click="signIn">Prijavi se</button>
                 </div>
             </div>
         </div>
@@ -75,49 +85,71 @@ Vue.component("registration", {
 		register : function() {
 			var empty = false;
 			this.showNotification = false;
+			this.passwordCheck = false;
+			this.genderCheck = false;
 			
-			if(this.username === null || this.username.length === 0) {
-				document.getElementById("username").setAtribute("style", "border-color:red");
+			if(this.username === null || this.username.length === 0) {	
+				var pocrveni = document.getElementById("username");
+				pocrveni.style.backgroundColor = "LightCoral"; 
 				empty = true;
-			} else {
-				document.getElementById("username").setAtribute("style", "border-color:red");
 			}
+			
 			
 			if(this.name === null || this.name.length === 0) {
-				document.getElementById("name").setAtribute("style", "border-color:red");
+				var pocrveni = document.getElementById("name");
+				pocrveni.style.backgroundColor = "LightCoral"; 
 				empty = true;
-			} else {
-				document.getElementById("name").setAtribute("style", "border-color:red");
-			}
+			} 
 			
 			if(this.surname === null || this.surname.length === 0) {
-				document.getElementById("surname").setAtribute("style", "border-color:red");
+				var pocrveni = document.getElementById("surname");
+				pocrveni.style.backgroundColor = "LightCoral"; 
 				empty = true;
-			} else {
-				document.getElementById("surname").setAtribute("style", "border-color:red");
-			}
+			} 
 			
 			if(this.password === null || this.password.length === 0) {
-				document.getElementById("password").setAtribute("style", "border-color:red");
+				var pocrveni = document.getElementById("password");
+				pocrveni.style.backgroundColor = "LightCoral";
 				empty = true;
-			} else {
-				document.getElementById("password").setAtribute("style", "border-color:red");
+			} else{
+				var pocrveni = document.getElementById("password");
+				pocrveni.style.backgroundColor = "#eee";
+				
 			}
 			
-			if((this.password2 === null || this.password2.length === 0 ) && this.password2 === this.password) {
-				document.getElementById("password2").setAtribute("style", "border-color:red");
+			if((this.password2 === null || this.password2.length === 0 )) {
+				var pocrveni = document.getElementById("password2");
+				pocrveni.style.backgroundColor = "LightCoral";
 				empty = true;
-			} else {
-				document.getElementById("password2").setAtribute("style", "border-color:red");
+			}else{
+				var pocrveni = document.getElementById("password2");
+				pocrveni.style.backgroundColor = "#eee";
+				
 			}
 			
+			if(this.gender === null){
+				this.genderCheck = true;
+				empty = true;
+			}
+			
+			
+			//ZA LOZINKE
+			var pass1 = document.getElementById("password").value;
+			var pass2 = document.getElementById("password2").value;
+			
+			if(pass1 != pass2){
+				this.passwordCheck = true;
+				empty = true;
+			}
+
 			
 			if(empty === false){		
-				axios.post('services/users/register',  {"username": + this.username ,"password" : this.password,
-							"name": + this.name, "surname" : this.surname, "gender" : this.gender, "role" : this.role},{
+				axios.post('services/users/register',  {"username": '' + this.username ,"password" : this.password,
+							"name": '' + this.name, "surname" : this.surname, "gender" : this.gender, "role" : this.role},{
 								params:{username: this.username}		
 					}).then(response => {
 						if(response.status === 200){ 
+							toast('Dobrodošli ' + this.name);
 							this.$router.push({ name: 'homePage' })	
 						}
 						else if(response.status === 201){
@@ -131,7 +163,7 @@ Vue.component("registration", {
 
 		},
 		
-		singIn : function() {
+		signIn : function() {
 				this.$router.push({ name: 'login' })
 		}
 	},
