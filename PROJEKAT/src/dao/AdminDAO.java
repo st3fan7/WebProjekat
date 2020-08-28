@@ -27,6 +27,7 @@ public class AdminDAO {
 	private void loadAdmins() {
 		try {
 			setAdminList(gson.fromJson(new FileReader("./files/admins.json"), new TypeToken<ArrayList<Admin>>(){}.getType()));
+			//setAdminList(gson.fromJson(new BufferedReader(new InputStreamReader(new FileInputStream("./files/admins.json"), StandardCharsets.UTF_8)), new TypeToken<ArrayList<Host>>(){}.getType()));
 		} catch (Exception e) {
 			System.out.println("Error on loading .json files");
 		}
@@ -53,6 +54,30 @@ public class AdminDAO {
 			System.out.println("Error in writing admins in files!");
 		}
 	}
+	
+	public void editAdmin(Admin a, String username)
+	{
+
+		int index = -1;
+		for (int i = 0; i < adminList.size(); i++) {
+			if(adminList.get(i).getUsername().equals(username))
+			{
+				index = i;
+				break;
+			}
+		}
+		
+		adminList.get(index).setUsername(a.getUsername());
+		adminList.get(index).setName(a.getName());
+		adminList.get(index).setSurname(a.getSurname());
+		adminList.get(index).setPassword(a.getPassword());
+		adminList.get(index).setGender(a.getGender());
+		
+		adminsMap.remove(username);
+		adminsMap.put(a.getUsername(), adminList.get(index));
+		
+	}
+	
 	
 	public Admin getAdminID(String username) {
 		return adminsMap.get(username);

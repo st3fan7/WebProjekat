@@ -44,7 +44,7 @@ Vue.component("homePage", {
 	        	<img id="userIcon" src="pictures/user.png" />
 	        </button>
 	        <div v-if="activeUser" class="dropdown-content">
-	             <router-link to="/" > Moj nalog </router-link>
+	             <router-link to="/changeProfile" > Moj nalog </router-link>
 	            <router-link to="/login" v-on:click.native="logOut($event)" > Odjavi se </router-link>            
 	        </div>
 		    <div v-else class="dropdown-content">

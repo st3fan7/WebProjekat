@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 
 import beans.Admin;
-import beans.Apartment;
 import beans.Guest;
 import beans.Host;
 import beans.User;
@@ -29,6 +28,7 @@ public class UserService {
 	 loginUsers();	
 	 logoutUser();
 	 register();
+	 changeProfile();
 	}
 	
 	public void loginUsers(){//FUNKCIJA 
@@ -129,6 +129,41 @@ public class UserService {
 			Session ss = req.session(true);
 			ss.attribute("user", guest);
 			return g.toJson("Ok");
+
+		});
+	}
+	
+	public void changeProfile() {
+		post("services/users/changeProfile", (req, res) -> {
+			Session ss = req.session(true);
+			System.out.println("usao");
+			String payload = req.body();
+			String username = req.queryMap("username").value();
+			User u = g.fromJson(payload, User.class);
+
+
+			if(u.getRole().toString() == "admin") {
+				adminDAO.editAdmin((Admin)u, username);
+				AdminDAO.writeAdminInFile(adminDAO.getAdminList());
+				ss.attribute("user", adminDAO.getAdminsMap().get(u.getUsername()));
+				res.status(200);
+				return ("OK");
+			} else if(u.getRole().toString() == "domacin") {
+				hostDAO.editHost((Host)u, username);
+				HostDAO.writeHostInFile(hostDAO.getHostList());
+				ss.attribute("user", hostDAO.getHostsMap().get(u.getUsername()));
+				res.status(200);
+				return ("OK");
+			} else if(u.getRole().toString() == "gost") {
+				guestDAO.editGuest((Guest)u, username);
+				GuestDAO.writeGuestInFile(guestDAO.getGuestList());
+				ss.attribute("user", guestDAO.getGuestsMap().get(u.getUsername()));
+				res.status(200);
+				return ("OK");
+			} else {
+				res.status(400);
+				return ("400 Bad Request");
+			}
 
 		});
 	}
