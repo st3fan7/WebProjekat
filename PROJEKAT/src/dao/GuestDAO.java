@@ -1,8 +1,16 @@
 package dao;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -26,8 +34,8 @@ public class GuestDAO {
 
 	private void loadGuests() {
 		try {
-			setGuestList(gson.fromJson(new FileReader("./files/guests.json"), new TypeToken<ArrayList<Guest>>(){}.getType()));
-			//setGuestList(gson.fromJson(new BufferedReader(new InputStreamReader(new FileInputStream("./files/guests.json"), StandardCharsets.UTF_8)), new TypeToken<ArrayList<Host>>(){}.getType()));
+			//setGuestList(gson.fromJson(new FileReader("./files/guests.json"), new TypeToken<ArrayList<Guest>>(){}.getType()));
+			setGuestList(gson.fromJson(new BufferedReader(new InputStreamReader(new FileInputStream("./files/guests.json"), StandardCharsets.UTF_8)), new TypeToken<ArrayList<Guest>>(){}.getType()));
 		} catch (Exception e) {
 			System.out.println("Error on loading .json files");
 		}
@@ -46,7 +54,9 @@ public class GuestDAO {
 	}
 	
 	public static void writeGuestInFile(ArrayList<Guest> guests) {
-		try (Writer writer = new FileWriter("./files/guests.json")){
+		try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("./files/guests.json"), 
+                StandardCharsets.UTF_8)){
+			//Writer writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8)
 			gson = new GsonBuilder().setPrettyPrinting().create();
 			gson.toJson(guests, writer);
 			
@@ -58,23 +68,23 @@ public class GuestDAO {
 	public void editGuest(Guest g, String username)
 	{
 
-//		int index = -1;
-//		for (int i = 0; i < adminList.size(); i++) {
-//			if(adminList.get(i).getUsername().equals(username))
-//			{
-//				index = i;
-//				break;
-//			}
-//		}
-//		
-//		adminList.get(index).setUsername(a.getUsername());
-//		adminList.get(index).setName(a.getName());
-//		adminList.get(index).setSurname(a.getSurname());
-//		adminList.get(index).setPassword(a.getPassword());
-//		adminList.get(index).setGender(a.getGender());
-//		
-//		adminsMap.remove(username);
-//		adminsMap.put(a.getUsername(), adminList.get(index));
+		int index = -1;
+		for (int i = 0; i < guestList.size(); i++) {
+			if(guestList.get(i).getUsername().equals(username))
+			{
+				index = i;
+				break;
+			}
+		}
+		
+		guestList.get(index).setUsername(g.getUsername());
+		guestList.get(index).setName(g.getName());
+		guestList.get(index).setSurname(g.getSurname());
+		guestList.get(index).setPassword(g.getPassword());
+		guestList.get(index).setGender(g.getGender());
+		
+		guestsMap.remove(username);
+		guestsMap.put(g.getUsername(), guestList.get(index));
 		
 	}
 	

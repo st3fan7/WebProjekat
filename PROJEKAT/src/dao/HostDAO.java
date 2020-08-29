@@ -1,12 +1,15 @@
 package dao;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -51,7 +54,9 @@ public class HostDAO {
 	
 	public static void writeHostInFile(ArrayList<Host> hosts)
 	{
-		try (Writer writer = new FileWriter("./files/hosts.json")) {
+		try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("./files/hosts.json"), 
+                StandardCharsets.UTF_8)) {
+			//Writer writer = new FileWriter("./files/hosts.json")
 		    gson = new GsonBuilder().setPrettyPrinting().create();
 		    gson.toJson(hosts, writer);
 		    
@@ -64,23 +69,23 @@ public class HostDAO {
 	public void editHost(Host h, String username)
 	{
 
-//		int index = -1;
-//		for (int i = 0; i < adminList.size(); i++) {
-//			if(adminList.get(i).getUsername().equals(username))
-//			{
-//				index = i;
-//				break;
-//			}
-//		}
-//		
-//		adminList.get(index).setUsername(a.getUsername());
-//		adminList.get(index).setName(a.getName());
-//		adminList.get(index).setSurname(a.getSurname());
-//		adminList.get(index).setPassword(a.getPassword());
-//		adminList.get(index).setGender(a.getGender());
-//		
-//		adminsMap.remove(username);
-//		adminsMap.put(a.getUsername(), adminList.get(index));
+		int index = -1;
+		for (int i = 0; i < hostList.size(); i++) {
+			if(hostList.get(i).getUsername().equals(username))
+			{
+				index = i;
+				break;
+			}
+		}
+		
+		hostList.get(index).setUsername(h.getUsername());
+		hostList.get(index).setName(h.getName());
+		hostList.get(index).setSurname(h.getSurname());
+		hostList.get(index).setPassword(h.getPassword());
+		hostList.get(index).setGender(h.getGender());
+		
+		hostsMap.remove(username);
+		hostsMap.put(h.getUsername(), hostList.get(index));
 		
 	}
 	

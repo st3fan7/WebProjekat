@@ -136,11 +136,39 @@ public class UserService {
 	public void changeProfile() {
 		post("services/users/changeProfile", (req, res) -> {
 			Session ss = req.session(true);
-			System.out.println("usao");
 			String payload = req.body();
 			String username = req.queryMap("username").value();
+			String role = req.queryMap("role").value();		
+		
+			if(role.equals("admin")){
+				Admin a = g.fromJson(payload, Admin.class);
+				adminDAO.editAdmin(a, username);
+				AdminDAO.writeAdminInFile(adminDAO.getAdminList());
+				ss.attribute("user", adminDAO.getAdminsMap().get(a.getUsername()));
+				res.status(200);
+				return ("OK");
+			}else if(role.equals("domacin")){
+				Host h = g.fromJson(payload, Host.class);
+				hostDAO.editHost(h, username);
+				HostDAO.writeHostInFile(hostDAO.getHostList());
+				ss.attribute("user", hostDAO.getHostsMap().get(h.getUsername()));
+				res.status(200);
+				return ("OK");
+			}else if(role.equals("gost")){
+				Guest guest = g.fromJson(payload, Guest.class);
+				guestDAO.editGuest(guest, username);
+				GuestDAO.writeGuestInFile(guestDAO.getGuestList());
+				ss.attribute("user", guestDAO.getGuestsMap().get(guest.getUsername()));
+				res.status(200);
+				return ("OK");
+			}else{
+				res.status(400);
+				return ("400 Bad Request");
+			}
+		
+	
+			/*
 			User u = g.fromJson(payload, User.class);
-
 
 			if(u.getRole().toString() == "admin") {
 				adminDAO.editAdmin((Admin)u, username);
@@ -149,6 +177,7 @@ public class UserService {
 				res.status(200);
 				return ("OK");
 			} else if(u.getRole().toString() == "domacin") {
+				System.out.println("USAAO2");
 				hostDAO.editHost((Host)u, username);
 				HostDAO.writeHostInFile(hostDAO.getHostList());
 				ss.attribute("user", hostDAO.getHostsMap().get(u.getUsername()));
@@ -164,6 +193,8 @@ public class UserService {
 				res.status(400);
 				return ("400 Bad Request");
 			}
+			*/
+			
 
 		});
 	}

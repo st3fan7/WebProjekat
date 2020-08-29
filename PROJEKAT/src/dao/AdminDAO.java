@@ -1,9 +1,16 @@
 package dao;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -26,8 +33,9 @@ public class AdminDAO {
 	
 	private void loadAdmins() {
 		try {
-			setAdminList(gson.fromJson(new FileReader("./files/admins.json"), new TypeToken<ArrayList<Admin>>(){}.getType()));
-			//setAdminList(gson.fromJson(new BufferedReader(new InputStreamReader(new FileInputStream("./files/admins.json"), StandardCharsets.UTF_8)), new TypeToken<ArrayList<Host>>(){}.getType()));
+			//setAdminList(gson.fromJson(new FileReader("./files/admins.json"), new TypeToken<ArrayList<Admin>>(){}.getType()));
+			//setAdminList(gson.fromJson(new BufferedReader(new InputStreamReader(new FileInputStream("./files/admins.json"), StandardCharsets.UTF_8)), new TypeToken<ArrayList<Admin>>(){}.getType()));
+			setAdminList(gson.fromJson(new BufferedReader(new InputStreamReader(new FileInputStream("./files/admins.json"), StandardCharsets.UTF_8)), new TypeToken<ArrayList<Admin>>(){}.getType()));
 		} catch (Exception e) {
 			System.out.println("Error on loading .json files");
 		}
@@ -46,7 +54,9 @@ public class AdminDAO {
 	
 	public static void writeAdminInFile(ArrayList<Admin> admins)
 	{
-		try (Writer writer = new FileWriter("./files/admins.json")) {
+		try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("./files/admins.json"), 
+                StandardCharsets.UTF_8)) {
+			//Writer writer = new FileWriter("./files/admins.json")
 		    gson = new GsonBuilder().setPrettyPrinting().create();
 		    gson.toJson(admins, writer);
 		

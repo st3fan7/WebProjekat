@@ -8,5 +8,15 @@
     "surname": "Mikić",
     "gender": "musko",
     "role": "gost"
+  },
+  {
+    "rentApartments": [],
+    "reservations": [],
+    "username": "stefan021",
+    "password": "123",
+    "name": "Stefan",
+    "surname": "Arađaninn",
+    "gender": "musko",
+    "role": "gost"
   }
 ]

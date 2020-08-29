@@ -28,13 +28,13 @@ Vue.component("changeProfile", {
     
         <div class="main">     
             <ul class="menu-contents">
-	            <li id="onlyHomePage"><a href="#/">Početna</a></li>
-	            <li v-if="activeHost"><a href="#">Moji apartmani</a></li>
-	            <li v-if="activeAdmin"><a href="#">Apartmani</a></li>
-                <li v-if="activeHost || activeAdmin"><a href="#">Rezervacije</a></li>
-                <li v-if="activeHost || activeAdmin"><a href="#">Komentari</a></li>   
-                <li v-if="activeAdmin"><a href="#">Korisnici</a></li>   
-                <li v-if="activeGuest"><a href="#">Moje rezervacije</a></li>
+	            <li id="onlyHomePage"><a href="#/" v-on:click="notChange($event)">Početna</a></li>
+	            <li v-if="activeHost"><a href="#" v-on:click="notChange($event)">Moji apartmani</a></li>
+	            <li v-if="activeAdmin"><a href="#" v-on:click="notChange($event)">Apartmani</a></li>
+                <li v-if="activeHost || activeAdmin"><a href="#" v-on:click="notChange($event)">Rezervacije</a></li>
+                <li v-if="activeHost || activeAdmin"><a href="#" v-on:click="notChange($event)">Komentari</a></li>   
+                <li v-if="activeAdmin"><a href="#" v-on:click="notChange($event)">Korisnici</a></li>   
+                <li v-if="activeGuest"><a href="#" v-on:click="notChange($event)">Moje rezervacije</a></li>
             </ul>
         </div>
     
@@ -70,7 +70,7 @@ Vue.component("changeProfile", {
                     <form id="form" method="POST">
                     	
                         <br><label for="name">Korisničko ime:</label>
-                        <input type="text" id="usernameID" name="usernameName" v-model=activeUser.username  disabled>
+                        <input type="text" id="usernameID" name="usernameName" v-model=activeUser.username disabled>
                         
                         <br><label for="name">Ime:</label>
                         <input type="text" id="nameID" name="nameName" v-model=activeUser.name>
@@ -110,6 +110,13 @@ Vue.component("changeProfile", {
 	`	
 	,
 	methods: {
+		notChange(event)
+		{
+			
+			if (confirm('Ukoliko napustite ovu stranicu, sve izmene će biti uklonjene. Napusti?') == false) {
+				event.preventDefault()
+			}
+		},
 		logOut : function(event)
 		{
 			if (confirm('Da li ste sigurni da želite da se odjavite?') == true) {
@@ -127,7 +134,9 @@ Vue.component("changeProfile", {
 			var empty = true;
 			document.getElementById("form").setAttribute("onsubmit","return false;");
 			
-			if(this.oldPassword.length === 0 || this.newPassword.length === 0 || this.newPassword2.length === 0 || activeUser.name.length === 0 || activeUser.surname.length === 0)
+			
+			//if(this.oldPassword.length === 0 || this.newPassword.length === 0 || this.newPassword2.length === 0 || this.activeUser.name.length === 0 || this.activeUser.surname.length === 0)
+			if(this.oldPassword.length === 0 || activeUser.name.length === 0 || activeUser.surname.length === 0)
 			{
 				this.emptyField = true; 
 				empty = false;
@@ -155,15 +164,40 @@ Vue.component("changeProfile", {
 			}
 			
 			
+			if(this.newPassword.length !== 0 && this.newPassword2.length === 0){//1 prazno
+				
+				this.emptyField = true; 
+				empty = false;
+				
+			}else if(this.newPassword.length === 0 && this.newPassword2.length !== 0){//1 prazno
+				
+				this.emptyField = true; 
+				empty = false;
+				
+			}else{//popunjeno
+				this.emptyField = false;
+				
+			}
+			
+			
+			//novaLozinka
+			if(this.newPassword2 != '' && this.newPassword === this.newPassword2){
+				this.userPassword = this.newPassword2;
+			}
+						
+		
+			
+			
 			if(empty)
 			{ 
-				axios.post('services/users/changeProfile', {"username":'' + this.acitveUser.username, "name" : '' + this.acitveUser.name, 
-					"surname":'' + this.acitveUser.surname, "password":'' + this.acitveUser.password, "gender":'' + this.activeUser.gender}, 
-					{params:{username:'' + this.activeUser.username}})
+				
+				axios.post('services/users/changeProfile', {"username":'' + activeUser.username, "name" :'' + activeUser.name, 
+					"surname":'' + activeUser.surname, "password":'' + this.userPassword, "gender":'' + activeUser.gender, "role": '' + activeUser.role}, 
+					{params:{username:'' + activeUser.username, role:'' + activeUser.role}})
 				.then(response => {
 					if(this.invalidNewAndControlPasswords === false)
 					{
-						toast('Nove informacije za korisnika ' + this.acitveUser.username + ' su sačuvane!');	
+						toast('Nove informacije za korisnika ' + this.activeUser.username + ' su sačuvane!');	
 					}
 				});
 			
