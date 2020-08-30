@@ -27,7 +27,7 @@ Vue.component("homePage", {
 	            <li v-if="activeAdmin"><a href="#">Apartmani</a></li>
                 <li v-if="activeHost || activeAdmin"><a href="#">Rezervacije</a></li>
                 <li v-if="activeHost || activeAdmin"><a href="#">Komentari</a></li>   
-                <li v-if="activeAdmin"><a href="#/adminUsers">Korisnici</a></li>   
+                <li v-if="activeHost || activeAdmin"><a href="#/adminUsers">Korisnici</a></li>   
                 <li v-if="activeGuest"><a href="#">Moje rezervacije</a></li>
 	        </ul>
 	    </div>

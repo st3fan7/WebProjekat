@@ -182,12 +182,20 @@ Vue.component("adminUsers",{
 			
 			if (this.activeUser.role === "admin"){
 				this.activeAdmin = true;
+				 this.allUsers = null;
+				axios.get('services/users/getAllUsers').then(response => {
+			      	  this.allUsers = response.data;  
+			    });
 			}else{
 				this.activeAdmin = false;
 			}		
 												
 			if (this.activeUser.role === "domacin"){
 				this.activeHost = true;
+				 this.allUsers = null;
+				axios.get('services/users/getHostUsers').then(response => {
+			      	  this.allUsers = response.data;  
+			    });
 			}else{
 				this.activeHost = false;
 			}
@@ -201,9 +209,7 @@ Vue.component("adminUsers",{
 
 		});	
 		
-		axios.get('services/users/getAllUsers').then(response => {
-      	  this.allUsers = response.data;  
-        });
+
 		
 		
 		

@@ -5,20 +5,18 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 
 import beans.Admin;
 import beans.Guest;
 import beans.Host;
+import beans.Reservation;
 import beans.User;
 import dao.AdminDAO;
 import dao.GuestDAO;
 import dao.HostDAO;
-import enums.Gender;
+import dao.ReservationDAO;
 import spark.Session;
 
 public class UserService {
@@ -27,6 +25,7 @@ public class UserService {
 	HostDAO hostDAO = new HostDAO();
 	AdminDAO adminDAO = new AdminDAO();
 	GuestDAO guestDAO = new GuestDAO();
+	ReservationDAO reservationDAO = new ReservationDAO();
 	ArrayList<User> allUsers = new ArrayList<User>();
 	
 	public UserService(){
@@ -35,6 +34,7 @@ public class UserService {
 	 register();
 	 changeProfile();
 	 getAllUsers();
+	 getHostUsers();
 	 searchAdminUsersByRoleAndGender();
 	}
 	
@@ -172,44 +172,14 @@ public class UserService {
 				res.status(400);
 				return ("400 Bad Request");
 			}
-		
-	
-			/*
-			User u = g.fromJson(payload, User.class);
 
-			if(u.getRole().toString() == "admin") {
-				adminDAO.editAdmin((Admin)u, username);
-				AdminDAO.writeAdminInFile(adminDAO.getAdminList());
-				ss.attribute("user", adminDAO.getAdminsMap().get(u.getUsername()));
-				res.status(200);
-				return ("OK");
-			} else if(u.getRole().toString() == "domacin") {
-				System.out.println("USAAO2");
-				hostDAO.editHost((Host)u, username);
-				HostDAO.writeHostInFile(hostDAO.getHostList());
-				ss.attribute("user", hostDAO.getHostsMap().get(u.getUsername()));
-				res.status(200);
-				return ("OK");
-			} else if(u.getRole().toString() == "gost") {
-				guestDAO.editGuest((Guest)u, username);
-				GuestDAO.writeGuestInFile(guestDAO.getGuestList());
-				ss.attribute("user", guestDAO.getGuestsMap().get(u.getUsername()));
-				res.status(200);
-				return ("OK");
-			} else {
-				res.status(400);
-				return ("400 Bad Request");
-			}
-			*/
-			
 
 		});
 	}
 	
 	public void getAllUsers(){
 		
-		get("services/users/getAllUsers", (req,res) -> {
-			Session ss = req.session(true);			
+		get("services/users/getAllUsers", (req,res) -> {	
 			
 			allUsers = new ArrayList<User>();
 			
@@ -230,41 +200,45 @@ public class UserService {
 		
 	}
 	
+	public void getHostUsers() {
+		get("services/users/getHostUsers", (req,res) -> {	
+			Session ss = req.session(true);
+			Host host = ss.attribute("user");
+			allUsers = new ArrayList<User>();
+			ArrayList<Guest> guests = new ArrayList<>();
+			
+			for(Guest guest : guestDAO.getGuestList()){
+				guests.add(guest);
+			}
+			
+			for(String apartment : host.getApartmentsForRent()) {
+				for(Guest g : guests) {
+					for(String r1 : g.getReservations()) {
+						for(Reservation r2 : reservationDAO.getReservationsList()) {
+							if(r1.equals(r2.getId()) && (r2.getApartment().equals(apartment))) {
+								allUsers.add(g);
+							}
+						}
+					}
+				}
+			}
+			
+			if(allUsers.isEmpty()) {
+				res.status(204);
+				return g.toJson(allUsers);
+			}
+			
+			res.status(200);
+			return g.toJson(allUsers);
+		});
+	}
+	
 	public void searchAdminUsersByRoleAndGender(){
 	
 		get("services/users/searchAdminUsersByRoleAndGender", (req,res) -> {
 			String role = req.queryMap("role").value();
 			String gender = req.queryMap("gender").value();
 			ArrayList<User> searchedUsers = new ArrayList<User>();
-			
-			/*
-			for(User user : allUsers){
-				if(user.getRole().toString().equals(role)){
-					searchedUsers.add(user);
-				}							
-			}
-		
-			for(User user : allUsers){;			
-				if(user.getGender().toString().equals(gender)){
-					searchedUsers.add(user);
-				}
-			}
-			
-			Collection<User> finalList = searchedUsers.stream().collect(Collectors.toSet());
-		
-			
-			
-			
-			
-			
-			if(finalList.isEmpty()){
-				res.status(204);
-				return g.toJson(allUsers);
-			}
-								
-			res.status(200);
-			return g.toJson(finalList);
-			*/
 			
 			if(role.equals("uloga") && gender.equals("pol")){
 				res.status(200);
@@ -308,31 +282,7 @@ public class UserService {
 			
 			
 		});
-		
-		/*
-		get("services/users/searchAdminUsersByGender", (req,res) -> {
-			String gender = req.queryMap("gender").value();
-			ArrayList<User> searchedByGender = new ArrayList<User>();
-			for(User user : allUsers){;			
-				if(user.getGender().toString().equals(gender)){
-					searchedByGender.add(user);
-				}
-			}
-			
-			if(searchedByGender.isEmpty()){
-				res.status(204);
-				return g.toJson(allUsers);
-			}
-								
-			res.status(200);
-			return g.toJson(searchedByGender);
-			
-		});
-		*/
-		
-		
-		
-		
+
 	}
 	
 	
