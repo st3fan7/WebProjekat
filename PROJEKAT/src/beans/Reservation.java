@@ -6,18 +6,18 @@ import enums.StatusOfReservation;
 
 public class Reservation {
 	
-	private Apartment apartment;
+	private String apartment;
 	private Date startDate;
 	private int numberOfNight = 1;
 	private double totalCost;
 	private String messageForReservation;
-	private Guest guest;
+	private String guest;
 	private StatusOfReservation status;
 	private String id;
 	
 	
-	public Reservation(String id, Apartment apartment, Date startDate, int numberOfNight, double totalCost,
-			String messageForReservation, Guest guest, StatusOfReservation status) {
+	public Reservation(String id, String apartment, Date startDate, int numberOfNight, double totalCost,
+			String messageForReservation, String guest, StatusOfReservation status) {
 		super();
 		this.id = id;
 		this.apartment = apartment;
@@ -32,12 +32,12 @@ public class Reservation {
 
 	public Reservation() {
 		super();
-		this.apartment = new Apartment();
+		this.apartment = "";
 		this.startDate = new Date();
 		this.numberOfNight = 1;
 		this.totalCost = 0;
 		this.messageForReservation = "";
-		this.guest = new Guest();
+		this.guest = "";
 		this.id = "";
 		
 	}
@@ -53,12 +53,12 @@ public class Reservation {
 	}
 
 
-	public Apartment getApartment() {
+	public String getApartment() {
 		return apartment;
 	}
 
 
-	public void setApartment(Apartment apartment) {
+	public void setApartment(String apartment) {
 		this.apartment = apartment;
 	}
 
@@ -103,12 +103,12 @@ public class Reservation {
 	}
 
 
-	public Guest getGuest() {
+	public String getGuest() {
 		return guest;
 	}
 
 
-	public void setGuest(Guest guest) {
+	public void setGuest(String guest) {
 		this.guest = guest;
 	}
 

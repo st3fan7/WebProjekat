@@ -6,7 +6,9 @@
 		"surname" : "Lanić",
 		"gender" : "zensko",
 		"role" : "domacin",
-		"apartmentsForRent" : []
+		"apartmentsForRent" : [
+			"Apartman1"
+		]
 	
 	}
 

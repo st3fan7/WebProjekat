@@ -1,7 +1,11 @@
 [
   {
-    "rentApartments": [],
-    "reservations": [],
+    "rentApartments": [
+    	"Apartman1"
+    ],
+    "reservations": [
+    	"R1"
+    ],
     "username": "gost1",
     "password": "gost1",
     "name": "Mika",

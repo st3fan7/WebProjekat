@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import enums.Role;
 
 public class Host extends User {
-	private ArrayList<Apartment> apartmentsForRent;
+	private ArrayList<String> apartmentsForRent;
 	
 	public Host() {
 		super();
@@ -15,7 +15,7 @@ public class Host extends User {
 		this.setPassword("");
 		this.setGender(null);
 		this.setRole(Role.domacin);
-		this.apartmentsForRent = new ArrayList<Apartment>();
+		this.apartmentsForRent = new ArrayList<String>();
 	}
 	
 	public Host(Host host) {
@@ -28,11 +28,11 @@ public class Host extends User {
 		this.apartmentsForRent = host.apartmentsForRent;
 	}
 
-	public ArrayList<Apartment> getApartmentsForRent() {
+	public ArrayList<String> getApartmentsForRent() {
 		return apartmentsForRent;
 	}
 
-	public void setApartmentsForRent(ArrayList<Apartment> apartmentsForRent) {
+	public void setApartmentsForRent(ArrayList<String> apartmentsForRent) {
 		this.apartmentsForRent = apartmentsForRent;
 	}
 	

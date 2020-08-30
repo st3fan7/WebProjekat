@@ -14,9 +14,9 @@ public class Apartment {
 	private Location location;
 	private ArrayList<Date> releaseDates;
 	private ArrayList<Date> freeDates;
-	private Host host;
+	private String host;
 	private ArrayList<Comment> comments;
-	private String pictures;
+	private ArrayList<String> pictures;
 	private int pricePerNight;
 	private String checkInTime; //inicijalno 2 PM
 	private String checkOutTime; //inicijalno 10 AM
@@ -29,7 +29,7 @@ public class Apartment {
 	}
 
 	public Apartment(String id, TypeOfApartment typeOfApartment, int numberOfRooms, int numberOfGuests, Location location,
-			Host host, String pictures, int pricePerNight, String checkInTime,
+			String host, int pricePerNight, String checkInTime,
 			String checkOutTime, StatusOfApartment statusOfApartment) {
 		super();
 		this.id = id;
@@ -37,12 +37,12 @@ public class Apartment {
 		this.numberOfRooms = numberOfRooms;
 		this.numberOfGuests = numberOfGuests;
 		this.location = location;
-		this.host = host;
-		this.pictures = pictures;
+		this.host = host;	
 		this.pricePerNight = pricePerNight;
 		this.checkInTime = checkInTime;
 		this.checkOutTime = checkOutTime;
 		this.statusOfApartment = statusOfApartment;
+		this.pictures = new ArrayList<String>();
 		this.releaseDates = new ArrayList<Date>();
 		this.freeDates = new ArrayList<Date>();
 		this.comments = new ArrayList<Comment>();
@@ -98,11 +98,11 @@ public class Apartment {
 		this.freeDates = freeDates;
 	}
 
-	public Host getHost() {
+	public String getHost() {
 		return host;
 	}
 
-	public void setHost(Host host) {
+	public void setHost(String host) {
 		this.host = host;
 	}
 
@@ -114,11 +114,11 @@ public class Apartment {
 		this.comments = comments;
 	}
 
-	public String getPictures() {
+	public ArrayList<String> getPictures() {
 		return pictures;
 	}
 
-	public void setPictures(String pictures) {
+	public void setPictures(ArrayList<String> pictures) {
 		this.pictures = pictures;
 	}
 
@@ -182,12 +182,14 @@ public class Apartment {
 
 	@Override
 	public String toString() {
-		return "Apartment [typeOfApartment=" + typeOfApartment + ", numberOfRooms=" + numberOfRooms
+		return "Apartment [id=" + id + ", typeOfApartment=" + typeOfApartment + ", numberOfRooms=" + numberOfRooms
 				+ ", numberOfGuests=" + numberOfGuests + ", location=" + location + ", releaseDates=" + releaseDates
 				+ ", freeDates=" + freeDates + ", host=" + host + ", comments=" + comments + ", pictures=" + pictures
 				+ ", pricePerNight=" + pricePerNight + ", checkInTime=" + checkInTime + ", checkOutTime=" + checkOutTime
 				+ ", statusOfApartment=" + statusOfApartment + ", amenities=" + amenities + ", reservations="
 				+ reservations + "]";
 	}
+
+
 		
 }

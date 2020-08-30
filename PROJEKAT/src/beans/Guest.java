@@ -6,8 +6,8 @@ import enums.Role;
 
 public class Guest extends User {
 
-	private ArrayList<Apartment> rentApartments;
-	private ArrayList<Reservation> reservations;
+	private ArrayList<String> rentApartments;
+	private ArrayList<String> reservations;
 	
 	public Guest() {
 		super();
@@ -17,8 +17,8 @@ public class Guest extends User {
 		this.setPassword("");
 		this.setGender(null);
 		this.setRole(Role.gost);
-		this.rentApartments = new ArrayList<Apartment>();
-		this.reservations = new ArrayList<Reservation>();
+		this.rentApartments = new ArrayList<String>();
+		this.reservations = new ArrayList<String>();
 	}
 	
 	public Guest(Guest guest) {
@@ -32,19 +32,19 @@ public class Guest extends User {
 		this.reservations = guest.reservations;
 	}
 
-	public ArrayList<Apartment> getRentApartments() {
+	public ArrayList<String> getRentApartments() {
 		return rentApartments;
 	}
 
-	public void setRentApartments(ArrayList<Apartment> rentApartments) {
+	public void setRentApartments(ArrayList<String> rentApartments) {
 		this.rentApartments = rentApartments;
 	}
 
-	public ArrayList<Reservation> getReservations() {
+	public ArrayList<String> getReservations() {
 		return reservations;
 	}
 
-	public void setReservations(ArrayList<Reservation> reservations) {
+	public void setReservations(ArrayList<String> reservations) {
 		this.reservations = reservations;
 	}
 	
