@@ -5,6 +5,9 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 
@@ -229,27 +232,84 @@ public class UserService {
 	
 	public void searchAdminUsersByRoleAndGender(){
 	
-		get("services/users/searchAdminUsersByRole", (req,res) -> {
+		get("services/users/searchAdminUsersByRoleAndGender", (req,res) -> {
 			String role = req.queryMap("role").value();
-			ArrayList<User> searchedByRole = new ArrayList<User>();
+			String gender = req.queryMap("gender").value();
+			ArrayList<User> searchedUsers = new ArrayList<User>();
 			
+			/*
 			for(User user : allUsers){
 				if(user.getRole().toString().equals(role)){
-				searchedByRole.add(user);
+					searchedUsers.add(user);
+				}							
+			}
+		
+			for(User user : allUsers){;			
+				if(user.getGender().toString().equals(gender)){
+					searchedUsers.add(user);
 				}
 			}
 			
-			if(searchedByRole.isEmpty()){
+			Collection<User> finalList = searchedUsers.stream().collect(Collectors.toSet());
+		
+			
+			
+			
+			
+			
+			if(finalList.isEmpty()){
 				res.status(204);
 				return g.toJson(allUsers);
 			}
 								
 			res.status(200);
-			return g.toJson(searchedByRole);
+			return g.toJson(finalList);
+			*/
+			
+			if(role.equals("uloga") && gender.equals("pol")){
+				res.status(200);
+				return g.toJson(allUsers);	
+				
+			}else if(!(role.equals("uloga")) && gender.equals("pol")){
+				for(User user : allUsers){
+					if(user.getRole().toString().equals(role)){
+						searchedUsers.add(user);
+					}							
+				}
+				
+				res.status(200);
+				return g.toJson(searchedUsers);
+				
+			}else if(role.equals("uloga") && !(gender.equals("pol"))){
+				for(User user : allUsers){		
+					if(user.getGender().toString().equals(gender)){
+						searchedUsers.add(user);
+					}
+				}
+				
+				res.status(200);
+				return g.toJson(searchedUsers);
+				
+			}else if(!(role.equals("uloga")) && !(gender.equals("pol"))){
+				
+				for(User user : allUsers){		
+					if(user.getGender().toString().equals(gender) && user.getRole().toString().equals(role) ){
+						searchedUsers.add(user);
+					}
+				}
+				
+				res.status(200);
+				return g.toJson(searchedUsers);
+			}
+			
+			res.status(204);
+			return g.toJson(allUsers);
+			
+			
 			
 		});
 		
-		
+		/*
 		get("services/users/searchAdminUsersByGender", (req,res) -> {
 			String gender = req.queryMap("gender").value();
 			ArrayList<User> searchedByGender = new ArrayList<User>();
@@ -268,7 +328,7 @@ public class UserService {
 			return g.toJson(searchedByGender);
 			
 		});
-		
+		*/
 		
 		
 		

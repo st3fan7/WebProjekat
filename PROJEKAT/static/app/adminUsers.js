@@ -8,8 +8,8 @@ Vue.component("adminUsers",{
 			allUsers : null,
 			searchedUsers : null,
 			searchUsername : '',
-			selectedGender : '',
-			selectedRole : null
+			selectedGender : 'pol',
+			selectedRole : 'uloga'
 			
 			
 		}
@@ -65,6 +65,7 @@ Vue.component("adminUsers",{
 			          <form id="formForSearch" >
 			             <label id="labelForRole" for="role">Uloga:</label>
 			             <select id="roleID" name="roleName" v-model="selectedRole">
+			             	 <option value="uloga" selected>Uloga</option>
 			                 <option value="gost">Gost</option>
 			                 <option value="domacin">Domaćin</option>
 			                 <option value="admin">Administrator</option>
@@ -72,17 +73,17 @@ Vue.component("adminUsers",{
 			
 			             <label id="labelForGender" for="gender">Pol:</label>
 			             <select id="genderID" name="genderName" v-model="selectedGender">
+			             	 <option value="pol" selected>Pol</option>
 			                 <option value="musko">Muško</option>
 			                 <option value="zensko">Žensko</option>
 			             </select>
 			
 			             <div class="search-btn-user-overview">
-			                 <button type="button" @click="searchRole">Pretraži po ulozi</button>
+			                 <button type="button" @click="searchRoleAndGender">Pretraži</button>
 			             </div>
-			             <div class="search-btn-user-overview">
-		                 	<button type="button" @click="searchGender">Pretraži po polu</button>
-		                </div>
 			             
+			             
+		                 
 			         </form>
 			     </div>
 			 </div>
@@ -135,10 +136,10 @@ Vue.component("adminUsers",{
 		
 			},
 			
-		searchRole : function()
+			searchRoleAndGender : function()
 			{
-			axios.get('services/users/searchAdminUsersByRole', {params: {
-				role : this.selectedRole
+			axios.get('services/users/searchAdminUsersByRoleAndGender', {params: {
+				role : this.selectedRole, gender : this.selectedGender
 				}}).then(response => {
 				if(response.status === 200)
 				{
@@ -151,25 +152,8 @@ Vue.component("adminUsers",{
 				}
 			});
 			
-			},
-			
-		searchGender : function()
-			{
-			axios.get('services/users/searchAdminUsersByGender', {params: {
-				gender : this.selectedGender
-				}}).then(response => {
-				if(response.status === 200)
-				{
-					this.allUsers = null;
-					this.allUsers = response.data;
-				}
-				else{
-					
-					this.allUsers = this.allUsers;
-				}
-			});
-			
-			}	
+			}
+				
 		
 	}, 
 	
