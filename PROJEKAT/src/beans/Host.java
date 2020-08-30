@@ -14,7 +14,7 @@ public class Host extends User {
 		this.setUsername("");
 		this.setPassword("");
 		this.setGender(null);
-		this.setRole(Role.Host);
+		this.setRole(Role.domacin);
 		this.apartmentsForRent = new ArrayList<Apartment>();
 	}
 	

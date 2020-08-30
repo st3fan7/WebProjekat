@@ -15,12 +15,15 @@ body, html {
     background-position: center;
 }
 
-.bg {
+div.bg {
     background-image: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0,0,0,0.3)), url(../pictures/2.jpg);
-    height: 100%; 
+    height: 950px;
+    width: 100%;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: cover;        
+    
+    
 }
 
 ul {
@@ -166,7 +169,7 @@ ul li.active a{
 
 .titleForMyProfil {
     margin-top: -3%;
-    margin-left: 37%;
+    margin-left: 39.5%;
 }
 
 .titleForHostBookedReservation {

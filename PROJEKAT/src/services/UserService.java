@@ -15,6 +15,7 @@ import beans.User;
 import dao.AdminDAO;
 import dao.GuestDAO;
 import dao.HostDAO;
+import enums.Gender;
 import spark.Session;
 
 public class UserService {
@@ -23,12 +24,15 @@ public class UserService {
 	HostDAO hostDAO = new HostDAO();
 	AdminDAO adminDAO = new AdminDAO();
 	GuestDAO guestDAO = new GuestDAO();
+	ArrayList<User> allUsers = new ArrayList<User>();
 	
 	public UserService(){
 	 loginUsers();	
 	 logoutUser();
 	 register();
 	 changeProfile();
+	 getAllUsers();
+	 searchAdminUsersByRoleAndGender();
 	}
 	
 	public void loginUsers(){//FUNKCIJA 
@@ -198,5 +202,81 @@ public class UserService {
 
 		});
 	}
+	
+	public void getAllUsers(){
+		
+		get("services/users/getAllUsers", (req,res) -> {
+			Session ss = req.session(true);			
+			
+			allUsers = new ArrayList<User>();
+			
+			for(Guest guest : guestDAO.getGuestList()){
+				allUsers.add(guest);
+			}
+			
+			for(Host h : hostDAO.getHostList()){
+				allUsers.add(h);
+			}
+			
+			for(Admin a : adminDAO.getAdminList()){
+				allUsers.add(a);
+			}
+			
+			return g.toJson(allUsers);
+		});
+		
+	}
+	
+	public void searchAdminUsersByRoleAndGender(){
+	
+		get("services/users/searchAdminUsersByRole", (req,res) -> {
+			String role = req.queryMap("role").value();
+			ArrayList<User> searchedByRole = new ArrayList<User>();
+			
+			for(User user : allUsers){
+				if(user.getRole().toString().equals(role)){
+				searchedByRole.add(user);
+				}
+			}
+			
+			if(searchedByRole.isEmpty()){
+				res.status(204);
+				return g.toJson(allUsers);
+			}
+								
+			res.status(200);
+			return g.toJson(searchedByRole);
+			
+		});
+		
+		
+		get("services/users/searchAdminUsersByGender", (req,res) -> {
+			String gender = req.queryMap("gender").value();
+			ArrayList<User> searchedByGender = new ArrayList<User>();
+			for(User user : allUsers){;			
+				if(user.getGender().toString().equals(gender)){
+					searchedByGender.add(user);
+				}
+			}
+			
+			if(searchedByGender.isEmpty()){
+				res.status(204);
+				return g.toJson(allUsers);
+			}
+								
+			res.status(200);
+			return g.toJson(searchedByGender);
+			
+		});
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
 }
 

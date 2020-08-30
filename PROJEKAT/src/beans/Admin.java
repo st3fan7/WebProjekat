@@ -11,7 +11,7 @@ public class Admin extends User {
 		this.setUsername("");
 		this.setPassword("");
 		this.setGender(null);
-		this.setRole(Role.Admin);
+		this.setRole(Role.admin);
 	}
 	
 	public Admin(Admin admin) {
