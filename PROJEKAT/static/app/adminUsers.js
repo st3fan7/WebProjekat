@@ -29,11 +29,13 @@ Vue.component("adminUsers",{
 				 
 				     <div class="main">     
 				         <ul class="menu-contents">
-				             <li><a href="#/">Početna</a></li>
-				             <li><a href="#">Apartmani</a></li>
-				             <li><a href="#">Rezervacije</a></li>
-				             <li><a href="#">Komentari</a></li>
-				             <li class="active"><a href="#">Korisnici</a></li>
+				            <li id="onlyHomePage"><a href="#">Početna</a></li>
+				            <li v-if="activeHost"><a href="#">Moji apartmani</a></li>
+				            <li v-if="activeAdmin"><a href="#">Apartmani</a></li>
+			                <li v-if="activeHost || activeAdmin"><a href="#/reservations">Rezervacije</a></li>
+			                <li v-if="activeHost || activeAdmin"><a href="#">Komentari</a></li>   
+			                <li v-if="activeHost || activeAdmin" class="active"><a href="#/adminUsers">Korisnici</a></li>   
+			                <li v-if="activeGuest"><a href="#">Moje rezervacije</a></li>
 				         </ul>
 				     </div>
 				 

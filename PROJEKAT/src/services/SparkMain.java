@@ -15,7 +15,7 @@ public class SparkMain {
 		staticFiles.externalLocation(new File("./static").getCanonicalPath());
 		
 		new UserService();
-
+		new ReservationService();
 
 	}
 

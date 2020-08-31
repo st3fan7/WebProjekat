@@ -4,6 +4,7 @@ const registration = {template: '<registration></registration>'}
 const badRequest = {template: '<badRequest></badRequest>'}
 const changeProfile = {template: '<changeProfile></changeProfile>'}
 const adminUsers = {template: '<adminUsers></adminUsers>'}
+const reservations = {template: '<reservations></reservations>'}
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -13,7 +14,8 @@ const router = new VueRouter({
 		  { path: '/registration', name:'registration', component: registration},
 		  { path: '/badRequest', name:'badRequest', component: badRequest},
 		  { path: '/changeProfile', name:'changeProfile', component: changeProfile},
-		  { path: '/adminUsers', name:'adminUsers', component: adminUsers}
+		  { path: '/adminUsers', name:'adminUsers', component: adminUsers},
+		  { path: '/reservations', name:'reservations', component: reservations}
 		  
 	  ]
 });

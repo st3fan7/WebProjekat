@@ -1,12 +1,42 @@
 [
 	{
 		"apartment" : "Apartman1",
-		"startDate" : "2014-01-01T23:28:56.782Z",
-		"numberOfNight" : 4,
-		"totalCost" : 4800.00,
+		"startDate" : "11.08.2020. 14:00",
+		"numberOfNight" : 10,
+		"totalCost" : 14800.00,
+		"messageForReservation"  : "",
+		"guest"  : "gost1",
+		"status"  : "Kreirana",
+		"id"  : "R1"
+	},
+	{
+		"apartment" : "Apartman1",
+		"startDate" : "21.08.2020. 14:00",
+		"numberOfNight" : 10,
+		"totalCost" : 14800.00,
 		"messageForReservation"  : "",
 		"guest"  : "gost1",
 		"status"  : "Prihvacena",
-		"id"  : "R1"
+		"id"  : "R2"
+	},
+	{
+		"apartment" : "Apartman1",
+		"startDate" : "31.08.2020. 14:00",
+		"numberOfNight" : 3,
+		"totalCost" : 4800.00,
+		"messageForReservation"  : "",
+		"guest"  : "gost1",
+		"status"  : "Zavrsena",
+		"id"  : "R3"
+	},
+	{
+		"apartment" : "Apartman1",
+		"startDate" : "21.10.2020. 14:00",
+		"numberOfNight" : 21,
+		"totalCost" : 44800.00,
+		"messageForReservation"  : "",
+		"guest"  : "gost1",
+		"status"  : "Odbijena",
+		"id"  : "R4"
 	}
 ]

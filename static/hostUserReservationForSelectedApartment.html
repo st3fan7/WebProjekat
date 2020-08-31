@@ -37,27 +37,11 @@
         </div>
     </div>
 
-    <div class="verticalLineReservation"></div>
-
-    <div class="sideComponents">      
-        <ul class="ulForSideComponentsHostReservation">
-            <div><li><a href="#">MOJE REZERVACIJE</a></li></div><br/>         
-            <div><li><a href="#">PREGLED KORISNIKA</a></li></div><br/>
-            <div><li class="active"><a href="#">KORISNIKOVE REZERVACIJE</a></li></div><br/>
-        </ul>
-    </div>
-
     <div class="sortAndFilterForUserReservation">
 
         <div class="search-title2">
             <h1>Pretraži rezervacije po:</h1>
-            <form id="formForSearch" action="#">
-                <input type="text" id="usernameID" name="usernameName" placeholder="Unesite korisničko ime...">
-        
-                <div class="search-btn-user-reservation">
-                    <button id="searchInUserReservation" type="submit">Pretraži</button>
-                </div>
-            </form>           
+            <input type="text" id="usernameID" name="usernameName" placeholder="Unesite korisničko ime...">          
         </div>
 
         <div class="price-title2">
@@ -95,8 +79,9 @@
     </div>
 
     <div class="titleForUserReservationSelectedA">
-        <h1 id="nameOfApartment2">Apartman 1</h1>
+        <h1 id="nameOfApartment2">Rezervacije</h1>
         <a href="#" class="previous">&laquo; Nazad</a>
+		<a href="#" class="saveChange">Sačuvaj izmene</a>
     </div> 
 
     <div class="listOfApartments">
@@ -104,6 +89,7 @@
                 <table class="fl-table">
                     <thead>
                     <tr>
+						<th>Apartman</th>
                         <th>Korisnik</th>
                         <th>Početni datum</th>
                         <th>Broj noćenja</th>
@@ -114,6 +100,7 @@
                     </thead>
                     <tbody>
                     <tr>
+						<td>Apartman1</td>
                         <td>pera123</td>
                         <td>01.02.2021.</td>
                         <td>10</td>
@@ -129,6 +116,7 @@
                         <td>Nemojte dolaziti pre 10 ujutru.</td>
                     </tr>
                     <tr>
+						<td>Apartman1</td>
                         <td>mika123</td>
                         <td>11.02.2021.</td>
                         <td>7</td>
@@ -144,6 +132,7 @@
                         <td></td>
                     </tr>
                     <tr>
+						<td>Apartman1</td>
                         <td>sonja123</td>
                         <td>18.02.2021.</td>
                         <td>10</td>
@@ -159,6 +148,7 @@
                         <td></td>
                     </tr>
                     <tr>
+						<td>Apartman1</td>
                         <td>zika123</td>
                         <td>28.02.2021.</td>
                         <td>10</td>

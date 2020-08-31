@@ -973,7 +973,7 @@ option {
     width: 100px;
 }
 
-.previous, .previousInHostManageForSelectedApartments {
+.previous, .previousInHostManageForSelectedApartments, .saveChange {
     text-decoration: none;
     display: inline-block;
     padding: 8px 16px;
@@ -991,12 +991,16 @@ option {
     margin-left: -130px; 
   }  
   
-.previous:hover, .previousInHostManageForSelectedApartments:hover {
+.previous:hover, .previousInHostManageForSelectedApartments:hover, .saveChange:hover {
     background-color: #f1f1f1;
     color: black;
 
     transform: scale(1.06);
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+}
+
+.saveChange {
+	margin-left: 520px;
 }
 
 #nameOfApartmentInComments {
