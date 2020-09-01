@@ -1,10 +1,12 @@
 [
   {
     "rentApartments": [
+    	"Apartman1",
     	"Apartman1"
     ],
     "reservations": [
-    	"R1"
+    	"R1",
+    	"R4"
     ],
     "username": "gost1",
     "password": "gost1",
@@ -14,12 +16,12 @@
     "role": "gost"
   },
   {
-    "rentApartments": [],
-    "reservations": ["R1"],
+    "rentApartments": ["Apartman3"],
+    "reservations": ["R3"],
     "username": "stefan021",
     "password": "123",
     "name": "Stefan",
-    "surname": "Arađaninn",
+    "surname": "Stefanović",
     "gender": "musko",
     "role": "gost"
   }

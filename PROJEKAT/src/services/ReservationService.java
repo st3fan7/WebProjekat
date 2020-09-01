@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
+import beans.Guest;
 import beans.Host;
 import beans.Reservation;
 import dao.AdminDAO;
@@ -26,12 +27,12 @@ public class ReservationService {
 	ReservationDAO reservationDAO = new ReservationDAO();
 	
 	public ReservationService() {
-		getAllReservationsByHost();
+		getAllReservationsByHostAndGuest();
 		getAllReservations();
 		saveChangedReservations();
 	}
 
-	private void getAllReservationsByHost() {
+	private void getAllReservationsByHostAndGuest() {
 		
 		get("services/reservations/getAllReservationsForHost", (req, res) -> {
             Session ss = req.session(true);
@@ -55,6 +56,30 @@ public class ReservationService {
             res.status(200);
             return g.toJson(reservations);
         });
+		
+		
+		get("services/reservations/getAllReservationsForGuest", (req, res) -> {
+            Session ss = req.session(true);
+            Guest guest = ss.attribute("user");
+            ArrayList<Reservation> reservations = new ArrayList<>();
+
+            for(Reservation r : reservationDAO.getReservationsList()){
+            	for(String rg : guest.getReservations()){
+            		if(r.getId().equals(rg)){
+            			reservations.add(r);
+            		}
+            	}
+            }
+
+            if(reservations.isEmpty()) {
+                res.status(204);
+                return ("No content");
+            }
+          
+
+            res.status(200);
+            return g.toJson(reservations);
+        });
 
 
     }
@@ -63,7 +88,7 @@ public class ReservationService {
 		
 		get("services/reservations/getAllReservations", (req, res) -> {
             
-			if(reservationDAO.getReservationsList() .isEmpty()) {
+			if(reservationDAO.getReservationsList().isEmpty()) {
                 res.status(204);
                 return ("No content");
             }
@@ -79,10 +104,12 @@ public class ReservationService {
 		post("services/reservation/saveChangedReservations", (req, res) -> {
 			res.type("application/json");
 			String payload = req.body();
-			ArrayList<Reservation> reservations = null;
+			ArrayList<Reservation> reservations = null; 
+			ArrayList<Reservation> allReservations = reservationDAO.getReservationsList(); 
+			ArrayList<Reservation> allReservationsEmpty = new ArrayList<Reservation>();
 			
 			try {
-				Type listType = new TypeToken<ArrayList<Reservation>>(){}.getType();
+				Type listType = new TypeToken<ArrayList<Reservation>>(){}.getType(); 
 				reservations = g.fromJson(payload, listType);	
 			}
 			catch(Exception e) {
@@ -91,7 +118,19 @@ public class ReservationService {
 			}
 			
 			
-			reservationDAO.setReservationsList(reservations);
+			for(Reservation r1 : allReservations){ 
+				for(Reservation r2 : reservations){ 
+					if(r1.getId().equals(r2.getId())){
+						allReservationsEmpty.add(r1); 
+					}
+				}
+			}
+
+			
+			allReservations.removeAll(allReservationsEmpty);		
+			allReservations.addAll(reservations);
+			
+			reservationDAO.setReservationsList(allReservations);
 			ReservationDAO.writeReservationsInFile(reservationDAO.getReservationsList());
 			reservationDAO.fillMapWithReservations();
 			
@@ -101,5 +140,7 @@ public class ReservationService {
 		});
 	
 	}
+	
+	
 
 }

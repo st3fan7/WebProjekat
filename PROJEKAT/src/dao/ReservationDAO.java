@@ -61,6 +61,20 @@ public class ReservationDAO {
 		}
 	}
 	
+	
+	public int getReservationIndex(String id){
+		for(Reservation r : reservationsList){
+			if(r.getId().equals(id)){
+				return reservationsList.indexOf(r);
+			}
+		}
+		
+		
+		return -1;
+	}
+	
+	
+	
 	public Reservation getHostID(String id) {
 		return reservationsMap.get(id);
 	}

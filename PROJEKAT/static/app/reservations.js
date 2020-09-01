@@ -32,7 +32,7 @@ Vue.component("reservations", {
                 <li v-if="activeHost || activeAdmin"  class="active"><a href="#/reservations">Rezervacije</a></li>
                 <li v-if="activeHost || activeAdmin"><a href="#">Komentari</a></li>   
                 <li v-if="activeHost || activeAdmin"><a href="#/adminUsers">Korisnici</a></li>   
-                <li v-if="activeGuest" class="active"><a href="#">Moje rezervacije</a></li>
+                <li v-if="activeGuest" class="active"><a href="#/reservations">Moje rezervacije</a></li>
             </ul>
         </div>
     
@@ -123,10 +123,10 @@ Vue.component("reservations", {
 			                 <td>                        
 	                            <select v-model=r.status id="statusID" name="statusName">
 	                                <option v-bind:disabled="activeAdmin" v-if="r.status === 'Kreirana'" value="Kreirana">Kreirana</option>
-	                                <option v-bind:disabled="activeAdmin" v-if="r.status === 'Odbijena' || (r.status === 'Kreirana' && !(checkDate(r.startDate, r.numberOfNight))) || r.status === 'Prihvacena'" value="Odbijena">Odbijena</option>
+	                                <option v-bind:disabled="activeAdmin" v-if="r.status === 'Odbijena' || (r.status === 'Kreirana' && !(checkDate(r.startDate, r.numberOfNight))) || (r.status === 'Prihvacena' && !(activeGuest))" value="Odbijena">Odbijena</option>
 	                                <option v-bind:disabled="activeAdmin" v-if="r.status === 'Prihvacena' || (r.status === 'Kreirana' && !(checkDate(r.startDate, r.numberOfNight)))" value="Prihvacena">Prihvaćena</option>
 	                                <option v-bind:disabled="activeAdmin" v-if="r.status === 'Zavrsena' || ( r.status === 'Prihvacena' && checkDate(r.startDate, r.numberOfNight)) === true" value="Zavrsena">Završena</option>
-	                                <option v-if="activeGuest && (r.status === 'Odustanak' || r.status === 'Prihvacena' || r.status === 'Kreirana')" value="Odustanak">Odustanak</option>
+	                                <option v-bind:disabled="!activeGuest" v-if="(activeGuest && (r.status === 'Odustanak' || r.status === 'Prihvacena' || r.status === 'Kreirana')) || (!(activeGuest) && r.status === 'Odustanak')" value="Odustanak">Odustanak</option>
 	                            </select>
                         	</td>
                         	<td class="tdbreak">{{r.messageForReservation}}</td>			                 
@@ -225,19 +225,20 @@ Vue.component("reservations", {
 			
 	   saveChangesButton : function()
 	   {
+		   if (confirm('Da li ste sigurni da želite da sačuvate sve izmene?') == true) {
+			
+				axios.post('services/reservation/saveChangedReservations', this.listOfReservations).then(response => {
+					if(response.status === 200)
+					{
+						toast("Rezervacije su uspešno izmenjenje!");
+					}
+					else{
+						
+						this.listOfReservations = this.listOfReservations;
+					}
+				});
 		   
-			axios.post('services/reservation/saveChangedReservations', this.listOfReservations).then(response => {
-				if(response.status === 200)
-				{
-					toast("Rezervacije su uspešno izmenjenje!");
-				}
-				else{
-					
-					this.listOfReservations = this.listOfReservations;
-				}
-			});
-		   
-		   
+		   }
 	   },
 	   
 	   cancelChangesButton : function() {
@@ -254,14 +255,12 @@ Vue.component("reservations", {
 	  		  
 	  		
 				if (this.searchUsername !== '') {
-	      	return this.listOfReservations.filter((res) => {
-	        	return res.guest.startsWith(this.searchUsername);
+	      	return this.listOfReservations.filter((reservation) => {
+	        	return reservation.guest.startsWith(this.searchUsername);
 	        });
-	      }else{
-	    	
+	      }else{	    	
 	    	  return this.listOfReservations;	    	  
-	      }
-	      
+	      }      
 	      
 	    }
 	},
@@ -291,6 +290,9 @@ Vue.component("reservations", {
 			
 			if (this.activeUser.role === "gost"){
 				this.activeGuest = true;
+				axios.get('services/reservations/getAllReservationsForGuest').then(response => {
+					this.listOfReservations = response.data;
+				});
 			}else{
 				this.activeGuest = false;
 			}

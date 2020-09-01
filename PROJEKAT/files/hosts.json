@@ -11,6 +11,18 @@
 			"Apartman2"
 		]
 	
+	},
+	{
+		"username" : "domacin2",
+		"password" : "domacin2",
+		"name" : "Milan",
+		"surname" : "Milanić",
+		"gender" : "musko",
+		"role" : "domacin",
+		"apartmentsForRent" : [
+			"Apartman3"
+		]
+	
 	}
 
 ]
