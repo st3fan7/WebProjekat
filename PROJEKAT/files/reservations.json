@@ -26,7 +26,7 @@
     "totalCost": 4800.0,
     "messageForReservation": "",
     "guest": "gost1",
-    "status": "Prihvacena",
+    "status": "Odbijena",
     "id": "R3"
   },
   {
@@ -40,7 +40,7 @@
     "id": "R4"
   },
   {
-    "apartment": "Apartman1",
+    "apartment": "Apartman2",
     "startDate": "21.10.2020. 14:00",
     "numberOfNight": 21,
     "totalCost": 44800.0,
@@ -50,7 +50,7 @@
     "id": "R5"
   },
   {
-    "apartment": "Apartman1",
+    "apartment": "Apartman3",
     "startDate": "21.11.2020. 14:00",
     "numberOfNight": 21,
     "totalCost": 44800.0,

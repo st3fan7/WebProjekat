@@ -32,7 +32,7 @@ Vue.component("reservations", {
                 <li v-if="activeHost || activeAdmin"  class="active"><a href="#/reservations">Rezervacije</a></li>
                 <li v-if="activeHost || activeAdmin"><a href="#">Komentari</a></li>   
                 <li v-if="activeHost || activeAdmin"><a href="#/adminUsers">Korisnici</a></li>   
-                <li v-if="activeGuest"><a href="#">Moje rezervacije</a></li>
+                <li v-if="activeGuest" class="active"><a href="#">Moje rezervacije</a></li>
             </ul>
         </div>
     
@@ -95,8 +95,8 @@ Vue.component("reservations", {
 
     <div class="titleForUserReservationSelectedA">
 		<h1 id="nameOfApartment2">Rezervacije</h1>
-        <a href="#" class="previousInReservation">&laquo; Nazad</a>
-		<a @click="saveChangesButton" class="saveChange">Sačuvaj izmene</a>
+        <a @click="cancelChangesButton" class="previousInReservation">Poništi izmene</a>
+		<a v-if="!activeAdmin" @click="saveChangesButton" class="saveChange">Sačuvaj izmene</a>
     </div> 
 
     <div class="listOfApartments">
@@ -122,10 +122,10 @@ Vue.component("reservations", {
 			                 <td>{{r.totalCost}}</td>	
 			                 <td>                        
 	                            <select v-model=r.status id="statusID" name="statusName">
-	                                <option v-if="r.status === 'Kreirana'" value="Kreirana">Kreirana</option>
-	                                <option v-if="r.status === 'Odbijena' || (r.status === 'Kreirana' && !(checkDate(r.startDate, r.numberOfNight))) || r.status === 'Prihvacena'" value="Odbijena">Odbijena</option>
-	                                <option v-if="r.status === 'Prihvacena' || (r.status === 'Kreirana' && !(checkDate(r.startDate, r.numberOfNight)))" value="Prihvacena">Prihvaćena</option>
-	                                <option v-if="r.status === 'Zavrsena' || ( r.status === 'Prihvacena' && checkDate(r.startDate, r.numberOfNight)) === true" value="Zavrsena">Završena</option>
+	                                <option v-bind:disabled="activeAdmin" v-if="r.status === 'Kreirana'" value="Kreirana">Kreirana</option>
+	                                <option v-bind:disabled="activeAdmin" v-if="r.status === 'Odbijena' || (r.status === 'Kreirana' && !(checkDate(r.startDate, r.numberOfNight))) || r.status === 'Prihvacena'" value="Odbijena">Odbijena</option>
+	                                <option v-bind:disabled="activeAdmin" v-if="r.status === 'Prihvacena' || (r.status === 'Kreirana' && !(checkDate(r.startDate, r.numberOfNight)))" value="Prihvacena">Prihvaćena</option>
+	                                <option v-bind:disabled="activeAdmin" v-if="r.status === 'Zavrsena' || ( r.status === 'Prihvacena' && checkDate(r.startDate, r.numberOfNight)) === true" value="Zavrsena">Završena</option>
 	                                <option v-if="activeGuest && (r.status === 'Odustanak' || r.status === 'Prihvacena' || r.status === 'Kreirana')" value="Odustanak">Odustanak</option>
 	                            </select>
                         	</td>
@@ -238,7 +238,15 @@ Vue.component("reservations", {
 			});
 		   
 		   
+	   },
+	   
+	   cancelChangesButton : function() {
+			if (confirm('Da li ste sigurni da želite da poništite sve izmene?') == true) {
+				this.$router.go();
+			}
+			
 	   }
+	   
 	   
 	},
 	computed: {		
@@ -265,6 +273,9 @@ Vue.component("reservations", {
 			
 			if (this.activeUser.role === "admin"){
 				this.activeAdmin = true;
+				axios.get('services/reservations/getAllReservations').then(response => {
+					this.listOfReservations = response.data;
+				});
 			}else{
 				this.activeAdmin = false;
 			}		

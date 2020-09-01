@@ -995,7 +995,7 @@ option {
   }
   
 .previousInReservation {
-	margin-left: -540px;
+	margin-left: -26%;
 }  
   
 .previous:hover, .previousInHostManageForSelectedApartments:hover, .saveChange:hover, .previousInReservation:hover {
@@ -1007,7 +1007,7 @@ option {
 }
 
 .saveChange {
-	margin-left: 580px;
+	margin-left: 27%;
 }
 
 #nameOfApartmentInComments {

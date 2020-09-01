@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
-import beans.Guest;
 import beans.Host;
 import beans.Reservation;
 import dao.AdminDAO;
@@ -28,6 +27,7 @@ public class ReservationService {
 	
 	public ReservationService() {
 		getAllReservationsByHost();
+		getAllReservations();
 		saveChangedReservations();
 	}
 
@@ -59,22 +59,31 @@ public class ReservationService {
 
     }
 	
+	private void getAllReservations() {
+		
+		get("services/reservations/getAllReservations", (req, res) -> {
+            
+			if(reservationDAO.getReservationsList() .isEmpty()) {
+                res.status(204);
+                return ("No content");
+            }
+
+            res.status(200);
+            return g.toJson(reservationDAO.getReservationsList() );
+        });
+
+
+    }
+	
 	private void saveChangedReservations() {
 		post("services/reservation/saveChangedReservations", (req, res) -> {
 			res.type("application/json");
-			Session ss = req.session(true);
-			Host host = ss.attribute("user");
 			String payload = req.body();
-			ArrayList<Reservation> changedReservations = new ArrayList<Reservation>();
+			ArrayList<Reservation> reservations = null;
 			
 			try {
 				Type listType = new TypeToken<ArrayList<Reservation>>(){}.getType();
-				ArrayList<Reservation> reservations = g.fromJson(payload, listType);
-				for(Reservation r : reservations){
-					changedReservations.add(r);
-				}
-				
-				
+				reservations = g.fromJson(payload, listType);	
 			}
 			catch(Exception e) {
 				res.status(400);
@@ -82,7 +91,7 @@ public class ReservationService {
 			}
 			
 			
-			reservationDAO.setReservationsList(changedReservations);
+			reservationDAO.setReservationsList(reservations);
 			ReservationDAO.writeReservationsInFile(reservationDAO.getReservationsList());
 			reservationDAO.fillMapWithReservations();
 			
@@ -90,17 +99,6 @@ public class ReservationService {
 			return g.toJson("ok");
 
 		});
-		
-		/*
-			
-		
-			reservationDAO.setReservationsList(reservations);
-			ReservationDAO.writeReservationsInFile(reservationDAO.getReservationsList());
-			reservationDAO.fillMapWithReservations();
-			
-			res.status(200);
-			return g.toJson("ok");
-		});*/
 	
 	}
 
