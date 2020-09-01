@@ -122,7 +122,7 @@ Vue.component("reservations", {
 	                                <option v-if="r.status === 'Kreirana'" value="Kreirana">Kreirana</option>
 	                                <option v-if="r.status === 'Odbijena' || r.status === 'Kreirana' || r.status === 'Prihvacena'" value="Odbijena">Odbijena</option>
 	                                <option v-if="r.status === 'Prihvacena' || r.status === 'Kreirana'" value="Prihvacena">Prihvaćena</option>
-	                                <option v-if="(r.status === 'Zavrsena' || r.status === 'Prihvacena') && checkDate(r.startDate, r.numberOfNight) === true" value="Zavrsena">Završena</option>
+	                                <option v-if="r.status === 'Zavrsena' || ( r.status === 'Prihvacena' && checkDate(r.startDate, r.numberOfNight)) === true" value="Zavrsena">Završena</option>
 	                                <option v-if="activeGuest && (r.status === 'Odustanak' || r.status === 'Prihvacena' || r.status === 'Kreirana')" value="Odustanak">Odustanak</option>
 	                            </select>
                         	</td>
@@ -174,8 +174,12 @@ Vue.component("reservations", {
 			newDateObj.setDate(newDateObj.getDate() + numberOfNight);
 			let lastDay =  moment(String(newDateObj)).format('DD.MM.YYYY. HH:mm')
 			console.log('Datum do kog vazi rezervacija: ' + lastDay)
+			
+			if(currentDateObj >= newDateObj) {
+				return true;
+			}
 					
-			return true;
+			return false;
 		} ,
 		getDate()
         {
