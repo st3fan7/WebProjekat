@@ -6,7 +6,10 @@ Vue.component("reservations", {
 			activeHost : false,
 			activeGuest : false,
 			listOfReservations : null,
-			closeReservation : false
+			closeReservation : false,
+			searchUsername : '',
+			priceSortBy : '',
+			changedList : null
 		}
 	},
 	template: `
@@ -53,20 +56,20 @@ Vue.component("reservations", {
 
         <div class="search-title2">
             <h1>Pretraži rezervacije po:</h1>
-            <input type="text" id="usernameID" name="usernameName" placeholder="Unesite korisničko ime...">          
+            <input type="text" id="usernameID" name="usernameName" v-model="searchUsername" placeholder="Unesite korisničko ime...">          
         </div>
 
         <div class="price-title2">
             <h1 id="sort-text-in-user-reservation">Sortiraj po ceni:</h1>
             <form id="formForSort" action="#">
                 
-                    <select id="statusID" name="statusName">
+                    <select id="statusID" name="statusName" v-model="priceSortBy">
                             <option value="rising">Rastuća</option>
                             <option value="falling">Opadajuća</option>
-                        </select>
+                    </select>
     
                     <div class="search-btn-user-reservation">
-                        <button id="searchInUserReservation" type="submit">Sortiraj</button>
+                        <button id="searchInUserReservation" type="button" @click="SortByPrice()">Sortiraj</button>
                     </div>
                 </form>
         </div>
@@ -93,7 +96,7 @@ Vue.component("reservations", {
     <div class="titleForUserReservationSelectedA">
 		<h1 id="nameOfApartment2">Rezervacije</h1>
         <a href="#" class="previousInReservation">&laquo; Nazad</a>
-		<a href="#" class="saveChange">Sačuvaj izmene</a>
+		<a @click="saveChangesButton" class="saveChange">Sačuvaj izmene</a>
     </div> 
 
     <div class="listOfApartments">
@@ -111,7 +114,7 @@ Vue.component("reservations", {
                     </tr>
                     </thead>
                     <tbody>
-            			<tr v-for="r in listOfReservations">
+            			<tr v-for="r in filteredReservationByGuest">
 			                 <td>{{r.apartment}}</td>
 			                 <td>{{r.guest}}</td>
 			                 <td>{{r.startDate}}</td>
@@ -120,8 +123,8 @@ Vue.component("reservations", {
 			                 <td>                        
 	                            <select v-model=r.status id="statusID" name="statusName">
 	                                <option v-if="r.status === 'Kreirana'" value="Kreirana">Kreirana</option>
-	                                <option v-if="r.status === 'Odbijena' || r.status === 'Kreirana' || r.status === 'Prihvacena'" value="Odbijena">Odbijena</option>
-	                                <option v-if="r.status === 'Prihvacena' || r.status === 'Kreirana'" value="Prihvacena">Prihvaćena</option>
+	                                <option v-if="r.status === 'Odbijena' || (r.status === 'Kreirana' && !(checkDate(r.startDate, r.numberOfNight))) || r.status === 'Prihvacena'" value="Odbijena">Odbijena</option>
+	                                <option v-if="r.status === 'Prihvacena' || (r.status === 'Kreirana' && !(checkDate(r.startDate, r.numberOfNight)))" value="Prihvacena">Prihvaćena</option>
 	                                <option v-if="r.status === 'Zavrsena' || ( r.status === 'Prihvacena' && checkDate(r.startDate, r.numberOfNight)) === true" value="Zavrsena">Završena</option>
 	                                <option v-if="activeGuest && (r.status === 'Odustanak' || r.status === 'Prihvacena' || r.status === 'Kreirana')" value="Odustanak">Odustanak</option>
 	                            </select>
@@ -180,7 +183,8 @@ Vue.component("reservations", {
 			}
 					
 			return false;
-		} ,
+		},
+	
 		getDate()
         {
             let currentDate = new Date();
@@ -202,19 +206,52 @@ Vue.component("reservations", {
                 hours = '0' + currentDate.getHours();
 
             return day + '.' + month + '.' + currentDate.getFullYear() + '. ' + hours + ':' + minutes;
-        }
+        },
+        
+        SortByPrice : function()
+			{
+        	
+        	
+	        	if(this.priceSortBy === "rising"){
+	        		return this.filteredReservationByGuest.sort((a, b) => a.totalCost - b.totalCost );
+	        	}else if(this.priceSortBy === "falling"){
+	        		return this.filteredReservationByGuest.sort((a, b) => b.totalCost - a.totalCost );
+	        	}else{
+	        		return this.filteredReservationByGuest;
+	        	}
+   	
+			},
+			
+			
+	   saveChangesButton : function()
+	   {
+		   
+			axios.post('services/reservation/saveChangedReservations', this.listOfReservations).then(response => {
+				if(response.status === 200)
+				{
+					toast("Rezervacije su uspešno izmenjenje!");
+				}
+				else{
+					
+					this.listOfReservations = this.listOfReservations;
+				}
+			});
+		   
+		   
+	   }
+	   
 	},
-	computed: {
-	  	filteredUsers() {
+	computed: {		
+	  	filteredReservationByGuest() {
 	  		  
 	  		
 				if (this.searchUsername !== '') {
-	      	return this.allUsers.filter((user) => {
-	        	return user.username.startsWith(this.searchUsername);
+	      	return this.listOfReservations.filter((res) => {
+	        	return res.guest.startsWith(this.searchUsername);
 	        });
 	      }else{
-
-	    	  return this.allUsers;	    	  
+	    	
+	    	  return this.listOfReservations;	    	  
 	      }
 	      
 	      

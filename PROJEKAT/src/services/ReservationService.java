@@ -1,11 +1,15 @@
 package services;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 
+import beans.Guest;
 import beans.Host;
 import beans.Reservation;
 import dao.AdminDAO;
@@ -24,33 +28,80 @@ public class ReservationService {
 	
 	public ReservationService() {
 		getAllReservationsByHost();
+		saveChangedReservations();
 	}
 
 	private void getAllReservationsByHost() {
+		
 		get("services/reservations/getAllReservationsForHost", (req, res) -> {
+            Session ss = req.session(true);
+            Host host = ss.attribute("user");
+            ArrayList<Reservation> reservations = new ArrayList<>();
+
+            for(Reservation r : reservationDAO.getReservationsList() ) {
+                for(String apartment : host.getApartmentsForRent()) {
+                    if(r.getApartment().equals(apartment)) {
+                        reservations.add(r);
+                    }
+                }
+            }
+
+            if(reservations.isEmpty()) {
+                res.status(204);
+                return ("No content");
+            }
+          
+
+            res.status(200);
+            return g.toJson(reservations);
+        });
+
+
+    }
+	
+	private void saveChangedReservations() {
+		post("services/reservation/saveChangedReservations", (req, res) -> {
+			res.type("application/json");
 			Session ss = req.session(true);
 			Host host = ss.attribute("user");
-			ArrayList<Reservation> reservations = new ArrayList<>();
+			String payload = req.body();
+			ArrayList<Reservation> changedReservations = new ArrayList<Reservation>();
 			
-			for(Reservation r : reservationDAO.getReservationsList() ) {
-				for(String apartment : host.getApartmentsForRent()) {
-					if(r.getApartment().equals(apartment)) {
-						reservations.add(r);
-					}
+			try {
+				Type listType = new TypeToken<ArrayList<Reservation>>(){}.getType();
+				ArrayList<Reservation> reservations = g.fromJson(payload, listType);
+				for(Reservation r : reservations){
+					changedReservations.add(r);
 				}
+				
+				
+			}
+			catch(Exception e) {
+				res.status(400);
+				return g.toJson("Bad request");
 			}
 			
-			if(reservations.isEmpty()) {
-				res.status(204);
-				return ("No content");
-			}
 			
+			reservationDAO.setReservationsList(changedReservations);
+			ReservationDAO.writeReservationsInFile(reservationDAO.getReservationsList());
+			reservationDAO.fillMapWithReservations();
 			
 			res.status(200);
-			return g.toJson(reservations);
+			return g.toJson("ok");
+
 		});
+		
+		/*
 			
 		
-		
+			reservationDAO.setReservationsList(reservations);
+			ReservationDAO.writeReservationsInFile(reservationDAO.getReservationsList());
+			reservationDAO.fillMapWithReservations();
+			
+			res.status(200);
+			return g.toJson("ok");
+		});*/
+	
 	}
+
 }

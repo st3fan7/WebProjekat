@@ -41,7 +41,7 @@ public class UserService {
 	public void loginUsers(){//FUNKCIJA 
 		
 		get("services/users/getUserByUsername", (req, res) -> {
-			res.type("guestDAOlication/json");
+			res.type("application/json");
 			
 			User u = null;
 			Host h = hostDAO.getHostID(req.queryMap("username").value());
@@ -86,7 +86,7 @@ public class UserService {
 		});
 		
 		get("services/users/getActiveUser", (req, res) -> {
-			res.type("guestDAOlication/json");
+			res.type("application/json");
 			Session ss = req.session(true);			
 			User u = ss.attribute("user");
 
@@ -108,7 +108,7 @@ public class UserService {
 	
 	public void register() {
 		post("services/users/register", (req, res) -> {
-			res.type("guestDAOlication/json");
+			res.type("application/json");
 			String payload = req.body();
 			Guest guest;
 			

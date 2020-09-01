@@ -36,7 +36,7 @@ public class ReservationDAO {
 		}
 	}
 
-	private void fillMapWithReservations() {
+	public void fillMapWithReservations() {
 		if(reservationsList != null){
 			for (int i = 0; i < reservationsList.size(); i++) {
 				reservationsMap.put(reservationsList.get(i).getId(), reservationsList.get(i));
