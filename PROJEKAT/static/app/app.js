@@ -5,6 +5,7 @@ const badRequest = {template: '<badRequest></badRequest>'}
 const changeProfile = {template: '<changeProfile></changeProfile>'}
 const adminUsers = {template: '<adminUsers></adminUsers>'}
 const reservations = {template: '<reservations></reservations>'}
+const addNewApartment = {template: '<addNewApartment></addNewApartment>'}
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -15,8 +16,8 @@ const router = new VueRouter({
 		  { path: '/badRequest', name:'badRequest', component: badRequest},
 		  { path: '/changeProfile', name:'changeProfile', component: changeProfile},
 		  { path: '/adminUsers', name:'adminUsers', component: adminUsers},
-		  { path: '/reservations', name:'reservations', component: reservations}
-		  
+		  { path: '/reservations', name:'reservations', component: reservations},
+		  { path: '/addNewApartment', name:'addNewApartment', component: addNewApartment}		  
 	  ]
 });
 

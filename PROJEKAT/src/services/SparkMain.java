@@ -16,7 +16,8 @@ public class SparkMain {
 		
 		new UserService();
 		new ReservationService();
-
+		new ApartmentService();
+		
 	}
 
 	
