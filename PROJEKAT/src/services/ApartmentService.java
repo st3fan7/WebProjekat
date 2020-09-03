@@ -24,7 +24,7 @@ public class ApartmentService {
 	}
 
 	public void addNewApartment() {
-		post("services/users/register", (req, res) -> {
+		post("services/apartments/addNewApartment", (req, res) -> {
 			res.type("application/json");
 			String payload = req.body();
 			Apartment apartment;
@@ -39,7 +39,7 @@ public class ApartmentService {
 			
 			if (apartmentDAO.getApartmetnID(apartment.getId()) != null) {
 				res.status(201);
-				return g.toJson("Vec postoji!");
+				return g.toJson("Apartman sa tim imenom veæ postoji!");
 
 			}
 			

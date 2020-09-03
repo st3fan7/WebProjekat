@@ -12,7 +12,7 @@ public class Apartment {
 	private int numberOfRooms;
 	private int numberOfGuests;
 	private Location location;
-	private ArrayList<Date> releaseDates;
+	private ArrayList<String> releaseDates;
 	private ArrayList<Date> freeDates;
 	private String host;
 	private ArrayList<Comment> comments;
@@ -21,8 +21,8 @@ public class Apartment {
 	private String checkInTime; //inicijalno 2 PM
 	private String checkOutTime; //inicijalno 10 AM
 	private StatusOfApartment statusOfApartment;
-	private ArrayList<Amenities> amenities;
-	private ArrayList<Reservation> reservations;
+	private ArrayList<String> amenities;
+	private ArrayList<String> reservations;
 	
 	public Apartment() {
 		super();
@@ -43,11 +43,11 @@ public class Apartment {
 		this.checkOutTime = checkOutTime;
 		this.statusOfApartment = statusOfApartment;
 		this.pictures = new ArrayList<String>();
-		this.releaseDates = new ArrayList<Date>();
+		this.releaseDates = new ArrayList<String>();
 		this.freeDates = new ArrayList<Date>();
 		this.comments = new ArrayList<Comment>();
-		this.amenities = new ArrayList<Amenities>();
-		this.reservations = new ArrayList<Reservation>();
+		this.amenities = new ArrayList<String>();
+		this.reservations = new ArrayList<String>();
 	}
 
 	public TypeOfApartment getTypeOfApartment() {
@@ -82,11 +82,11 @@ public class Apartment {
 		this.location = location;
 	}
 
-	public ArrayList<Date> getReleaseDates() {
+	public ArrayList<String> getReleaseDates() {
 		return releaseDates;
 	}
 
-	public void setReleaseDates(ArrayList<Date> releaseDates) {
+	public void setReleaseDates(ArrayList<String> releaseDates) {
 		this.releaseDates = releaseDates;
 	}
 
@@ -154,19 +154,19 @@ public class Apartment {
 		this.statusOfApartment = statusOfApartment;
 	}
 
-	public ArrayList<Amenities> getAmenities() {
+	public ArrayList<String> getAmenities() {
 		return amenities;
 	}
 
-	public void setAmenities(ArrayList<Amenities> amenities) {
+	public void setAmenities(ArrayList<String> amenities) {
 		this.amenities = amenities;
 	}
 
-	public ArrayList<Reservation> getReservations() {
+	public ArrayList<String> getReservations() {
 		return reservations;
 	}
 
-	public void setReservations(ArrayList<Reservation> reservations) {
+	public void setReservations(ArrayList<String> reservations) {
 		this.reservations = reservations;
 	}
 	

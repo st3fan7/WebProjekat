@@ -30,7 +30,7 @@ public class ApartmentDAO {
 		try {
 			setApartmentsList(gson.fromJson(new BufferedReader(new InputStreamReader(new FileInputStream("./files/apartments.json"),  StandardCharsets.UTF_8)), new TypeToken<ArrayList<Apartment>>(){}.getType()));
 		} catch (Exception e) {
-			System.out.println("Error on loading .json files");
+			System.out.println("Error on loading apartments.json files");
 		}
 		
 	}

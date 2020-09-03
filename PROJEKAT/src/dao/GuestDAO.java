@@ -37,7 +37,7 @@ public class GuestDAO {
 			//setGuestList(gson.fromJson(new FileReader("./files/guests.json"), new TypeToken<ArrayList<Guest>>(){}.getType()));
 			setGuestList(gson.fromJson(new BufferedReader(new InputStreamReader(new FileInputStream("./files/guests.json"), StandardCharsets.UTF_8)), new TypeToken<ArrayList<Guest>>(){}.getType()));
 		} catch (Exception e) {
-			System.out.println("Error on loading .json files");
+			System.out.println("Error on loading guests.json files");
 		}
 		
 	}

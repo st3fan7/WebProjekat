@@ -32,7 +32,7 @@ public class ReservationDAO {
 			//setHostList(gson.fromJson(new FileReader("./files/reservations.json"), new TypeToken<ArrayList<Host>>(){}.getType())); // NE CITA UTF-8
 			setReservationsList(gson.fromJson(new BufferedReader(new InputStreamReader(new FileInputStream("./files/reservations.json"), StandardCharsets.UTF_8)), new TypeToken<ArrayList<Reservation>>(){}.getType()));
 		} catch (Exception e) {
-			System.out.println("Error on loading .json files");
+			System.out.println("Error on loading reservation.json files");
 		}
 	}
 

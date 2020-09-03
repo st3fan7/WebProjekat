@@ -37,7 +37,7 @@ public class AdminDAO {
 			//setAdminList(gson.fromJson(new BufferedReader(new InputStreamReader(new FileInputStream("./files/admins.json"), StandardCharsets.UTF_8)), new TypeToken<ArrayList<Admin>>(){}.getType()));
 			setAdminList(gson.fromJson(new BufferedReader(new InputStreamReader(new FileInputStream("./files/admins.json"), StandardCharsets.UTF_8)), new TypeToken<ArrayList<Admin>>(){}.getType()));
 		} catch (Exception e) {
-			System.out.println("Error on loading .json files");
+			System.out.println("Error on loading admins.json files");
 		}
 	}
 

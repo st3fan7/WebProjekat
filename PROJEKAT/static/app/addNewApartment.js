@@ -7,15 +7,20 @@ Vue.component("addNewApartment", {
 			activeGuest : false,
 			showNotification : false,
 			nameOfApartment : '',
-			numberOfRoomsModel : '',
-			numberOfGuestModel : '',
-			priceForNightModel : '',
+			numberOfRoomsModel : null,
+			numberOfGuestModel : null,
+			priceForNightModel : null,
 			locationModel : '',
 			addressModel : '',
 			startDateModel : '',
 			endDateModel : '',
 			checkinTimeModel : '',
-			checkoutTimeModel : ''
+			checkoutTimeModel : '',
+			typeOfApartment : null,
+			statusOfApartment : null,
+			starTimeInit : '',
+			endTimeInit : ''
+			 
 			
 		}
 	},
@@ -99,15 +104,15 @@ Vue.component("addNewApartment", {
                         <input v-model="nameOfApartment" type="text" id="aName" name="apartmentname" placeholder="Unesite naziv apartmana..." pattern="[A-Z][A-Za-z0-9 ]*" title="Možete uneti slova i brojeve i prvo slovo mora biti veliko!">
                     
                         <label for="typeOfApartment">Tip apartmana:</label>
-                        <select id="typeOfApartmentID" name="typeOfApartmentName">
-                          <option value="allApartment">Ceo apartman</option>
-                          <option value="room">Soba</option>
+                        <select id="typeOfApartmentID" name="typeOfApartmentName" v-model="typeOfApartment">
+                          <option value="Ceo apartman">Ceo apartman</option>
+                          <option value="Soba">Soba</option>
                         </select>
 
                         <label for="status">Status:</label>
-                        <select id="statusID" name="statusName">
-                          <option value="active">Neaktivan</option>
-                          <option value="inactive">Aktivan</option>
+                        <select id="statusID" name="statusName" v-model="statusOfApartment">
+                          <option value="Neaktivan">Neaktivan</option>
+                          <option value="Aktivan">Aktivan</option>
                         </select>
 
                         <label for="numberOfRooms">Broj soba:</label>
@@ -129,13 +134,13 @@ Vue.component("addNewApartment", {
                         <vuejs-datepicker v-model="startDateModel" id="startDateID" name="startDate" type="date"  format="dd.MM.yyyy." placeholder="Izaberite datum od kojeg se izdaje..." ></vuejs-datepicker>
 						
 						<label for="dateToPublishing">Datum do kojeg se izdaje:</label><br/>
-                        <vuejs-datepicker v-model="endDateModel" id="endDateID" name="endDate" type="date"  format="dd.MM.yyyy." placeholder="Izaberite datum do kojeg se izdaje..." ></vuejs-datepicker>
+                        <vuejs-datepicker v-model="endDateModel" id="endDateID" name="endDate" type="date"  format="dd.MM.yyyy."  :open-date="startDateModel" :disabledDates="newDateStart" v-bind:disabled="startDateModel === ''" placeholder="Izaberite datum do kojeg se izdaje..." ></vuejs-datepicker>
                                             
                         <label for="check-inTime">Vreme za prijavu:</label><br/>
-                        <input v-model="checkinTimeModel" type="time" id="check-inTimeID" name="check-inTimeName" placeholder="Izaberite inicijalno vreme za prijavu...">
+                        <input v-model="checkinTimeModel" type="time" :hours-format="24" id="check-inTimeID"  name="check-inTimeName"  placeholder="Izaberite inicijalno vreme za prijavu...">
 
                         <label for="check-outTime">Vreme za odjavu:</label><br/>
-                        <input v-model="checkoutTimeModel" type="time" id="check-outTimeID" name="check-outTimeName" placeholder="Izaberite inicijalno vreme za odjavu...">
+                        <input v-model="checkoutTimeModel" type="time" :hours-format="24" id="check-outTimeID"  name="check-outTimeName" placeholder="Izaberite inicijalno vreme za odjavu...">
 			
                         <label for="imagesForApartment">Slike:</label><br/>
                         <input type="image" id="imagesForApartmentID" name="imagesForApartmentName">
@@ -220,6 +225,21 @@ Vue.component("addNewApartment", {
 	components : {
 		vuejsDatepicker
 	},
+	
+	computed : {
+		newDateStart() {
+  		
+			if(this.startDateModel !== ''){
+				return {
+		            to: moment(this.startDateModel).startOf('day').add(0, 'days').toDate()
+		        }
+			}
+			
+				
+			
+		}
+		
+	},
 
 	methods: {
 		logOut : function(event)
@@ -249,7 +269,7 @@ Vue.component("addNewApartment", {
 				red.style.backgroundColor = "white"; 
 			}
 			
-			if(this.numberOfRoomsModel.length === 0) {
+			if(this.numberOfRoomsModel.length === 0 || this.numberOfRoomsModel === null) {
 				var red = document.getElementById("numberOfRoomsID");
 				red.style.backgroundColor = "LightCoral"; 
 				empty = true;
@@ -258,7 +278,7 @@ Vue.component("addNewApartment", {
 				red.style.backgroundColor = "white"; 
 			}
 			
-			if(this.numberOfGuestModel.length === 0) {
+			if(this.numberOfGuestModel.length === 0 || this.numberOfGuestModel === null) {
 				var red = document.getElementById("numberOfGuestID");
 				red.style.backgroundColor = "LightCoral"; 
 				empty = true;
@@ -267,7 +287,7 @@ Vue.component("addNewApartment", {
 				red.style.backgroundColor = "white"; 
 			}
 			
-			if(this.priceForNightModel.length === 0) {
+			if(this.priceForNightModel.length === 0 || this.priceForNightModel === null) {
 				var red = document.getElementById("priceForNightID");
 				red.style.backgroundColor = "LightCoral"; 
 				empty = true;
@@ -312,15 +332,34 @@ Vue.component("addNewApartment", {
 				red.style.backgroundColor = "white"; 
 			}
 			
+			var locationLatAndLog = this.locationModel.split(',');
+			var Latitude = locationLatAndLog[0].trim();
+			var longitude = locationLatAndLog[1].trim();
+			
+			var fullAddress = this.addressModel.split(","); 
+			var streetAndNum = fullAddress[0].split(/(\d+)/);
+			var street = streetAndNum[0].trim();
+			var number = streetAndNum[1].trim();
+			
+			var cityAndZip = fullAddress[1].substring().split(/(\d+)/);
+			var city = cityAndZip[0].trim();
+			var zip = cityAndZip[1].trim();
+		
+			
 			if(empty === false) {
-				axios.post('services/apartments/addNewApartment', {"nameOfApartment": '' + this.nameOfApartment, "numberOfRoomsModel": '' + this.numberOfRoomsModel,
-					"numberOfGuestModel": '' + this.numberOfGuestModel , "priceForNightModel": '' + this.priceForNightModel, "locationModel": '' + this.locationModel ,
-					"addressModel": '' + this.addressModel, "startDateModel" : '' + this.startDateModel, "endDateModel" : '' + this.endDateModel, 
-					"checkinTimeModel" : '' + this.checkinTimeModel, "checkoutTimeModel" : '' + this.checkoutTimeModel})
+				axios.post('services/apartments/addNewApartment', {"id": '' + this.nameOfApartment, "numberOfRooms": this.numberOfRoomsModel,
+					"typeOfApartment" : this.typeOfApartment, "statusOfApartment" : this.statusOfApartment, "numberOfGuests" : this.numberOfGuestModel,
+					"pricePerNight" : this.priceForNightModel, "location" : { "latitude" : Latitude, "longitude" : longitude, 
+					"address" : {"street" : street, "houseNumber" : number, "populatedPlace" : city, "zipCode" : zip } },					
+					"releaseDates" : ['' + this.startDateModel, '' + this.endDateModel], 
+					"checkInTime" : '' + this.checkinTimeModel, "checkOutTime" : '' + this.checkoutTimeModel, "host" : '' + this.activeUser.username,
+					"reservations" : [], "comments" : [], "amenities" : [], "pictures": []})
 					.then(response => {
 						if(response.status === 200){
 							toast('Apartman je uspšeno dodat!')
-						} else {
+						} else if(response.status === 201){
+							toast('Apartman sa tim imenom već postoji!')
+						}else {
 							toast('Apartman nije uspšeno dodat, pokušajte ponovo!')
 						}
 						
@@ -329,15 +368,18 @@ Vue.component("addNewApartment", {
 				
 				this.showNotification = true;
 			}
+			
+			
 		}
 
 
 
 	},
 	mounted() {
-	
-		document.getElementById("check-inTimeID").defaultValue = "14:00";
-		document.getElementById("check-outTimeID").defaultValue = "10:00";
+		
+		this.checkinTimeModel = "14:00";
+		this.checkoutTimeModel = "10:00";
+
 		
 		axios.get('services/users/getActiveUser').then(response => {
 			this.activeUser = response.data;

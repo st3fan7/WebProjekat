@@ -36,7 +36,7 @@ public class HostDAO {
 			//setHostList(gson.fromJson(new FileReader("./files/hosts.json"), new TypeToken<ArrayList<Host>>(){}.getType())); // NE CITA UTF-8
 			setHostList(gson.fromJson(new BufferedReader(new InputStreamReader(new FileInputStream("./files/hosts.json"), StandardCharsets.UTF_8)), new TypeToken<ArrayList<Host>>(){}.getType()));
 		} catch (Exception e) {
-			System.out.println("Error on loading .json files");
+			System.out.println("Error on loading hosts.json files");
 		}
 	}
 	
