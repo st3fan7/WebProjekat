@@ -29,33 +29,5 @@
     "statusOfApartment": "Aktivan",
     "amenities": [],
     "reservations": []
-  },
-  {
-    "id": "Soba 24",
-    "typeOfApartment": "Soba",
-    "numberOfRooms": 1,
-    "numberOfGuests": 2,
-    "location": {
-      "latitude": 2.0,
-      "longitude": 52.0,
-      "address": {
-        "street": "Cara Dusana",
-        "houseNumber": 75,
-        "populatedPlace": "Novi Sad",
-        "zipCode": "21000"
-      }
-    },
-    "releaseDates": [
-      "Fri Sep 04 2020 13:55:00 GMT+0200 (Средњеевропско летње време)",
-      "Thu Nov 19 2020 13:55:00 GMT+0100 (Средњеевропско стандардно време)"
-    ],
-    "host": "domacin2",
-    "comments": [],
-    "pricePerNight": 2255,
-    "checkInTime": "14:00",
-    "checkOutTime": "15:00",
-    "statusOfApartment": "Neaktivan",
-    "amenities": [],
-    "reservations": []
   }
 ]

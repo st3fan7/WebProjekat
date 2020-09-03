@@ -19,7 +19,9 @@ Vue.component("addNewApartment", {
 			typeOfApartment : null,
 			statusOfApartment : null,
 			starTimeInit : '',
-			endTimeInit : ''
+			endTimeInit : '',
+			amenitiesList : null,
+			checkedAmenities : []
 			 
 			
 		}
@@ -146,72 +148,16 @@ Vue.component("addNewApartment", {
                         <input type="image" id="imagesForApartmentID" name="imagesForApartmentName">
 
                         <h1>Ostali podaci:</h1>
-
-                        <label class="container">
-                                <div class="text-checkbox">Internet</div>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                         </label>
-                        <label class="container"> 
-                            <div class="text-checkbox">TV</div>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container">
-                            <div class="text-checkbox">Klima uređaj</div>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container">
-                            <div class="text-checkbox">Pegla</div>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container">
-                                <div class="text-checkbox">Veš mašina</div>
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                        </label>
-                        <label class="container">
-                            <div class="text-checkbox">Mašina za sudove</div>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container">
-                            <div class="text-checkbox">Grejanje</div>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container">
-                            <div class="text-checkbox">Tuš kabina</div>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container">
-                            <div class="text-checkbox">Kada</div>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container">
-                            <div class="text-checkbox">Peškiri</div>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container">
-                            <div class="text-checkbox">Terasa</div>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container">
-                            <div class="text-checkbox">Krevetac</div>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="container">
-                            <div class="text-checkbox">Pomoćni krevet</div>
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
+                         
+                        <span class="spanAmenities" v-for="a in amenitiesList">
+                        <br><label class="container">
+	                        <input type="checkbox" :value="a" v-model="checkedAmenities">
+	                        <div class="text-checkbox">{{a.content}}</div>
+	                        <span class="checkmark"></span>
+	                        </label>
+	                        <br>
+                        </span>
+                        
                 </div>
             </div>
         </div>
@@ -231,7 +177,7 @@ Vue.component("addNewApartment", {
   		
 			if(this.startDateModel !== ''){
 				return {
-		            to: moment(this.startDateModel).startOf('day').add(0, 'days').toDate()
+		            to: moment(this.startDateModel).startOf('day').add(1, 'days').toDate()
 		        }
 			}
 			
@@ -353,7 +299,7 @@ Vue.component("addNewApartment", {
 					"address" : {"street" : street, "houseNumber" : number, "populatedPlace" : city, "zipCode" : zip } },					
 					"releaseDates" : ['' + this.startDateModel, '' + this.endDateModel], 
 					"checkInTime" : '' + this.checkinTimeModel, "checkOutTime" : '' + this.checkoutTimeModel, "host" : '' + this.activeUser.username,
-					"reservations" : [], "comments" : [], "amenities" : [], "pictures": []})
+					"reservations" : [], "comments" : [], "amenities" : this.checkedAmenities, "pictures": []})
 					.then(response => {
 						if(response.status === 200){
 							toast('Apartman je uspšeno dodat!')
@@ -392,6 +338,10 @@ Vue.component("addNewApartment", {
 												
 			if (this.activeUser.role === "domacin"){
 				this.activeHost = true;
+				axios.get('services/amenities/getAllAmenities').then(response => {
+					this.amenitiesList = response.data;			
+				});
+				
 			}else{
 				this.activeHost = false;
 			}

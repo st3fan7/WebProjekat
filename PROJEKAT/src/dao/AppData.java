@@ -96,7 +96,7 @@ public class AppData {
 			apartmentList = new ArrayList<Apartment>();
 		}
 		
-		
+		/*
 		//amenities
 		if(amenitiesList != null){
 			for (int i = 0; i < amenitiesList.size(); i++) {
@@ -106,6 +106,8 @@ public class AppData {
 		else{
 			amenitiesList = new ArrayList<Amenities>();
 		}
+		
+		*/
 		
 		//comment
 		if(commentList != null){

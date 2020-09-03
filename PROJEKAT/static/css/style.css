@@ -539,6 +539,13 @@ span {
     font-size: 34px;
 }
 
+.spanAmenities {
+    display: block;
+    height: 50px;
+    font-family: 'Suranna', serif;
+    font-size: 34px;
+}
+
 .product-price-btn button, .rasing-price-btn button, .change-btn-in-admin-change-apartment button, .cancel-btn-in-admin-change-apartment button, .search-btn-user-reservation button, .search-btn-user-overview button, .review-btn button, .falling-price-btn button, .type-filter-btn button, .content-filter-btn button, .add-btn button, .cancel-btn button, .sort-price-btn button, .filter-btn-active-apartment button, .change-btn button  {
     float: right;
     display: inline-block;

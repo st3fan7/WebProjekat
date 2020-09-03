@@ -21,7 +21,7 @@ public class Apartment {
 	private String checkInTime; //inicijalno 2 PM
 	private String checkOutTime; //inicijalno 10 AM
 	private StatusOfApartment statusOfApartment;
-	private ArrayList<String> amenities;
+	private ArrayList<Amenities> amenities;
 	private ArrayList<String> reservations;
 	
 	public Apartment() {
@@ -46,7 +46,7 @@ public class Apartment {
 		this.releaseDates = new ArrayList<String>();
 		this.freeDates = new ArrayList<Date>();
 		this.comments = new ArrayList<Comment>();
-		this.amenities = new ArrayList<String>();
+		this.amenities = new ArrayList<Amenities>();
 		this.reservations = new ArrayList<String>();
 	}
 
@@ -154,11 +154,11 @@ public class Apartment {
 		this.statusOfApartment = statusOfApartment;
 	}
 
-	public ArrayList<String> getAmenities() {
+	public ArrayList<Amenities> getAmenities() {
 		return amenities;
 	}
 
-	public void setAmenities(ArrayList<String> amenities) {
+	public void setAmenities(ArrayList<Amenities> amenities) {
 		this.amenities = amenities;
 	}
 
