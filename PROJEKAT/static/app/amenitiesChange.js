@@ -1,0 +1,205 @@
+Vue.component("amenitiesChange", {
+	data : function() {
+		return {
+			activeUser : null,
+			activeAdmin : false,
+			activeHost : false,
+			activeGuest : false,
+			amenitiesList : null,
+			amenityModel : '',
+			oldAmenityModel : '',
+			showManpulationPartForContent : false
+		}
+	},
+	template: 
+		`
+		<div>
+				<div class="boundaryForScroll">
+		        <div class="logoAndName">
+		            <div class="logo">        
+		                <img src="pictures/clipart302388.png"/>
+		            </div>
+		            <div class="webName">
+		                <h3>BookingApp</h3>
+		            </div>  
+		        </div>
+		    
+		        <div class="main">     
+		            <ul class="menu-contents">
+			            <li id="onlyHomePage"><a href="#">Početna</a></li>
+			            <li v-if="activeHost"><a href="#/addNewApartment">Moji apartmani</a></li>
+			            <li v-if="activeAdmin" class="active"><a href="#/amenitiesChange">Apartmani</a></li>
+		                <li v-if="activeHost || activeAdmin"><a href="#/reservations">Rezervacije</a></li>
+		                <li v-if="activeHost || activeAdmin"><a href="#">Komentari</a></li>   
+		                <li v-if="activeHost || activeAdmin"><a href="#/adminUsers">Korisnici</a></li>   
+		                <li v-if="activeGuest"><a href="#/reservations">Moje rezervacije</a></li>
+		            </ul>
+		        </div>
+		    
+		       <div class="dropdown">
+			        <button class="dropbtn">
+			        	<img id="menuIcon" src="pictures/menuIcon.png" />
+			        	<img id="userIcon" src="pictures/user.png" />
+			        </button>
+			        <div v-if="activeUser" class="dropdown-content">
+			             <router-link to="/changeProfile" > Moj nalog </router-link>
+			            <router-link to="/login" v-on:click.native="logOut($event)" > Odjavi se </router-link>            
+			        </div>
+				    <div v-else class="dropdown-content">
+				        <a href="#/registration">Registruj se</a>
+			            <a href="#/login">Prijavi se</a>
+				    </div>
+			    </div>
+			</div>
+		
+		    <div class="sortAndFilterForUserReservation">
+		
+		        <div class="search-title2">
+		            <h1>Dodaj novi sadržaj:</h1>
+		            <form id="formForSearch" action="#">
+		                <input type="text" id="amenitiesID" name="amenitiesName" placeholder="Unesite naziv sadržaja...">
+		        
+		                <div class="add-btn-amenities">
+		                    <button id="searchInUserReservationID" type="submit">Dodaj</button>
+		                </div>
+		            </form>           
+		        </div>
+		
+		        <div v-if="showManpulationPartForContent" class="price-title2">
+		            <h1 id="sort-text-in-user-reservation">Selektovan sadržaj:</h1>
+		            <form id="formForSort" action="#">
+		                
+		                    <input v-model="amenityModel" type="text" id="amenitiesChangeID" name="amenitiesChangeName">
+		    
+		                    <div class="search-btn-user-reservation">
+		                        <button @click="changeAmenities()" id="change-btn-in-admin-change-apartment" type="button">Izmeni</button>
+		                    </div>
+		
+		                    <div class="delete-btn-in-amenities">
+		                        <button @click="deleteAmenities()" id="delete-btn-id" type="button">Obriši</button>
+		                    </div>
+		                   
+		                    <div class="cancel-btn-in-amenities">
+		                        <button @click="cancelChange()" id="cancel-btn-id" type="button">Odustani</button>
+		                    </div>
+		            </form>
+		        </div>
+		
+		
+		    </div>
+		
+		    <div class="verticalLine"></div>
+		
+		    <div class="sideComponents">      
+		        <ul class="ulForSideComponents">
+		            <div><li class="active"><a href="#">SADRŽAJ</a></li></div><br/>
+		            <div><li><a href="#">PREGLED APARTMANA</a></li></div><br/>  
+		        </ul>
+		    </div>
+		
+		    <div class="listOfApartments">
+		        <div class="table-wrapper">
+		                <table class="fl-table">
+		                    <thead>
+		                    <tr>
+		                        <th>Redni broj</th>
+		                        <th>Naziv sadržaj apartmana</th>
+		                    </tr>
+		                    </thead>
+		                    <tbody>
+		                    <tr v-for="a in amenitiesList" @click="fillInputWithContent(a.content)">
+		                        <td class="serialNumber"></td>
+		                        <td>{{a.content}}</td>
+		                    </tr>
+		                    
+		                    </tbody>
+		                </table>
+		            </div>
+		    </div>
+		</div>
+		
+		`
+	,
+	methods : {
+		fillInputWithContent : function(content){
+			this.showManpulationPartForContent = true;
+			this.oldAmenityModel = content;
+			this.amenityModel = content;
+			console.log("Stara : " + this.oldAmenityModel)
+		},
+		
+		cancelChange : function() {
+			if(confirm('Da li ste sigurni da želite da odustante od promene?') == true){
+				this.showManpulationPartForContent = false;
+			}
+			
+		},
+		
+		deleteAmenities : function() {
+			if(confirm('Da li ste sigurni da želite da obrišete sadržaj koji se zove: ' + this.amenityModel + '?') == true){
+				this.showManpulationPartForContent = false;
+//				axios.delete('services/amenities/deleteAmenity', {params: "amenity" : '' + this.amenityModel})
+//				.then(response => {
+//					if(response.status === 200){
+//						toast('Sadržaj čiji je naziv bio ' + this.amenityModel + ' je uspšeno obrisan!')
+//					} else if(response.status === 201){
+//						toast('Neuspešno brisanje!')
+//					} else {
+//						toast('Greška!')
+//					}
+//				});
+				
+			}
+		},
+		
+		changeAmenities : function() {
+			console.log("Nova : " + this.amenityModel)
+			if(confirm('Da li ste sigurni da želite da izvršite izmenu?') == true){
+				this.showManpulationPartForContent = false;
+				axios.post('services/amenities/changeAmenity', {"content" : '' + this.amenityModel}, 
+						{params : {"oldAmenity" : this.oldAmenityModel}})
+				.then(response => {
+					if(response.status === 200){
+						toast('Sadržaj čiji je naziv bio ' + this.amenityModel + ' je uspšeno izmenjen!')
+						this.amenitiesList = response.data;
+					} else if(response.status === 201){
+						toast('Neuspešna izmena!')
+					} else {
+						this.$router.push({name : 'badRequest'});
+					}
+				});
+			}
+		}
+		
+		
+	},
+	mounted() {
+		
+		axios.get('services/users/getActiveUser').then(response => {
+			this.activeUser = response.data;
+			
+			if (this.activeUser.role === "admin"){
+				this.activeAdmin = true;
+				axios.get('services/amenities/getAllAmenities').then(response => {
+					this.amenitiesList = response.data;			
+				});
+			}else{
+				this.activeAdmin = false;
+			}		
+												
+			if (this.activeUser.role === "domacin"){
+				this.activeHost = true;
+			}else{
+				this.activeHost = false;
+			}
+			
+			if (this.activeUser.role === "gost"){
+				this.activeGuest = true;
+			}else{
+				this.activeGuest = false;
+			}
+				
+
+		});	
+	}
+});

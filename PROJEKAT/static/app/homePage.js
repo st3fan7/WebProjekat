@@ -24,7 +24,7 @@ Vue.component("homePage", {
 	        <ul>
 	            <li id="onlyHomePage" class="active"><a href="#">Početna</a></li>
 	            <li v-if="activeHost"><a href="#/addNewApartment">Moji apartmani</a></li>
-	            <li v-if="activeAdmin"><a href="#">Apartmani</a></li>
+	            <li v-if="activeAdmin"><a href="#/amenitiesChange">Apartmani</a></li>
                 <li v-if="activeHost || activeAdmin"><a href="#/reservations">Rezervacije</a></li>
                 <li v-if="activeHost || activeAdmin"><a href="#">Komentari</a></li>   
                 <li v-if="activeHost || activeAdmin"><a href="#/adminUsers">Korisnici</a></li>   

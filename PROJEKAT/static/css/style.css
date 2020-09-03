@@ -460,7 +460,7 @@ ul li.active a{
 label,
 .product-text h1,
 .text-for-adding-apartment h1,
-.product-price-btn p, .rasing-price-btn p, .change-btn-in-admin-change-apartment p, .cancel-btn-in-admin-change-apartment p,  .search-btn-user-reservation p, .search-btn-user-overview p, .review-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p, .sort-price-btn p, .filter-btn-active-apartment p, .change-btn p {
+.product-price-btn p, .add-btn-amenities p, .delete-btn-in-amenities p, .cancel-btn-in-amenities p, .rasing-price-btn p, .change-btn-in-admin-change-apartment p, .cancel-btn-in-admin-change-apartment p,  .search-btn-user-reservation p, .search-btn-user-overview p, .review-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p, .sort-price-btn p, .filter-btn-active-apartment p, .change-btn p {
     font-family: 'Bentham', serif;
 }
 
@@ -494,7 +494,7 @@ label {
     overflow: hidden;
 }
 
-.product-price-btn, .rasing-price-btn, .change-btn-in-admin-change-apartment, .cancel-btn-in-admin-change-apartment,  .search-btn-user-reservation, .search-btn-user-overview, .review-btn, .falling-price-btn, .type-filter-btn, .content-filter-btn, .add-btn, .cancel-btn, .sort-price-btn, .filter-btn-active-apartment, .change-btn {
+.product-price-btn, .rasing-price-btn, .add-btn-amenities, .delete-btn-in-amenities, .cancel-btn-in-amenities, .change-btn-in-admin-change-apartment, .cancel-btn-in-admin-change-apartment,  .search-btn-user-reservation, .search-btn-user-overview, .review-btn, .falling-price-btn, .type-filter-btn, .content-filter-btn, .add-btn, .cancel-btn, .sort-price-btn, .filter-btn-active-apartment, .change-btn {
     height: 103px;
     width: 327px;
     margin-top: 17px;
@@ -508,7 +508,7 @@ label {
     position: relative;
 }
 
-.product-price-btn p, .rasing-price-btn p, .change-btn-in-admin-change-apartment p, .cancel-btn-in-admin-change-apartment p,  .search-btn-user-reservation p, .search-btn-user-overview p, .review-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p, .sort-price-btn p, .filter-btn-active-apartment p, .change-btn p  {
+.product-price-btn p, .rasing-price-btn p, .add-btn-amenities p, .delete-btn-in-amenities p, .cancel-btn-in-amenities p, .change-btn-in-admin-change-apartment p, .cancel-btn-in-admin-change-apartment p,  .search-btn-user-reservation p, .search-btn-user-overview p, .review-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p, .sort-price-btn p, .filter-btn-active-apartment p, .change-btn p  {
     display: inline-block;
     position: absolute;
     top: 7px;
@@ -546,7 +546,7 @@ span {
     font-size: 34px;
 }
 
-.product-price-btn button, .rasing-price-btn button, .change-btn-in-admin-change-apartment button, .cancel-btn-in-admin-change-apartment button, .search-btn-user-reservation button, .search-btn-user-overview button, .review-btn button, .falling-price-btn button, .type-filter-btn button, .content-filter-btn button, .add-btn button, .cancel-btn button, .sort-price-btn button, .filter-btn-active-apartment button, .change-btn button  {
+.product-price-btn button, .rasing-price-btn button, .add-btn-amenities button, .delete-btn-in-amenities button, .cancel-btn-in-amenities button, .change-btn-in-admin-change-apartment button, .cancel-btn-in-admin-change-apartment button, .search-btn-user-reservation button, .search-btn-user-overview button, .review-btn button, .falling-price-btn button, .type-filter-btn button, .content-filter-btn button, .add-btn button, .cancel-btn button, .sort-price-btn button, .filter-btn-active-apartment button, .change-btn button  {
     float: right;
     display: inline-block;
     height: 50px;
@@ -571,6 +571,18 @@ span {
     background-color: #054f5294;
 }
 
+.cancel-btn-in-amenities button {
+	margin: -44px  85px 0 16px; 
+}
+
+.delete-btn-in-amenities button {
+	margin: -5px  85px 0 16px;
+}
+
+.add-btn-amenities button {
+	margin: -5px  85px 0 16px;
+}
+
 .change-btn-in-admin-change-apartment button {
     margin: 40px 125px 0 16px; 
 }
@@ -580,7 +592,7 @@ span {
 }
 
 .search-btn-user-reservation button {
-    margin: -5px 85px 0 16px;
+    margin: 35px 85px 0 16px;
 }
 
 .search-btn-user-overview button {
@@ -645,7 +657,7 @@ span {
     outline: none;
 }
 
-.product-price-btn button:hover, .rasing-price-btn button:hover,  .change-btn-in-admin-change-apartment button:hover, .cancel-btn-in-admin-change-apartment button:hover, .search-btn-user-reservation button:hover,  .search-btn-user-overview button:hover, .review-btn button:hover, .falling-price-btn button:hover, .type-filter-btn button:hover, .add-btn button:hover, .cancel-btn button:hover, .sort-price-btn button:hover, .filter-btn-active-apartment button:hover, .change-btn button:hover{
+.product-price-btn button:hover, .delete-btn-in-amenities button:hover, .add-btn-amenities button:hover, .cancel-btn-in-amenities button:hover, .rasing-price-btn button:hover,  .change-btn-in-admin-change-apartment button:hover, .cancel-btn-in-admin-change-apartment button:hover, .search-btn-user-reservation button:hover,  .search-btn-user-overview button:hover, .review-btn button:hover, .falling-price-btn button:hover, .type-filter-btn button:hover, .add-btn button:hover, .cancel-btn button:hover, .sort-price-btn button:hover, .filter-btn-active-apartment button:hover, .change-btn button:hover{
     background-color: #054f5294;
 }
 
@@ -808,7 +820,7 @@ span {
     text-align: center; 
 } 
 
-.text-for-adding-apartment input[type=text], select {
+.text-for-adding-apartment input[type=text], .price-title2 input[type=text], select {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -820,7 +832,7 @@ span {
     font-size: 16px;
 }
 
-.text-for-adding-apartment input[type="text"]::placeholder {  
+.text-for-adding-apartment input[type="text"]::placeholder, .price-title2 input[type=text]::placeholder  {  
     text-align: center; 
 } 
   
@@ -1054,6 +1066,7 @@ option {
 }
 
 .fl-table {
+	counter-reset: serial-number;
     border-radius: 5px;
     font-size: 16px;
     font-weight: normal;
@@ -1063,6 +1076,11 @@ option {
     max-width: 100%;
 	word-wrap: break-word;
     background-color: white;
+}
+
+.fl-table  td.serialNumber:first-child:before {
+  counter-increment: serial-number;  /* Increment the serial number counter */
+  content: counter(serial-number);  /* Display the counter */
 }
 
 .fl-table td, .fl-table th {

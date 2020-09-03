@@ -59,7 +59,26 @@ public class AmenitiesDAO {
 	public Amenities getAmenitiesID(String id) {
 		return amenitiesMap.get(id);
 	}
+	
+	
+	public void editAmenity(String content, String oldAmenity)
+	{
 
+		int index = -1;
+		for (int i = 0; i < amenitiesList.size(); i++) {
+			if(amenitiesList.get(i).getContent().equals(oldAmenity))
+			{
+				index = i;
+				break;
+			}
+		}
+		
+		amenitiesList.get(index).setContent(content);
+		
+		amenitiesMap.remove(oldAmenity);
+		amenitiesMap.put(content, amenitiesList.get(index));
+		
+	}
 	
 	// getter and setter
 	

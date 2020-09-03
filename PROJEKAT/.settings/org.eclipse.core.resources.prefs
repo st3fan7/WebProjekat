@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//files/admins.json=UTF-8
+encoding//files/amenities.json=UTF-8
 encoding//files/guests.json=UTF-8
 encoding//files/hosts.json=UTF-8
 encoding//src/enums/Role.java=UTF-8
