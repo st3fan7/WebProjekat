@@ -39,7 +39,7 @@ public class AmenitiesDAO {
 	public void fillMapWithAmenities() {
 		if(amenitiesList != null) {
 			for(int i = 0; i < amenitiesList.size(); i++) {
-				amenitiesMap.put(amenitiesList.get(i).getContent(), amenitiesList.get(i));
+				amenitiesMap.put(amenitiesList.get(i).getContent().toLowerCase(), amenitiesList.get(i));
 			}
 		} else {
 			amenitiesList = new ArrayList<Amenities>();
@@ -76,7 +76,7 @@ public class AmenitiesDAO {
 		amenitiesList.get(index).setContent(content);
 		
 		amenitiesMap.remove(oldAmenity);
-		amenitiesMap.put(content, amenitiesList.get(index));
+		amenitiesMap.put(content.toLowerCase(), amenitiesList.get(index));
 		
 	}
 	

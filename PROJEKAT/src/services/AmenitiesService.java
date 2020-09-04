@@ -2,6 +2,9 @@ package services;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+
+import java.util.ArrayList;
+
 import com.google.gson.Gson;
 
 import beans.Amenities;
@@ -16,6 +19,7 @@ public class AmenitiesService {
 	public AmenitiesService() {
 		getAllAmenities();
 		changeAmenity();
+		addAmenity();
 	}
 
 	public void getAllAmenities() {	
@@ -54,6 +58,33 @@ public class AmenitiesService {
 			res.status(200);
 			return g.toJson(amenitiesDAO.getAmenitiesList());
 
+		});
+	}
+	
+	public void addAmenity() {
+		post("services/amenities/addAmenity", (req, res) -> {
+			res.type("application/json");
+			String payload = req.body();
+			Amenities amenities = g.fromJson(payload, Amenities.class);
+			
+			if(amenities == null) {
+				res.status(400);
+				return ("400 Bad Request");
+			}
+			
+			if(amenitiesDAO.getAmenitiesMap().containsKey(amenities.getContent().toLowerCase())) {
+				res.status(200);
+				return ("200 OK");
+			}
+			
+			ArrayList<Amenities> amenitiesList = amenitiesDAO.getAmenitiesList();
+			amenitiesList.add(amenities);
+			amenitiesDAO.setAmenitiesList(amenitiesList);
+			AmenitiesDAO.writeAmenitiesInFile(amenitiesDAO.getAmenitiesList());
+			amenitiesDAO.fillMapWithAmenities();
+			
+			res.status(201);
+			return g.toJson(amenitiesDAO.getAmenitiesList());
 		});
 	}
 

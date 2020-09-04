@@ -8,7 +8,8 @@ Vue.component("amenitiesChange", {
 			amenitiesList : null,
 			amenityModel : '',
 			oldAmenityModel : '',
-			showManpulationPartForContent : false
+			showManpulationPartForContent : false,
+			addAmenityInputField : ''
 		}
 	},
 	template: 
@@ -57,10 +58,10 @@ Vue.component("amenitiesChange", {
 		        <div class="search-title2">
 		            <h1>Dodaj novi sadržaj:</h1>
 		            <form id="formForSearch" action="#">
-		                <input type="text" id="amenitiesID" name="amenitiesName" placeholder="Unesite naziv sadržaja...">
+		                <input v-model="addAmenityInputField" type="text" id="amenitiesID" name="amenitiesName" placeholder="Unesite naziv sadržaja...">
 		        
 		                <div class="add-btn-amenities">
-		                    <button id="searchInUserReservationID" type="submit">Dodaj</button>
+		                    <button @click="addAmenity()" id="searchInUserReservationID" type="button">Dodaj</button>
 		                </div>
 		            </form>           
 		        </div>
@@ -160,16 +161,38 @@ Vue.component("amenitiesChange", {
 						{params : {"oldAmenity" : this.oldAmenityModel}})
 				.then(response => {
 					if(response.status === 200){
-						toast('Sadržaj čiji je naziv bio ' + this.amenityModel + ' je uspšeno izmenjen!')
+						toast('Sadržaj je uspšeno izmenjen!')
 						this.amenitiesList = response.data;
-					} else if(response.status === 201){
-						toast('Neuspešna izmena!')
 					} else {
 						this.$router.push({name : 'badRequest'});
 					}
 				});
 			}
+		},
+		
+		addAmenity : function() {
+			
+			if(confirm('Da li ste sigurni da želite da dodate ' + this.addAmenityInputField + '?') == true){
+				axios.post('services/amenities/addAmenity', {"content": '' + this.addAmenityInputField})
+				.then(response => {
+					if(response.status === 201) {
+						toast('Sadržaj je uspešno dodat!')
+						this.amenitiesList = response.data;
+					} else if(response.status === 200) {
+						toast('Sadržaj već postoji!')
+					} else {
+						toast('Sadržaj nije dodat!')
+						this.$router.push({ name : 'badRequest'});
+					}
+				});
+				
+			} 
+			
+			this.addAmenityInputField = '';
+
+			
 		}
+		
 		
 		
 	},
