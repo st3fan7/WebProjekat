@@ -474,12 +474,12 @@ label {
 }
 
 .product-text h2 {
-    margin: 0 0 47px 38px;
-    font-size: 13px;
+    margin: 0 0 47px -185px;
+    font-size: 15px;
     font-family: 'Raleway', sans-serif;
     font-weight: 400;
     text-transform: uppercase;
-    color: #d2d2d2;
+    color: #474747;
     letter-spacing: 0.2em;
 }
 

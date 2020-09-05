@@ -29,8 +29,8 @@ Vue.component("adminUsers",{
 				 
 				     <div class="main">     
 				         <ul class="menu-contents">
-				            <li id="onlyHomePage"><a href="#">Početna</a></li>
-				            <li v-if="activeHost"><a href="#">Moji apartmani</a></li>
+				            <li id="onlyHomePage"><a href="#/">Početna</a></li>
+				            <li v-if="activeHost"><a href="#/reviewApartments">Moji apartmani</a></li>
 				            <li v-if="activeAdmin"><a href="#">Apartmani</a></li>
 			                <li v-if="activeHost || activeAdmin"><a href="#/reservations">Rezervacije</a></li>
 			                <li v-if="activeHost || activeAdmin"><a href="#">Komentari</a></li>   

@@ -29,5 +29,179 @@
     "statusOfApartment": "Aktivan",
     "amenities": [],
     "reservations": []
+  },
+  {
+    "id": "Soba 24",
+    "typeOfApartment": "Soba",
+    "numberOfRooms": 1,
+    "numberOfGuests": 2,
+    "location": {
+      "latitude": 2.0,
+      "longitude": 52.0,
+      "address": {
+        "street": "Cara Dusana",
+        "houseNumber": 75,
+        "populatedPlace": "Novi Sad",
+        "zipCode": "21000"
+      }
+    },
+    "releaseDates": [
+      "Fri Oct 09 2020 17:12:00 GMT+0200 (Средњеевропско летње време)",
+      "Fri Feb 12 2021 17:12:00 GMT+0100 (Средњеевропско стандардно време)"
+    ],
+    "host": "domacin1",
+    "comments": [],
+    "pictures": [],
+    "pricePerNight": 1000,
+    "checkInTime": "14:00",
+    "checkOutTime": "10:00",
+    "statusOfApartment": "Aktivan",
+    "amenities": [
+      {
+        "content": "stolica"
+      },
+      {
+        "content": "tv"
+      },
+      {
+        "content": "kada"
+      },
+      {
+        "content": "tuš kabina"
+      },
+      {
+        "content": "ogledalo"
+      },
+      {
+        "content": "terasa"
+      },
+      {
+        "content": "radio"
+      }
+    ],
+    "reservations": []
+  },
+  {
+    "id": "Apartman 212",
+    "typeOfApartment": "Ceo apartman",
+    "numberOfRooms": 5,
+    "numberOfGuests": 25,
+    "location": {
+      "latitude": 50.0,
+      "longitude": 18.156,
+      "address": {
+        "street": "Stepa Stepanović",
+        "houseNumber": 2,
+        "populatedPlace": "Beograd",
+        "zipCode": "11000"
+      }
+    },
+    "releaseDates": [
+      "Thu Oct 01 2020 17:12:00 GMT+0200 (Средњеевропско летње време)",
+      "Sat Oct 31 2020 17:12:00 GMT+0100 (Средњеевропско стандардно време)"
+    ],
+    "host": "domacin1",
+    "comments": [],
+    "pictures": [],
+    "pricePerNight": 5000,
+    "checkInTime": "22:00",
+    "checkOutTime": "22:00",
+    "statusOfApartment": "Aktivan",
+    "amenities": [
+      {
+        "content": "sto"
+      },
+      {
+        "content": "stolica"
+      },
+      {
+        "content": "tv"
+      },
+      {
+        "content": "klima"
+      },
+      {
+        "content": "krevet"
+      },
+      {
+        "content": "krevetac"
+      },
+      {
+        "content": "kada"
+      },
+      {
+        "content": "ogledalo"
+      },
+      {
+        "content": "bazen"
+      },
+      {
+        "content": "fen za kosu"
+      },
+      {
+        "content": "radio"
+      },
+      {
+        "content": "grejanje"
+      }
+    ],
+    "reservations": []
+  },
+  {
+    "id": "Beogradski sobe 2",
+    "typeOfApartment": "Soba",
+    "numberOfRooms": 2,
+    "numberOfGuests": 5,
+    "location": {
+      "latitude": 49.0,
+      "longitude": 165.022,
+      "address": {
+        "street": "Beogradska",
+        "houseNumber": 55,
+        "populatedPlace": "Beograd",
+        "zipCode": "11000"
+      }
+    },
+    "releaseDates": [
+      "Sat Sep 05 2020 01:06:00 GMT+0200 (Средњеевропско летње време)",
+      "Wed Sep 30 2020 01:06:00 GMT+0200 (Средњеевропско летње време)"
+    ],
+    "host": "domacin1",
+    "comments": [],
+    "pictures": [],
+    "pricePerNight": 175,
+    "checkInTime": "14:00",
+    "checkOutTime": "10:00",
+    "statusOfApartment": "Neaktivan",
+    "amenities": [
+      {
+        "content": "sto"
+      },
+      {
+        "content": "stolica"
+      },
+      {
+        "content": "tv"
+      },
+      {
+        "content": "krevet"
+      },
+      {
+        "content": "pomoćni krevet"
+      },
+      {
+        "content": "tuš kabina"
+      },
+      {
+        "content": "grejanje"
+      },
+      {
+        "content": "terasa"
+      },
+      {
+        "content": "ogledalo"
+      }
+    ],
+    "reservations": []
   }
 ]

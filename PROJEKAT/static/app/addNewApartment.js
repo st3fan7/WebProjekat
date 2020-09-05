@@ -21,7 +21,12 @@ Vue.component("addNewApartment", {
 			starTimeInit : '',
 			endTimeInit : '',
 			amenitiesList : null,
-			checkedAmenities : []
+			checkedAmenities : [],
+			 state : {
+				    disabledDates: {
+				     to: new Date(),
+				     }
+				   }
 			 
 			
 		}
@@ -40,8 +45,8 @@ Vue.component("addNewApartment", {
     
         <div class="main">     
             <ul class="menu-contents">
-	            <li id="onlyHomePage"><a href="#">Početna</a></li>
-	            <li v-if="activeHost" class="active"><a href="#/addNewApartment">Moji apartmani</a></li>
+	            <li id="onlyHomePage"><a href="#/">Početna</a></li>
+	            <li v-if="activeHost" class="active"><a href="#/reviewApartments">Moji apartmani</a></li>
 	            <li v-if="activeAdmin"><a href="#">Apartmani</a></li>
                 <li v-if="activeHost || activeAdmin"><a href="#/reservations">Rezervacije</a></li>
                 <li v-if="activeHost || activeAdmin"><a href="#">Komentari</a></li>   
@@ -72,9 +77,9 @@ Vue.component("addNewApartment", {
 
     <div class="sideComponents">      
         <ul class="ulForSideComponents">
-            <div><li><a href="#">AKTIVNI</a></li></div><br/>         
-            <div><li><a href="#">NEAKTIVNI</a></li></div><br/>
-            <div><li class="active"><a href="#">DODAJ APARTMAN</a></li></div><br/>
+            <div><li><a href="#/reviewApartments">AKTIVNI</a></li></div><br/>         
+            <div><li><a href="#/reviewInActiveApartments">NEAKTIVNI</a></li></div><br/>
+            <div><li class="active"><a href="#/addNewApartment">DODAJ APARTMAN</a></li></div><br/>
         </ul>
     </div>
 
@@ -133,7 +138,7 @@ Vue.component("addNewApartment", {
                         <input v-model="addressModel" type="text" id="addressID" name="addressName" placeholder="Unesite adresu apartmana..."  pattern="[A-Z][a-z A-Z]*[ ][1-9][0-9]*, [A-Z][a-z A-Z]* [0-9]{5}" title="Primer validne adrese: Cara Dusana 25, Novi Sad 21000">	
 							
 						<label for="dateFromPublishing">Datum od kojeg se izdaje:</label><br/>
-                        <vuejs-datepicker v-model="startDateModel" id="startDateID" name="startDate" type="date"  format="dd.MM.yyyy." placeholder="Izaberite datum od kojeg se izdaje..." ></vuejs-datepicker>
+                        <vuejs-datepicker v-model="startDateModel" id="startDateID" name="startDate" type="date"  format="dd.MM.yyyy." :disabledDates="state.disabledDates" placeholder="Izaberite datum od kojeg se izdaje..." ></vuejs-datepicker>
 						
 						<label for="dateToPublishing">Datum do kojeg se izdaje:</label><br/>
                         <vuejs-datepicker v-model="endDateModel" id="endDateID" name="endDate" type="date"  format="dd.MM.yyyy."  :open-date="startDateModel" :disabledDates="newDateStart" v-bind:disabled="startDateModel === ''" placeholder="Izaberite datum do kojeg se izdaje..." ></vuejs-datepicker>

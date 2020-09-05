@@ -27,8 +27,8 @@ Vue.component("amenitiesChange", {
 		    
 		        <div class="main">     
 		            <ul class="menu-contents">
-			            <li id="onlyHomePage"><a href="#">Početna</a></li>
-			            <li v-if="activeHost"><a href="#/addNewApartment">Moji apartmani</a></li>
+			            <li id="onlyHomePage"><a href="#/">Početna</a></li>
+			            <li v-if="activeHost"><a href="#/reviewApartments">Moji apartmani</a></li>
 			            <li v-if="activeAdmin" class="active"><a href="#/amenitiesChange">Apartmani</a></li>
 		                <li v-if="activeHost || activeAdmin"><a href="#/reservations">Rezervacije</a></li>
 		                <li v-if="activeHost || activeAdmin"><a href="#">Komentari</a></li>   
