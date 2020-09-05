@@ -9,6 +9,7 @@ const addNewApartment = {template: '<addNewApartment></addNewApartment>'}
 const amenitiesChange = {template: '<amenitiesChange></amenitiesChange>'}
 const reviewApartments = {template: '<reviewApartments></reviewApartments>'}
 const reviewInActiveApartments = {template: '<reviewInActiveApartments></reviewInActiveApartments>'}
+const comments = {template: '<comments></comments>'}
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -23,7 +24,8 @@ const router = new VueRouter({
 		  { path: '/addNewApartment', name:'addNewApartment', component: addNewApartment},
 		  { path: '/amenitiesChange', name:'amenitiesChange', component: amenitiesChange},
 		  { path: '/reviewApartments', name:'reviewApartments', component: reviewApartments},
-		  { path: '/reviewInActiveApartments', name:'reviewInActiveApartments', component: reviewInActiveApartments}
+		  { path: '/reviewInActiveApartments', name:'reviewInActiveApartments', component: reviewInActiveApartments},
+		  { path: '/comments', name:'comments', component: comments}
 	  ]
 });
 

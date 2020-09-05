@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>WEBSITE FOR VACACTION</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body class="bodyForBackground">
+    <div class="boundaryForScroll">
+        <div class="logoAndName">
+            <div class="logo">        
+                <img src="pictures/clipart302388.png"/>
+            </div>
+            <div class="webName">
+                <h3>BookingApp</h3>
+            </div>  
+        </div>
+    
+        <div class="main">     
+            <ul class="menu-contents">
+                <li><a href="#">Početna</a></li>
+                <li><a href="#">Moji apartmani</a></li>
+                <li class="active"><a href="#">Rezervacije</a></li>
+                <li><a href="#">Komentari</a></li>
+            </ul>
+        </div>
+    
+        <div class="dropdown">
+            <button class="dropbtn"><img id="menuIcon" src="pictures/menuIcon.png" />
+                <img id="userIcon" src="pictures/user.png" />
+            </button>
+            <div class="dropdown-content">
+                <a href="#">Moj Nalog</a>
+                <a href="#">Odjavi se</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="reservationForGuest">
+        <div class="filter-title">
+            <h1>Rezervacija:</h1>
+            <form id="formForSearch" action="#">
+                <label for="username" id="labelForStartDate">Izaberite početni datum:</label>
+                <input type="date" id="dateID" name="dateName" >
+            
+                <label for="numberOfNight" id="labelNumberOfNight">Broj noćenja:</label>
+                <input type="text" id="numberOfNightID" name="numberOfNightName" placeholder="Unesite broj noćenja...">
+            
+
+                <label for="message" id="labelMessage">Poruka za domaćina:</label>
+                <input type="text" id="messageID" name="messageName" placeholder="Unesite poruku za domaćina...">
+            
+
+                <div class="search-btn-user-overview">
+                    <button type="button">Rezerviši</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="commentForHost">
+        <div class="filter-title">
+            <h1>Komentar za apartman:</h1>
+            <form id="formForSearch" action="#">
+
+                <input type="text" id="messageID" name="messageName" placeholder="Unesite komentar za apartman...">
+            
+                <label id="labelForRole" for="role">Ocena:</label>
+                <select id="roleID" name="roleName">
+                    <option value="withoutMark">Bez ocene</option>
+                    <option value="1">1 (jedan)</option>
+                    <option value="2">2 (dva)</option>
+                    <option value="3">3 (tri)</option>
+                    <option value="4">4 (četiri)</option>
+                    <option value="5">5 (pet)</option>
+                </select>
+
+                <div class="search-btn-user-overview">
+                    <button type="button">Pošalji</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="titleForUserOverviewForSelectedA">
+        <h1 id="nameOfApartmentInApartmentReview">Apartman 1</h1>
+        <a href="#" class="previousInReservation">&laquo; Nazad</a>
+    </div> 
+
+    <div class="room-gallery">
+        <img class="gallery-hightlight" src="img/room1-big.jpeg" alt="room1" />
+        <div class="room-preview">
+          <img src="./img/room1-small.jpeg" class="room-active" alt="" />
+          <img src="./img/room2-small.jpeg" alt="" />
+          <img src="./img/room3-small.jpeg" alt="" />
+          <img src="./img/room2-small.jpeg" alt="" />
+        </div>
+    </div>
+
+    <div class="basicDataWrapper">
+        <div class="filter-title">
+            <div class="text-for-adding-apartment">
+                <h1>Osnovni podaci o apartmanu</h1>
+
+                <label class="labelFontSize">Naziv apartmana (ID):</label><br/><br/>
+                <label class="labelWithoutItalicFontStyle">Povuci naziv</label><br/><br/><br/>
+
+                <label class="labelFontSize">Tip apartmana:</label><br/><br/>
+                <label class="labelWithoutItalicFontStyle">Povuci tip</label><br/><br/><br/>
+
+                <label class="labelFontSize">Status:</label><br/><br/>
+                <label class="labelWithoutItalicFontStyle">Povuci status</label><br/><br/><br/>
+
+                <label class="labelFontSize">Broj soba:</label><br/><br/>
+                <label class="labelWithoutItalicFontStyle">Povuci broj soba</label><br/><br/><br/>
+
+                <label class="labelFontSize">Broj gostiju:</label><br/><br/>
+                <label class="labelWithoutItalicFontStyle">Povuci broj gostiju</label><br/><br/><br/>
+
+                <label class="labelFontSize">Cena po noći:</label><br/><br/>
+                <label class="labelWithoutItalicFontStyle">Povuci cenu</label><br/><br/><br/>
+
+                <label class="labelFontSize">Lokacija:</label><br/><br/>
+                <label class="labelWithoutItalicFontStyle">Povuci lokaciju</label><br/><br/><br/>
+
+                <label class="labelFontSize">Datum od kojeg se izdaje:</label><br/><br/>
+                <label class="labelWithoutItalicFontStyle">Povuci datum od kojeg se izdaje</label><br/><br/><br/>
+
+                <label class="labelFontSize">Datum do kojeg se izdaje:</label><br/><br/>
+                <label class="labelWithoutItalicFontStyle">Povuci datum do kojeg se izdaje</label><br/><br/><br/>
+
+                <label class="labelFontSize">Vreme za prijavu:</label><br/><br/>
+                <label class="labelWithoutItalicFontStyle">Povuci vreme za prijavu</label><br/><br/><br/>
+
+                <label class="labelFontSize">Vreme za odjavu:</label><br/><br/>
+                <label class="labelWithoutItalicFontStyle">Povuci vreme za odjavu</label><br/><br/><br/>
+
+                <label class="labelFontSize">Domaćin:</label><br/><br/>
+                <label class="labelWithoutItalicFontStyle">Povuci domaćina</label><br/>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="listOfApartments2">
+        
+    <h1 id="titleForContentForApartment">Sadržaj apartmana</h1><br/><br/><br/>
+        <div class="table-wrapper-apartment">
+
+                <table class="fl-table">
+                    <thead>
+                    <tr>
+                        <th>Redni broj</th>
+                        <th>Naziv sadržaj apartmana</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="serialNumber"></td>
+                        <td>sto</td>
+
+                    </tr>
+                    <tbody>
+                </table>
+            </div>
+            
+    </div>
+
+    <div class="listOfApartments2">
+        
+            <h1 id="titleForCommentsForApartment">Komentari za apartman</h1><br/><br/><br/>
+                <div class="table-wrapper-apartment">
+        
+                        <table class="fl-table">
+                            <thead>
+                            <tr>
+                                <th>Gost</th>
+                                <th>Komentar</th>
+                                <th>Ocena</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>marko123</td>
+                                <td>Osoblje je ljubazno, sve pohvale! </td>
+                                <td>5 (pet)</td>
+                            </tr>
+                            <tr>
+                                <td>milan123</td>
+                                <td>Osoblje je ljubazno, hrana solidna! </td>
+                                <td>4 (četiri)</td>
+                            </tr>                    
+                            <tbody>
+                        </table>
+                    </div>
+                    <br/><br/><br/><br/><br/>
+                    
+            </div>
+</body>
+</html>

@@ -32,7 +32,7 @@ Vue.component("changeProfile", {
 	            <li v-if="activeHost"><a href="#/reviewApartments" v-on:click="notChange($event)">Moji apartmani</a></li>
 	            <li v-if="activeAdmin"><a href="#" v-on:click="notChange($event)">Apartmani</a></li>
                 <li v-if="activeHost || activeAdmin"><a href="#/reservations" v-on:click="notChange($event)">Rezervacije</a></li>
-                <li v-if="activeHost || activeAdmin"><a href="#" v-on:click="notChange($event)">Komentari</a></li>   
+                <li v-if="activeHost || activeAdmin"><a href="#/comments" v-on:click="notChange($event)">Komentari</a></li>   
                 <li v-if="activeAdmin"><a href="#/adminUsers" v-on:click="notChange($event)">Korisnici</a></li>   
                 <li v-if="activeGuest"><a href="#/reservations" v-on:click="notChange($event)">Moje rezervacije</a></li>
             </ul>

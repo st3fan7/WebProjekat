@@ -18,6 +18,7 @@ public class SparkMain {
 		new ReservationService();
 		new ApartmentService();
 		new AmenitiesService();
+		new CommentService();
 	}
 
 	

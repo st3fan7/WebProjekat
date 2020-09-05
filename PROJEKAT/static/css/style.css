@@ -327,7 +327,7 @@ ul li.active a{
     z-index: 1;
     margin-left: -8px;
     border-radius: 25px;
-    
+    z-index: 5;
   }
   
   .dropdown-content a {
@@ -336,6 +336,7 @@ ul li.active a{
     text-decoration: none;
     display: block;
     border-radius: 25px;
+    z-index: 5;
    
   }
   
@@ -343,6 +344,7 @@ ul li.active a{
     background-color: lightgray;
     color: black;
     border:1px solid black;
+    z-index: 5;
 }
   
 .dropdown:hover .dropdown-content {display: block;}
@@ -352,6 +354,7 @@ ul li.active a{
     cursor: pointer;
     transform: scale(1.05);
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+    z-index: 5;
     }
 
 #menuIcon{
@@ -469,6 +472,19 @@ label {
     font-weight: 400;
 }
 
+.labelFontSize {
+    font-size: 21px;
+    font-weight: 400;
+    font-family: 'Bentham', serif;
+}
+
+.labelWithoutItalicFontStyle {
+    font-size: 20px;
+    font-weight: 400;
+    font-family: 'Bentham', serif;
+    color: #474747;
+}
+
 .product-price-btn2 p {
     font-family: 'Bentham', serif;
 }
@@ -482,6 +498,7 @@ label {
     color: #474747;
     letter-spacing: 0.2em;
 }
+
 
 .product-text p {
     height: 125px;
@@ -673,6 +690,10 @@ span {
     margin-top: 220px;
 }
 
+.listOfApartments2 {
+    margin-top: 120px;
+}
+
 .boundaryForScroll {
     position: fixed;
     width: 100%;
@@ -683,7 +704,7 @@ span {
     z-index: 4;  
 }
 
-.sortAndFilter, .sortAndFilterForUserOverview,.confirm-cancel-field, .sortAndFilterForUserReservation {
+.sortAndFilter, .basicDataWrapper, .reservationForGuest, .commentForHost, .sortAndFilterForUserOverview,.confirm-cancel-field, .sortAndFilterForUserReservation {
     position: fixed;
     width: 400px;
     height: 650px;
@@ -691,7 +712,7 @@ span {
     margin-top: 0%;
     margin-left: 73%;
     background-color: #afd0c7;
-    z-index: 4;
+    z-index: 3;
     border-radius: 30px 30px 30px 30px;
     -webkit-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
     -moz-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
@@ -719,8 +740,35 @@ span {
     cursor: pointer;
 }
 
-.sortAndFilterForUserOverview {
+.sortAndFilterForUserOverview{
     height: 550px;
+}
+
+.commentForHost {
+    height: 310px;
+    margin-left: 73%;
+    background-color: #afd0c7;
+    margin-top: 20%;
+    border-radius: 0px 0px 30px 30px;
+}
+
+.basicDataWrapper {
+    position: relative;
+    height: 1410px;
+    width: 810px;
+    margin-left: 18%;
+    background-color: #afd0c7;
+    margin-top: 4%;
+}
+
+.reservationForGuest {
+    height: 380px;
+    margin-top: -1.4%;
+    border-radius: 30px 30px 0px 0px;
+    -webkit-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+    z-index: 4;
 }
 
 .sortAndFilterForUserReservation {
@@ -765,6 +813,23 @@ span {
 #labelForUsername {
     position: relative;
     margin-left: 90px;
+}
+
+#dateID {
+    margin-left: 70px;
+}
+
+#labelNumberOfNight {
+    margin-left: 100px;
+}
+
+#labelMessage {
+    margin-left: 75px;
+}
+
+#labelForStartDate {
+    position: relative;
+    margin-left: 60px;
 }
 
 #labelForRole {
@@ -987,7 +1052,13 @@ option {
 
 .table-wrapper-comments{
     margin-left: 400px;
-    width: 900px;
+    width: 850px;
+    box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+}
+
+.table-wrapper-apartment {
+    margin-left: 19%;
+    width: 810px;
     box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
 }
 
@@ -995,7 +1066,7 @@ option {
     width: 100px;
 }
 
-.previous, .previousInHostManageForSelectedApartments, .saveChange, .previousInReservation {
+.previous, .previousInHostManageForSelectedApartments, .saveChange, .previousInReservation, .previousInComments, .saveChangeInComments {
     text-decoration: none;
     display: inline-block;
     padding: 8px 16px;
@@ -1014,10 +1085,14 @@ option {
   }
   
 .previousInReservation {
-	margin-left: -26%;
+	margin-left: -28%;
 }  
+
+.previousInComments {
+	margin-left: -14%;
+}
   
-.previous:hover, .previousInHostManageForSelectedApartments:hover, .saveChange:hover, .previousInReservation:hover {
+.previous:hover, .previousInHostManageForSelectedApartments:hover, .saveChange:hover, .previousInReservation:hover, .previousInComments:hover, .saveChangeInComments:hover {
     background-color: #f1f1f1;
     color: black;
 
@@ -1029,12 +1104,34 @@ option {
 	margin-left: 27%;
 }
 
+.saveChangeInComments {
+	margin-left: 19%;
+}
+
 #nameOfApartmentInComments {
     margin-left: 210px;
 }
 
 #nameOfApartment {
     margin-left: 140px;
+}
+
+#nameOfApartmentInApartmentReview {
+    margin-left: 75px;
+}
+
+#titleForContentForApartment {
+    margin-left: 35%;
+    padding-top: -352px;
+    font-size: 28px;
+    color: white;
+}
+
+#titleForCommentsForApartment {
+    margin-left: 34%;
+    padding-top: -352px;
+    font-size: 28px;
+    color: white;
 }
 
 #nameOfApartment2 {
@@ -1115,7 +1212,7 @@ option {
         display: block;
         width: 100%;
     }
-    .table-wrapper:before, .table-wrapper-comments:before{
+    .table-wrapper:before, .table-wrapper-comments:before, .table-wrapper-apartment:before{
         content: "Scroll horizontally >";
         display: block;
         text-align: right;
@@ -1537,3 +1634,56 @@ option {
       color: #3c97bf;
       text-decoration: none;
   } 
+
+/* GALLERY */
+
+  
+  .room-gallery {
+    position: relative;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 13%;
+    margin-top: 11%;
+  }
+  
+  .room-description {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #e2d2c0;
+    color: rgb(41, 41, 41);
+  }
+  .room-description h1 {
+    padding: 10px;
+    font-size: 40px;
+  }
+  .room-description p {
+    font-size: 20px;
+  }
+  
+  .gallery-hightlight {
+    width: 80%;
+    height: 50%;
+  }
+  
+  .room-preview {
+    display: flex;
+    width: 80%;
+    border: 2px solid #d3baa0;
+  }
+  .room-preview img {
+    flex-grow: 1;
+    height: 100px;
+    opacity: 0.5;
+    transition: opacity 0.4s ease;
+    cursor: pointer;
+  }
+  
+  img.room-active {
+    opacity: 1;
+  }

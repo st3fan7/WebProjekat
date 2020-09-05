@@ -1,50 +1,64 @@
 package beans;
 
+import enums.CommentVisibility;
+
 public class Comment {
 
-	private Guest guest;
-	private Apartment apartment;
+	private String guest;
+	private String apartment;
 	private String text;
-	private int grade;
+	private String grade;
 	private String id;
+	private CommentVisibility visibility;
 	
 	
-	public Comment(String id, Guest guest, Apartment apartment, String text, int grade) {
+	public Comment(String id, String guest, String apartment, String text, String grade, CommentVisibility visibility) {
 		super();
 		this.id = id;
 		this.guest = guest;
 		this.apartment = apartment;
 		this.text = text;
 		this.grade = grade;
+		this.visibility = visibility;
 	}
 
 	
 	public Comment(){
 		super();
 		this.id = "";
-		this.guest = new Guest();
-		this.apartment = new Apartment();
+		this.guest = "";
+		this.apartment = "";
 		this.text = "";
-		this.grade = 0;
+		this.grade = "";
 	}
 
 
-	public Guest getGuest() {
+	public CommentVisibility getVisibility() {
+		return visibility;
+	}
+
+
+	public void setVisibility(CommentVisibility visibility) {
+		this.visibility = visibility;
+	}
+
+
+	public String getGuest() {
 		return guest;
 	}
 
 
-	public void setGuest(Guest guest) {
+	public void setGuest(String guest) {
 		this.guest = guest;
 	}
 
 
-	public Apartment getApartment() {
+	public String getApartment() {
 		return apartment;
 	}
 
 
-	public void setApartment(Apartment apartment) {
+	public void setApartment(String apartment) {
 		this.apartment = apartment;
 	}
 
@@ -59,12 +73,12 @@ public class Comment {
 	}
 
 
-	public int getGrade() {
+	public String getGrade() {
 		return grade;
 	}
 
 
-	public void setGrade(int grade) {
+	public void setGrade(String grade) {
 		this.grade = grade;
 	}
 	

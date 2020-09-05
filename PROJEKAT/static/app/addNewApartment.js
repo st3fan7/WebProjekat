@@ -49,7 +49,7 @@ Vue.component("addNewApartment", {
 	            <li v-if="activeHost" class="active"><a href="#/reviewApartments">Moji apartmani</a></li>
 	            <li v-if="activeAdmin"><a href="#">Apartmani</a></li>
                 <li v-if="activeHost || activeAdmin"><a href="#/reservations">Rezervacije</a></li>
-                <li v-if="activeHost || activeAdmin"><a href="#">Komentari</a></li>   
+                <li v-if="activeHost || activeAdmin"><a href="#/comments">Komentari</a></li>   
                 <li v-if="activeHost || activeAdmin"><a href="#/adminUsers">Korisnici</a></li>   
                 <li v-if="activeGuest"><a href="#/reservations">Moje rezervacije</a></li>
             </ul>
