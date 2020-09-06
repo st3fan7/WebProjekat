@@ -5,6 +5,22 @@
     "text": "Usluga je odlična, sve pohvale!",
     "grade": "5 (pet)",
     "id": "komentar1",
-    "visibility": "vidljiv"
+    "visibility": "Vidljiv"
+  },  
+   {
+    "guest": "gost1",
+    "apartment": "Apartman2",
+    "text": "Usluga je odlična!",
+    "grade": "5 (pet)",
+    "id": "komentar2",
+    "visibility": "Sakriven"
+  },
+  {
+    "guest": "gost1",
+    "apartment": "Apartman3",
+    "text": "Smeštaj nije najbolji!",
+    "grade": "3 (tri)",
+    "id": "komentar3",
+    "visibility": "Sakriven"
   }
 ]

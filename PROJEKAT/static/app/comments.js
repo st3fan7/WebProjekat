@@ -58,7 +58,7 @@ Vue.component("comments", {
     
     <div class="titleForUserReservationSelectedA">
 		<h1 id="nameOfApartment2">Pregled komentara</h1>
-        <a @click="cancelChangesButton" class="previousInComments">Poništi izmene</a>
+        <a v-if="activeHost" @click="cancelChangesButton" class="previousInComments">Poništi izmene</a>
 		<a v-if="!activeAdmin" @click="saveChangesButton" class="saveChangeInComments">Sačuvaj izmene</a>
     </div> 
 
@@ -68,6 +68,8 @@ Vue.component("comments", {
                     <thead>
                     <tr>
                         <th>Redni broj</th>
+                        <th>Gost</th>
+                        <th>Apartman</th>
                         <th class="comments">Komentar</th>
                         <th>Ocena</th>
                         <th class="visiblityForComment">Vidljivost</th>
@@ -76,14 +78,17 @@ Vue.component("comments", {
                     <tbody>
                     <tr v-for="c in listOfComments" >
                         <td class="serialNumber"></td>
+                        <td>{{c.guest}}</td>
+                        <td>{{c.apartment}}</td>
                         <td>{{c.text}}</td>
                         <td>{{c.grade}}</td>
-                        <td>
+                        <td v-if="activeHost">
                             <select v-model=c.visibility id="statusID" name="statusName">
-                                <option value="vidljiv">Vidljiv</option>
-                                <option value="sakriven" selected>Sakriven</option>
+                                <option value="Vidljiv">Vidljiv</option>
+                                <option value="Sakriven">Sakriven</option>
                             </select>
                         </td>
+                        <td v-else>{{c.visibility}}</td>
                     </tr> 
                     <tbody>
                 </table>
@@ -115,7 +120,7 @@ Vue.component("comments", {
 					axios.post('services/comments/saveChangedComments', this.listOfComments).then(response => {
 						if(response.status === 200)
 						{
-							toast("Komentar je uspešno izmenjen!");
+							toast("Izmene su sačuvane!");
 						}
 						else{
 							
@@ -129,7 +134,6 @@ Vue.component("comments", {
 		   cancelChangesButton : function() {
 				if (confirm('Da li ste sigurni da želite da poništite sve izmene?') == true) {
 					this.$router.go();
-//					this.listOfComments = this.listOfComments; //probaj
 				}
 				
 		   }
@@ -141,6 +145,13 @@ Vue.component("comments", {
 			
 			if (this.activeUser.role === "admin"){
 				this.activeAdmin = true;
+				axios.get('services/comments/getAllComments').then(response => {
+					if(response.status === 200){
+						this.listOfComments = response.data;
+					} else {
+						toast('Trenutno nema komentara!')
+					}
+				});
 			}else{
 				this.activeAdmin = false;
 			}		
@@ -148,7 +159,12 @@ Vue.component("comments", {
 			if (this.activeUser.role === "domacin"){
 				this.activeHost = true;
 				axios.get('services/comments/getAllCommentsForHost').then(response => {
-					this.listOfComments = response.data;
+					if(response.status === 200){
+						this.listOfComments = response.data;
+					} else {
+						toast('Trenutno nema komentara!')
+					}
+					
 				});
 			}else{
 				this.activeHost = false;

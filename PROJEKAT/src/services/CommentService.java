@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import dao.CommentDAO;
-import spark.Session;
 import beans.Comment;
 import beans.Host;
+import dao.CommentDAO;
+import spark.Session;
 
 public class CommentService {
 	private static Gson g = new Gson();
@@ -20,6 +20,7 @@ public class CommentService {
 	
 	public CommentService() {
 		saveChangedComments();
+		getAllCommentsForHost();
 		getAllComments();
 	}
 	
@@ -40,7 +41,6 @@ public class CommentService {
 				return g.toJson("Bad request");
 			}
 			
-			
 			for(Comment c1 : allComments){ 
 				for(Comment c2 : comments){ 
 					if(c1.getId().equals(c2.getId())){
@@ -48,7 +48,6 @@ public class CommentService {
 					}
 				}
 			}
-
 			
 			allComments.removeAll(allCommentsEmpty);		
 			allComments.addAll(comments);
@@ -64,7 +63,7 @@ public class CommentService {
 	
 	}
 	
-	private void getAllComments() {
+	private void getAllCommentsForHost() {
 		
 		get("services/comments/getAllCommentsForHost", (req, res) -> {
             Session ss = req.session(true);
@@ -88,6 +87,21 @@ public class CommentService {
             res.status(200);
             return g.toJson(comments);
         });
+	}
+	
+	public void getAllComments() {
+		get("services/comments/getAllComments", (req, res) -> {
+			ArrayList<Comment> comments = commentDAO.getCommentsList();
+			
+			if(comments.isEmpty()) {
+				res.status(204);
+				return ("No content");
+			}
+			
+			res.status(200);
+			return g.toJson(comments);
+			
+		});
 	}
 
 }
