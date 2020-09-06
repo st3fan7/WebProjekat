@@ -25,13 +25,22 @@ public class AmenitiesService {
 	public void getAllAmenities() {	
 		get("services/amenities/getAllAmenities", (req, res) -> {
 		
-			if(amenitiesDAO.getAmenitiesList().isEmpty()){
+			ArrayList<Amenities> allAmenities = amenitiesDAO.getAmenitiesList();
+			ArrayList<Amenities> allAmenitiesNotDeleted = new ArrayList<>();
+
+			for(Amenities a : allAmenities) {
+				if(a.getDeleted() == 0) {
+					allAmenitiesNotDeleted.add(a);
+				}
+			}
+			
+			if(allAmenitiesNotDeleted.isEmpty()){
 				res.status(204);
 				return "No content";
 			}
 			
 			res.status(200);
-			return g.toJson(amenitiesDAO.getAmenitiesList());
+			return g.toJson(allAmenitiesNotDeleted);
 			
 		  });
 	}
@@ -66,25 +75,44 @@ public class AmenitiesService {
 			res.type("application/json");
 			String payload = req.body();
 			Amenities amenities = g.fromJson(payload, Amenities.class);
+			int check = 0;
 			
 			if(amenities == null) {
 				res.status(400);
 				return ("400 Bad Request");
 			}
 			
-			if(amenitiesDAO.getAmenitiesMap().containsKey(amenities.getContent().toLowerCase())) {
-				res.status(200);
-				return ("200 OK");
+			
+			
+			if(amenitiesDAO.getAmenitiesMap().containsKey(amenities.getContent().toLowerCase())) { // sto 1 ; sto 0
+				if(amenitiesDAO.getAmenitiesMap().get(amenities.getContent().toLowerCase()).getDeleted() == 1) {
+					amenitiesDAO.getAmenitiesMap().get(amenities.getContent().toLowerCase()).setDeleted(0);
+					check = 1;
+				} else {
+					res.status(200);
+					return ("200 OK");
+				}
+			}
+
+			ArrayList<Amenities> amenitiesList = amenitiesDAO.getAmenitiesList();
+			
+			if(check != 1) {
+				amenitiesList.add(amenities);
 			}
 			
-			ArrayList<Amenities> amenitiesList = amenitiesDAO.getAmenitiesList();
-			amenitiesList.add(amenities);
 			amenitiesDAO.setAmenitiesList(amenitiesList);
 			AmenitiesDAO.writeAmenitiesInFile(amenitiesDAO.getAmenitiesList());
 			amenitiesDAO.fillMapWithAmenities();
 			
+			ArrayList<Amenities> amenitiesNotDeleted = new ArrayList<>();
+			for(Amenities a : amenitiesList) {
+				if(a.getDeleted() == 0) {
+					amenitiesNotDeleted.add(a);
+				}
+			}
+			
 			res.status(201);
-			return g.toJson(amenitiesDAO.getAmenitiesList());
+			return g.toJson(amenitiesNotDeleted);
 		});
 	}
 

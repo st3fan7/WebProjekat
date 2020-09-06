@@ -174,13 +174,27 @@ Vue.component("reviewApartments", {
 	     <h1 id="titleInAdminChangeApartment">Izmena podataka</h1>
 	     <a @click="previousButtonClicked()" class="previous">&laquo; Nazad</a>
 	     </div> 
+	     
+	     <form id="form" action="" onsubmit="return false;"  method = "POST">
+	      <div class="confirm-cancel-field">
+	        <div class="price-title">
+	            <h1>Želite da izmenite podatke o apartmanu?</h1>
+	            <div class="add-btn">
+	                <button type="button" @click="changesConfirm()">Izmeni</button>
+	            </div>
+	            <div class="cancel-btn">
+	                <button type="button">Odustani</button>
+	            </div>
+	            <label v-if="showNotification" style="color:red; margin-left: 10%; font-size: 20px">Morate popuniti sve obavezne podatke!</label>
+	        </div>
+	    </div>
+	      
 		 <div class="listOfApartments">
 
 	        <div class="wrapper-form">
 	            <div class="data-for-apartment">
 	                <div class="text-for-adding-apartment">
 	                    <h1>Obavezni podaci:</h1>
-	                    <form action="#">
 	                        <label for="apartmentName">Naziv apartmana (ID):</label>
 	                        <input type="text" id="aName" name="apartmentname"  v-model="apartmentId" placeholder="Unesite naziv apartmana...">
 	                    
@@ -236,18 +250,11 @@ Vue.component("reviewApartments", {
 		                        <br>
 	                        </span>
 
-	                        <label v-if="showNotification" style="color:red; margin-left: 10%; font-size: 20px">Morate popuniti sve obavezne podatke!</label>
-	                        <div class="change-btn-in-admin-change-apartment">
-	                            <button type="button" @click="changesConfirm()">Izmeni</button>
-	                        </div>
-	                        <div class="cancel-btn-in-admin-change-apartment">
-	                            <button type="button">Odustani</button>
-	                        </div>
-	                    </form>
 	                </div>
 	            </div>
 	        </div>
 	    </div>
+	    </form>
 		 </div>
 		     
 		  

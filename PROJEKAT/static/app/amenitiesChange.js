@@ -204,7 +204,11 @@ Vue.component("amenitiesChange", {
 			if (this.activeUser.role === "admin"){
 				this.activeAdmin = true;
 				axios.get('services/amenities/getAllAmenities').then(response => {
-					this.amenitiesList = response.data;			
+					if(response.status === 200){
+						this.amenitiesList = response.data;	
+					} else {
+						toast('Trenutno nema sadržaja!')
+					}
 				});
 			}else{
 				this.activeAdmin = false;

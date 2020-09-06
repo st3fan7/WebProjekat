@@ -1,47 +1,62 @@
 [
   {
-    "content": "sto"
+    "content": "sto",
+    "deleted": 0
   },
   {
-    "content": "stolica"
+    "content": "stolica",
+    "deleted": 0
   },
   {
-    "content": "tv"
+    "content": "tv",
+    "deleted": 0
   },
   {
-    "content": "klima"
+    "content": "klima",
+    "deleted": 0
   },
   {
-    "content": "krevet"
+    "content": "krevet",
+    "deleted": 0
   },
   {
-    "content": "pomoćni krevet"
+    "content": "pomoćni krevet",
+    "deleted": 0
   },
   {
-    "content": "krevetac"
+    "content": "krevetac",
+    "deleted": 0
   },
   {
-    "content": "kada"
+    "content": "kada",
+    "deleted": 0
   },
   {
-    "content": "tuš kabina"
+    "content": "tuš kabina",
+    "deleted": 0
   },
   {
-    "content": "grejanje"
+    "content": "grejanje",
+    "deleted": 0
   },
   {
-    "content": "radio"
+    "content": "radio",
+    "deleted": 0
   },
   {
-    "content": "fen za kosu"
+    "content": "fen za kosu",
+    "deleted": 0
   },
   {
-    "content": "terasa"
+    "content": "terasa",
+    "deleted": 1
   },
   {
-    "content": "ogledalo"
+    "content": "ogledalo",
+    "deleted": 0
   },
   {
-    "content": "bazen"
+    "content": "bazen",
+    "deleted": 1
   }
 ]

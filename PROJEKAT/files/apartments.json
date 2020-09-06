@@ -46,8 +46,8 @@
       }
     },
     "releaseDates": [
-      "Fri Oct 09 2020 17:12:00 GMT+0200 (Средњеевропско летње време)",
-      "Fri Feb 12 2021 17:12:00 GMT+0100 (Средњеевропско стандардно време)"
+      "Fri Oct 09 2020 17:12:00 GMT+0200 (Ð¡Ñ€ÐµÐ´ÑšÐµÐµÐ²Ñ€Ð¾Ð¿Ñ�ÐºÐ¾ Ð»ÐµÑ‚ÑšÐµ Ð²Ñ€ÐµÐ¼Ðµ)",
+      "Fri Feb 12 2021 17:12:00 GMT+0100 (Ð¡Ñ€ÐµÐ´ÑšÐµÐµÐ²Ñ€Ð¾Ð¿Ñ�ÐºÐ¾ Ñ�Ñ‚Ð°Ð½Ð´Ð°Ñ€Ð´Ð½Ð¾ Ð²Ñ€ÐµÐ¼Ðµ)"
     ],
     "host": "domacin1",
     "comments": [],
@@ -58,25 +58,32 @@
     "statusOfApartment": "Aktivan",
     "amenities": [
       {
-        "content": "stolica"
+        "content": "stolica",
+    	"deleted": 0
       },
       {
-        "content": "tv"
+        "content": "tv",
+    	"deleted": 0
       },
       {
-        "content": "kada"
+        "content": "kada",
+    	"deleted": 0
       },
       {
-        "content": "tuš kabina"
+        "content": "tuš kabina",
+    	"deleted": 0
       },
       {
-        "content": "ogledalo"
+        "content": "ogledalo",
+    	"deleted": 0
       },
       {
-        "content": "terasa"
+        "content": "terasa",
+    	"deleted": 1
       },
       {
-        "content": "radio"
+        "content": "radio",
+    	"deleted": 0
       }
     ],
     "reservations": []
@@ -90,15 +97,15 @@
       "latitude": 50.0,
       "longitude": 18.156,
       "address": {
-        "street": "Stepa Stepanović",
+        "street": "Stepa StepanoviÄ‡",
         "houseNumber": 2,
         "populatedPlace": "Beograd",
         "zipCode": "11000"
       }
     },
     "releaseDates": [
-      "Thu Oct 01 2020 17:12:00 GMT+0200 (Средњеевропско летње време)",
-      "Sat Oct 31 2020 17:12:00 GMT+0100 (Средњеевропско стандардно време)"
+      "Thu Oct 01 2020 17:12:00 GMT+0200 (Ð¡Ñ€ÐµÐ´ÑšÐµÐµÐ²Ñ€Ð¾Ð¿Ñ�ÐºÐ¾ Ð»ÐµÑ‚ÑšÐµ Ð²Ñ€ÐµÐ¼Ðµ)",
+      "Sat Oct 31 2020 17:12:00 GMT+0100 (Ð¡Ñ€ÐµÐ´ÑšÐµÐµÐ²Ñ€Ð¾Ð¿Ñ�ÐºÐ¾ Ñ�Ñ‚Ð°Ð½Ð´Ð°Ñ€Ð´Ð½Ð¾ Ð²Ñ€ÐµÐ¼Ðµ)"
     ],
     "host": "domacin1",
     "comments": [],
@@ -109,40 +116,52 @@
     "statusOfApartment": "Aktivan",
     "amenities": [
       {
-        "content": "sto"
+        "content": "sto",
+    	"deleted": 0
       },
       {
-        "content": "stolica"
+        "content": "stolica",
+    	"deleted": 0
       },
       {
-        "content": "tv"
+        "content": "tv",
+    	"deleted": 0
       },
       {
-        "content": "klima"
+        "content": "klima",
+    	"deleted": 0
       },
       {
-        "content": "krevet"
+        "content": "krevet",
+    	"deleted": 0
       },
       {
-        "content": "krevetac"
+        "content": "krevetac",
+    	"deleted": 0
       },
       {
-        "content": "kada"
+        "content": "kada",
+    	"deleted": 0
       },
       {
-        "content": "ogledalo"
+        "content": "ogledalo",
+    	"deleted": 0
       },
       {
-        "content": "bazen"
+        "content": "bazen",
+    	"deleted": 1
       },
       {
-        "content": "fen za kosu"
+        "content": "fen za kosu",
+    	"deleted": 0
       },
       {
-        "content": "radio"
+        "content": "radio",
+    	"deleted": 0
       },
       {
-        "content": "grejanje"
+        "content": "grejanje",
+    	"deleted": 0
       }
     ],
     "reservations": []
@@ -163,8 +182,8 @@
       }
     },
     "releaseDates": [
-      "Sat Sep 05 2020 01:06:00 GMT+0200 (Средњеевропско летње време)",
-      "Wed Sep 30 2020 01:06:00 GMT+0200 (Средњеевропско летње време)"
+      "Sat Sep 05 2020 01:06:00 GMT+0200 (Ð¡Ñ€ÐµÐ´ÑšÐµÐµÐ²Ñ€Ð¾Ð¿Ñ�ÐºÐ¾ Ð»ÐµÑ‚ÑšÐµ Ð²Ñ€ÐµÐ¼Ðµ)",
+      "Wed Sep 30 2020 01:06:00 GMT+0200 (Ð¡Ñ€ÐµÐ´ÑšÐµÐµÐ²Ñ€Ð¾Ð¿Ñ�ÐºÐ¾ Ð»ÐµÑ‚ÑšÐµ Ð²Ñ€ÐµÐ¼Ðµ)"
     ],
     "host": "domacin1",
     "comments": [],
@@ -175,31 +194,40 @@
     "statusOfApartment": "Neaktivan",
     "amenities": [
       {
-        "content": "sto"
+        "content": "sto",
+    	"deleted": 0
       },
       {
-        "content": "stolica"
+        "content": "stolica",
+    	"deleted": 0
       },
       {
-        "content": "tv"
+        "content": "tv",
+    	"deleted": 0
       },
       {
-        "content": "krevet"
+        "content": "krevet",
+    	"deleted": 0
       },
       {
-        "content": "pomoćni krevet"
+        "content": "pomoÄ‡ni krevet",
+    	"deleted": 0
       },
       {
-        "content": "tuš kabina"
+        "content": "tuÅ¡ kabina",
+    	"deleted": 0
       },
       {
-        "content": "grejanje"
+        "content": "grejanje",
+    	"deleted": 0
       },
       {
-        "content": "terasa"
+        "content": "terasa",
+    	"deleted": 1
       },
       {
-        "content": "ogledalo"
+        "content": "ogledalo",
+    	"deleted": 0
       }
     ],
     "reservations": []

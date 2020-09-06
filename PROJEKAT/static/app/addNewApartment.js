@@ -17,7 +17,7 @@ Vue.component("addNewApartment", {
 			checkinTimeModel : '',
 			checkoutTimeModel : '',
 			typeOfApartment : null,
-			statusOfApartment : null,
+			statusOfApartment : 'Neaktivan',
 			starTimeInit : '',
 			endTimeInit : '',
 			amenitiesList : null,
@@ -220,7 +220,7 @@ Vue.component("addNewApartment", {
 				red.style.backgroundColor = "white"; 
 			}
 			
-			if(this.numberOfRoomsModel.length === 0 || this.numberOfRoomsModel === null) {
+			if(this.numberOfRoomsModel === null) {
 				var red = document.getElementById("numberOfRoomsID");
 				red.style.backgroundColor = "LightCoral"; 
 				empty = true;
@@ -229,7 +229,7 @@ Vue.component("addNewApartment", {
 				red.style.backgroundColor = "white"; 
 			}
 			
-			if(this.numberOfGuestModel.length === 0 || this.numberOfGuestModel === null) {
+			if(this.numberOfGuestModel === null) {
 				var red = document.getElementById("numberOfGuestID");
 				red.style.backgroundColor = "LightCoral"; 
 				empty = true;
@@ -238,7 +238,7 @@ Vue.component("addNewApartment", {
 				red.style.backgroundColor = "white"; 
 			}
 			
-			if(this.priceForNightModel.length === 0 || this.priceForNightModel === null) {
+			if(this.priceForNightModel === null) {
 				var red = document.getElementById("priceForNightID");
 				red.style.backgroundColor = "LightCoral"; 
 				empty = true;
@@ -253,7 +253,11 @@ Vue.component("addNewApartment", {
 				empty = true;
 			} else {
 				var red = document.getElementById("locationID");
-				red.style.backgroundColor = "white"; 
+				red.style.backgroundColor = "white";
+				
+				var locationLatAndLog = this.locationModel.split(',');
+				var Latitude = locationLatAndLog[0].trim();
+				var longitude = locationLatAndLog[1].trim();
 			}
 			
 			if(this.addressModel.length === 0) {
@@ -263,6 +267,15 @@ Vue.component("addNewApartment", {
 			} else {
 				var red = document.getElementById("addressID");
 				red.style.backgroundColor = "white"; 
+				
+				var fullAddress = this.addressModel.split(","); 
+				var streetAndNum = fullAddress[0].split(/(\d+)/);
+				var street = streetAndNum[0].trim();
+				var number = streetAndNum[1].trim();
+				
+				var cityAndZip = fullAddress[1].split(/(\d+)/);
+				var city = cityAndZip[0].trim();
+				var zip = cityAndZip[1].trim();
 			}
 			
 			if(this.startDateModel === null || this.startDateModel.length === 0) {
@@ -283,18 +296,14 @@ Vue.component("addNewApartment", {
 				red.style.backgroundColor = "white"; 
 			}
 			
-			var locationLatAndLog = this.locationModel.split(',');
-			var Latitude = locationLatAndLog[0].trim();
-			var longitude = locationLatAndLog[1].trim();
-			
-			var fullAddress = this.addressModel.split(","); 
-			var streetAndNum = fullAddress[0].split(/(\d+)/);
-			var street = streetAndNum[0].trim();
-			var number = streetAndNum[1].trim();
-			
-			var cityAndZip = fullAddress[1].substring().split(/(\d+)/);
-			var city = cityAndZip[0].trim();
-			var zip = cityAndZip[1].trim();
+			if(this.typeOfApartment === null){
+				var red = document.getElementById("typeOfApartmentID");
+				red.style.backgroundColor = "LightCoral"; 
+				empty = true;
+			} else {
+				var red = document.getElementById("typeOfApartmentID");
+				red.style.backgroundColor = "white"; 
+			}
 		
 			
 			if(empty === false) {
@@ -316,7 +325,7 @@ Vue.component("addNewApartment", {
 						
 					});
 			} else {
-				
+				console.log('usaooo')
 				this.showNotification = true;
 			}
 			
