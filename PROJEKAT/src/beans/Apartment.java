@@ -23,14 +23,16 @@ public class Apartment {
 	private StatusOfApartment statusOfApartment;
 	private ArrayList<Amenities> amenities;
 	private ArrayList<String> reservations;
+	private int deleted;
 	
 	public Apartment() {
 		super();
+		deleted = 0;
 	}
 
 	public Apartment(String id, TypeOfApartment typeOfApartment, int numberOfRooms, int numberOfGuests, Location location,
 			String host, int pricePerNight, String checkInTime,
-			String checkOutTime, StatusOfApartment statusOfApartment) {
+			String checkOutTime, StatusOfApartment statusOfApartment, int deleted) {
 		super();
 		this.id = id;
 		this.typeOfApartment = typeOfApartment;
@@ -48,6 +50,7 @@ public class Apartment {
 		this.comments = new ArrayList<Comment>();
 		this.amenities = new ArrayList<Amenities>();
 		this.reservations = new ArrayList<String>();
+		this.deleted = deleted;
 	}
 
 	public TypeOfApartment getTypeOfApartment() {
@@ -170,7 +173,14 @@ public class Apartment {
 		this.reservations = reservations;
 	}
 	
-	
+
+	public int getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(int deleted) {
+		this.deleted = deleted;
+	}
 
 	public String getId() {
 		return id;

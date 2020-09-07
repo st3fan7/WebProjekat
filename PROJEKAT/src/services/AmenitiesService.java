@@ -50,13 +50,14 @@ public class AmenitiesService {
 			String payload = req.body();
 			String oldAmenity = req.queryMap("oldAmenity").value();
 			Amenities amenities = g.fromJson(payload, Amenities.class);
-			
+	
 			if (amenities == null) {
 				res.status(400);
 				return ("400 Bad Request");
 			}
 			
-			if (!amenitiesDAO.getAmenitiesMap().containsKey(oldAmenity)) {
+			if (!amenitiesDAO.getAmenitiesMap().containsKey(oldAmenity.toLowerCase())) {
+				System.out.println("usao");
 				res.status(400);
 				return ("400 Bad Request");
 			}
@@ -64,8 +65,18 @@ public class AmenitiesService {
 			amenitiesDAO.editAmenity(amenities.getContent(), oldAmenity);
 			AmenitiesDAO.writeAmenitiesInFile(amenitiesDAO.getAmenitiesList());
 			
+			ArrayList<Amenities> amenitiesNotDeleted = new ArrayList<>();
+			ArrayList<Amenities> amenitiesList = amenitiesDAO.getAmenitiesList();
+			
+			
+			for(Amenities a : amenitiesList) {
+				if(a.getDeleted() == 0) {
+					amenitiesNotDeleted.add(a);
+				}
+			}			
+		
 			res.status(200);
-			return g.toJson(amenitiesDAO.getAmenitiesList());
+			return g.toJson(amenitiesNotDeleted);
 
 		});
 	}

@@ -38,7 +38,7 @@ public class ApartmentDAO {
 	public void fillMapWithApartments() {
 		if(apartmentsList != null) {
 			for(int i = 0; i < apartmentsList.size(); i++) {
-				apartmentsMap.put(apartmentsList.get(i).getId(), apartmentsList.get(i));
+				apartmentsMap.put(apartmentsList.get(i).getId().toLowerCase(), apartmentsList.get(i));
 			}
 		} else {
 			apartmentsList = new ArrayList<Apartment>();
@@ -58,6 +58,51 @@ public class ApartmentDAO {
 	public Apartment getApartmetnID(String id) {
 		return apartmentsMap.get(id);
 	}
+	
+	
+	public void editApartment(Apartment a, String id){
+		
+		int index = -1;
+		for (int i = 0; i < apartmentsList.size(); i++) {
+			if(apartmentsList.get(i).getId().equals(id))
+			{
+				index = i;
+				break;
+			}
+		}
+		
+		apartmentsList.get(index).setId(a.getId());
+		apartmentsList.get(index).setTypeOfApartment(a.getTypeOfApartment());;
+		apartmentsList.get(index).setNumberOfRooms(a.getNumberOfRooms());
+		apartmentsList.get(index).setNumberOfGuests(a.getNumberOfGuests());
+		apartmentsList.get(index).setLocation(a.getLocation());
+		//apartmentsList.get(index).setReleaseDates(releaseDates);
+		apartmentsList.get(index).setComments(a.getComments());
+		apartmentsList.get(index).setHost(a.getHost());
+		apartmentsList.get(index).setFreeDates(a.getFreeDates());
+		apartmentsList.get(index).setPictures(a.getPictures());
+		apartmentsList.get(index).setPricePerNight(a.getPricePerNight());
+		apartmentsList.get(index).setCheckInTime(a.getCheckInTime());
+		apartmentsList.get(index).setCheckOutTime(a.getCheckOutTime());
+		apartmentsList.get(index).setStatusOfApartment(a.getStatusOfApartment());
+		apartmentsList.get(index).setAmenities(a.getAmenities());
+		apartmentsList.get(index).setReservations(a.getReservations());
+		
+		
+		
+		apartmentsMap.remove(id);
+		apartmentsMap.put(a.getId(), apartmentsList.get(index));
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 	// getter and setter
 

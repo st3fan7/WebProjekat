@@ -13,9 +13,9 @@ Vue.component("reviewApartments", {
 			apartmentId : '',
 			apType : '',
 			apStatus : '',
-			apRooms : '',
-			apNumberOfGuests : '',
-			apPriceForNightName : '',
+			apRooms : null,
+			apNumberOfGuests : null,
+			apPriceForNightName : null,
 			amenitiesList : [],
 			apLocation : '',
 			apAddress : '',
@@ -30,7 +30,12 @@ Vue.component("reviewApartments", {
 			     }
 			   },
 			startDateModel : '',
-			endDateModel : ''
+			endDateModel : '',
+			comments : [],
+			reservations : [],
+			oldId : '',
+			freeDates : [],
+			pictures : []
 				
 			 
 			
@@ -153,7 +158,7 @@ Vue.component("reviewApartments", {
 		                 </p>
 		             </div>
 		             <div class="product-price-btn">
-		                 <button type="button">obriši</button>
+		                 <button type="button" @click="deleteApartment(a)">obriši</button>
 		             </div>
 		             <div class="product-price-btn2">
 		                     <button type="button" @click="changeApartment(a)">izmeni</button>
@@ -336,6 +341,8 @@ Vue.component("reviewApartments", {
 		{
 			this.changeApartmentButtonClicked = true;
 			
+			this.oldId = a.id;
+			
 			this.apartmentId = a.id;
 			this.apType = a.typeOfApartment;
 			this.apStatus = a.statusOfApartment;
@@ -348,14 +355,190 @@ Vue.component("reviewApartments", {
 			this.apStartTime = a.checkInTime;
 			this.apEndTime = a.checkOutTime;
 			//this.startDateModel = a.releaseDates;
+			this.comments = a.comments;
+			this.reservations = a.reservations;
+			this.freeDates = a.freeDates;
+			this.pictures = a.pictures;
 			
 		},
 		changesConfirm : function(){
-			this.showNotification = true;
+			
+			
+			
+			var empty = false;
+			this.showNotification = false;
+			
+			
+			if(this.apartmentId.length === 0) {
+				var red = document.getElementById("aName");
+				red.style.backgroundColor = "LightCoral"; 
+				empty = true;
+			} else {
+				var red = document.getElementById("aName");
+				red.style.backgroundColor = "white"; 
+			}
+			
+			if(this.apRooms === null || this.apRooms === '') {
+				var red = document.getElementById("numberOfRoomsID");
+				red.style.backgroundColor = "LightCoral"; 
+				empty = true;
+			} else {
+				var red = document.getElementById("numberOfRoomsID");
+				red.style.backgroundColor = "white"; 
+			}
+			
+			if(this.apNumberOfGuests === null || this.apNumberOfGuests === '') {
+				var red = document.getElementById("numberOfGuestID");
+				red.style.backgroundColor = "LightCoral"; 
+				empty = true;
+			} else {
+				var red = document.getElementById("numberOfGuestID");
+				red.style.backgroundColor = "white"; 
+			}
+			
+			if(this.apPriceForNightName === null || this.apPriceForNightName === '') {
+				var red = document.getElementById("priceForNightID");
+				red.style.backgroundColor = "LightCoral"; 
+				empty = true;
+			} else {
+				var red = document.getElementById("priceForNightID");
+				red.style.backgroundColor = "white"; 
+			}
+			
+			if(this.apLocation.length === 0) {
+				var red = document.getElementById("locationID");
+				red.style.backgroundColor = "LightCoral"; 
+				empty = true;
+			} else {
+				var red = document.getElementById("locationID");
+				red.style.backgroundColor = "white";
+				
+				var locationLatAndLog = this.apLocation.split(',');
+				var Latitude = locationLatAndLog[0].trim();
+				var longitude = locationLatAndLog[1].trim();
+			}
+			
+			if(this.apAddress.length === 0) {
+				var red = document.getElementById("addressID");
+				red.style.backgroundColor = "LightCoral"; 
+				empty = true;
+			} else {
+				var red = document.getElementById("addressID");
+				red.style.backgroundColor = "white"; 
+				
+				var fullAddress = this.apAddress.split(","); 
+				var streetAndNum = fullAddress[0].split(/(\d+)/);
+				var street = streetAndNum[0].trim();
+				var number = streetAndNum[1].trim();
+				
+				var cityAndZip = fullAddress[1].split(/(\d+)/);
+				var city = cityAndZip[0].trim();
+				var zip = cityAndZip[1].trim();
+			}
+			
+			/*
+			if(this.startDateModel === null || this.startDateModel.length === 0) {
+				var red = document.getElementById("startDateID");
+				red.style.backgroundColor = "LightCoral"; 
+				empty = true;
+			} else {
+				var red = document.getElementById("startDateID");
+				red.style.backgroundColor = "white"; 
+			}
+			
+			if(this.endDateModel === null || this.endDateModel.length === 0) {
+				var red = document.getElementById("endDateID");
+				red.style.backgroundColor = "LightCoral"; 
+				empty = true;
+			} else {
+				var red = document.getElementById("endDateID");
+				red.style.backgroundColor = "white"; 
+			}
+			
+			*/
+			
+			if(this.apType === null){
+				var red = document.getElementById("typeOfApartmentID");
+				red.style.backgroundColor = "LightCoral"; 
+				empty = true;
+			} else {
+				var red = document.getElementById("typeOfApartmentID");
+				red.style.backgroundColor = "white"; 
+			}
+		
+			if(empty === false) {
+				
+				axios.post('services/apartments/changeApartment', {"id": '' + this.apartmentId, "numberOfRooms": this.apRooms,
+					"typeOfApartment" : this.apType, "statusOfApartment" : this.apStatus, "numberOfGuests" : this.apNumberOfGuests,
+					"pricePerNight" : this.apPriceForNightName, "location" : { "latitude" : Latitude, "longitude" : longitude, 
+					"address" : {"street" : street, "houseNumber" : number, "populatedPlace" : city, "zipCode" : zip } },					
+					"releaseDates" : [], 
+					"checkInTime" : '' + this.apStartTime, "checkOutTime" : '' + this.apEndTime, "host" : '' + this.activeUser.username,
+					"reservations" : this.reservations, "comments" : this.comments, "amenities" : this.checkedList, "pictures": this.pictures, "freeDates" : this.freeDates},
+				{params:{oldId:'' + this.oldId}})
+					.then(response => {
+						if(response.status === 200){
+							toast('Apartman je izmenjen!')
+						}else if(response.status === 202){
+							toast('Apartman sa tim imenom već postoji!')
+						}else {
+							toast('Apartman nije uspšeno izmenjen, pokušajte ponovo!')
+						}
+						
+					});
+				
+			} else {
+				
+				this.showNotification = true;
+			}
+			
+		
+			
 		},		
 		previousButtonClicked : function(){
-			this.showNotification = false;
-			this.changeApartmentButtonClicked = false;
+			
+			
+			if(confirm('Da li ste sigurni da želite da se vratite na pregled aktivnih apartmana?')){
+				this.showNotification = false;
+				this.changeApartmentButtonClicked = false;
+				axios.get('services/apartments/getActiveApratmentsForHost').then(response => {
+					if(response.status === 200){
+						this.activeApartmentsForHost = response.data;
+					}else{
+					
+						toast('Trenutno ne postoje aktivni apartmani')
+					}
+					
+				});
+				
+			}
+		},
+		
+		deleteApartment : function(a){
+			
+			if(confirm('Da li ste sigurni da želite da se obrišete ovaj apartman?') === true){
+				
+				axios.post('services/apartments/deleteApartment', a.id).then(response => {
+					if(response.status === 200){
+						toast('Apartman je obrisan')
+					}else{					
+						toast('Trenutno ne postoje aktivni apartmani za brisanje')
+					}
+					
+				});
+				
+				axios.get('services/apartments/getActiveApratmentsForHost').then(response => {
+					if(response.status === 200){
+						this.activeApartmentsForHost = response.data;
+					}else{
+						this.activeApartmentsForHost = response.data;
+						toast('Trenutno ne postoje aktivni apartmani')
+					}
+					
+				});
+				
+			}
+			
 		}
 		
 		

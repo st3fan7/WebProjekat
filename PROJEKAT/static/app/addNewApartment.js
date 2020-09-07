@@ -325,7 +325,7 @@ Vue.component("addNewApartment", {
 						
 					});
 			} else {
-				console.log('usaooo')
+				
 				this.showNotification = true;
 			}
 			
