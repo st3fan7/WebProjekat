@@ -94,7 +94,7 @@ Vue.component("amenitiesChange", {
 		    <div class="sideComponents">      
 		        <ul class="ulForSideComponents">
 		            <div><li class="active"><a href="#">SADRŽAJ</a></li></div><br/>
-		            <div><li><a href="#">PREGLED APARTMANA</a></li></div><br/>  
+		            <div><li><a href="#/reviewInActiveApartments">PREGLED APARTMANA</a></li></div><br/>  
 		        </ul>
 		    </div>
 		
@@ -139,16 +139,25 @@ Vue.component("amenitiesChange", {
 		deleteAmenities : function() {
 			if(confirm('Da li ste sigurni da želite da obrišete sadržaj koji se zove: ' + this.amenityModel + '?') == true){
 				this.showManpulationPartForContent = false;
-//				axios.delete('services/amenities/deleteAmenity', {params: "amenity" : '' + this.amenityModel})
-//				.then(response => {
-//					if(response.status === 200){
-//						toast('Sadržaj čiji je naziv bio ' + this.amenityModel + ' je uspšeno obrisan!')
-//					} else if(response.status === 201){
-//						toast('Neuspešno brisanje!')
-//					} else {
-//						toast('Greška!')
-//					}
-//				});
+				axios.post('services/amenities/deleteAmenity', this.amenityModel)
+				.then(response => {
+					if(response.status === 200){
+						toast('Sadržaj je uspšeno obrisan!')
+					} else if(response.status === 201){
+						toast('Neuspešno brisanje!')
+					} else {
+						toast('Greška!')
+					}
+				});
+				
+				axios.get('services/amenities/getAllAmenities').then(response => {
+					if(response.status === 200){
+						this.amenitiesList = response.data;	
+					} else {
+						this.amenitiesList = response.data;	
+						toast('Trenutno nema sadržaja!')
+					}
+				});
 				
 			}
 		},

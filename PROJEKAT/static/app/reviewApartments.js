@@ -188,7 +188,7 @@ Vue.component("reviewApartments", {
 	                <button type="button" @click="changesConfirm()">Izmeni</button>
 	            </div>
 	            <div class="cancel-btn">
-	                <button type="button">Odustani</button>
+	                <button type="button" @click="previousButtonClicked()">Odustani</button>
 	            </div>
 	            <label v-if="showNotification" style="color:red; margin-left: 10%; font-size: 20px">Morate popuniti sve obavezne podatke!</label>
 	        </div>

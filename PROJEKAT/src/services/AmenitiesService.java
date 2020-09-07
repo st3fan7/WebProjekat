@@ -20,6 +20,7 @@ public class AmenitiesService {
 		getAllAmenities();
 		changeAmenity();
 		addAmenity();
+		deleteAmenity();
 	}
 
 	public void getAllAmenities() {	
@@ -124,6 +125,27 @@ public class AmenitiesService {
 			
 			res.status(201);
 			return g.toJson(amenitiesNotDeleted);
+		});
+	}
+	
+	public void deleteAmenity(){
+		post("services/amenities/deleteAmenity", (req, res) -> {
+			res.type("application/json");
+			String payload = req.body();
+
+			for(Amenities a : amenitiesDAO.getAmenitiesList()){
+				if(a.getContent().equalsIgnoreCase(payload)){
+					a.setDeleted(1);
+					break;
+				}
+			}
+			
+			AmenitiesDAO.writeAmenitiesInFile(amenitiesDAO.getAmenitiesList());
+			amenitiesDAO.fillMapWithAmenities();
+			
+			res.status(200);	
+			return "ok";
+			
 		});
 	}
 
