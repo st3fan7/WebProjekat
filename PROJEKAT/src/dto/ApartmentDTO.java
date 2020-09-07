@@ -1,19 +1,23 @@
-package beans;
+package dto;
 
 import java.util.ArrayList;
 import java.util.Date;
 
+import beans.Amenities;
+import beans.Comment;
+import beans.Location;
 import enums.StatusOfApartment;
 import enums.TypeOfApartment;
 
-public class Apartment {
+public class ApartmentDTO {
+
 	private String id;
 	private TypeOfApartment typeOfApartment;
 	private int numberOfRooms;
 	private int numberOfGuests;
 	private Location location;
-	private ArrayList<Date> releaseDates;
-	private ArrayList<Date> freeDates;
+	private ArrayList<String> releaseDates;
+	private ArrayList<String> freeDates;
 	private String host;
 	private ArrayList<Comment> comments;
 	private ArrayList<String> pictures;
@@ -25,12 +29,12 @@ public class Apartment {
 	private ArrayList<String> reservations;
 	private int deleted;
 	
-	public Apartment() {
+	public ApartmentDTO() {
 		super();
 		deleted = 0;
 	}
 
-	public Apartment(String id, TypeOfApartment typeOfApartment, int numberOfRooms, int numberOfGuests, Location location,
+	public ApartmentDTO(String id, TypeOfApartment typeOfApartment, int numberOfRooms, int numberOfGuests, Location location,
 			String host, int pricePerNight, String checkInTime,
 			String checkOutTime, StatusOfApartment statusOfApartment, int deleted) {
 		super();
@@ -45,8 +49,8 @@ public class Apartment {
 		this.checkOutTime = checkOutTime;
 		this.statusOfApartment = statusOfApartment;
 		this.pictures = new ArrayList<String>();
-		this.releaseDates = new ArrayList<Date>();
-		this.freeDates = new ArrayList<Date>();
+		this.releaseDates = new ArrayList<String>();
+		this.freeDates = new ArrayList<String>();
 		this.comments = new ArrayList<Comment>();
 		this.amenities = new ArrayList<Amenities>();
 		this.reservations = new ArrayList<String>();
@@ -85,19 +89,19 @@ public class Apartment {
 		this.location = location;
 	}
 
-	public ArrayList<Date> getReleaseDates() {
+	public ArrayList<String> getReleaseDates() {
 		return releaseDates;
 	}
 
-	public void setReleaseDates(ArrayList<Date> releaseDates) {
+	public void setReleaseDates(ArrayList<String> releaseDates) {
 		this.releaseDates = releaseDates;
 	}
 
-	public ArrayList<Date> getFreeDates() {
+	public ArrayList<String> getFreeDates() {
 		return freeDates;
 	}
 
-	public void setFreeDates(ArrayList<Date> freeDates) {
+	public void setFreeDates(ArrayList<String> freeDates) {
 		this.freeDates = freeDates;
 	}
 
@@ -203,3 +207,4 @@ public class Apartment {
 
 		
 }
+

@@ -209,7 +209,8 @@ Vue.component("addNewApartment", {
 			
 			var empty = false;
 			this.showNotification = false;
-			
+			var newStartDate = null;
+			var newEndDate = null;
 			
 			if(this.nameOfApartment.length === 0) {
 				var red = document.getElementById("aName");
@@ -285,6 +286,13 @@ Vue.component("addNewApartment", {
 			} else {
 				var red = document.getElementById("startDateID");
 				red.style.backgroundColor = "white"; 
+				
+				//console.log(this.startDateModel)
+				let localStartDate = moment(this.startDateModel).format("YYYY-MM-DD");
+				//console.log(localStartDate)
+				newStartDate = new Date(localStartDate);
+				//console.log(newStartDate)
+			
 			}
 			
 			if(this.endDateModel === null || this.endDateModel.length === 0) {
@@ -294,6 +302,9 @@ Vue.component("addNewApartment", {
 			} else {
 				var red = document.getElementById("endDateID");
 				red.style.backgroundColor = "white"; 
+				
+				let localEndDate = moment(this.endDateModel).format("YYYY-MM-DD");
+				newEndDate = new Date(localEndDate);
 			}
 			
 			if(this.typeOfApartment === null){
@@ -305,13 +316,15 @@ Vue.component("addNewApartment", {
 				red.style.backgroundColor = "white"; 
 			}
 		
+			//console.log(newStartDate);
+			
 			
 			if(empty === false) {
 				axios.post('services/apartments/addNewApartment', {"id": '' + this.nameOfApartment, "numberOfRooms": this.numberOfRoomsModel,
 					"typeOfApartment" : this.typeOfApartment, "statusOfApartment" : this.statusOfApartment, "numberOfGuests" : this.numberOfGuestModel,
 					"pricePerNight" : this.priceForNightModel, "location" : { "latitude" : Latitude, "longitude" : longitude, 
 					"address" : {"street" : street, "houseNumber" : number, "populatedPlace" : city, "zipCode" : zip } },					
-					"releaseDates" : ['' + this.startDateModel, '' + this.endDateModel], 
+					"releaseDates" : [newStartDate, newEndDate], 
 					"checkInTime" : '' + this.checkinTimeModel, "checkOutTime" : '' + this.checkoutTimeModel, "host" : '' + this.activeUser.username,
 					"reservations" : [], "comments" : [], "amenities" : this.checkedAmenities, "pictures": []})
 					.then(response => {

@@ -3,17 +3,24 @@ package services;
 import static spark.Spark.post;
 import static spark.Spark.get;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.google.gson.Gson;
 
+import beans.Amenities;
 import beans.Apartment;
+import beans.Comment;
 import beans.Host;
+import beans.Location;
 import dao.AdminDAO;
 import dao.ApartmentDAO;
 import dao.GuestDAO;
 import dao.HostDAO;
+import dto.ApartmentDTO;
 import enums.StatusOfApartment;
+import enums.TypeOfApartment;
 import spark.Session;
 
 public class ApartmentService {
@@ -54,20 +61,62 @@ public class ApartmentService {
 		});
 	}
 
+
 	public void addNewApartment() {
 		post("services/apartments/addNewApartment", (req, res) -> {
 			res.type("application/json");
 			String payload = req.body();
-			Apartment apartment;
+			ApartmentDTO apartmentDTO;
+			Apartment apartment = new Apartment();
 			
 			
 			try {
-				apartment = g.fromJson(payload, Apartment.class); //uneo sva polja i dobio novi app
+				apartmentDTO = g.fromJson(payload, ApartmentDTO.class); //uneo sva polja i dobio novi app
 			}
 			catch(Exception e) {
+				System.out.println("ovde");
 				res.status(400);
 				return g.toJson("Bad request");
 			}
+			
+			Date startDate = null;
+			Date endDate = null;
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+			
+			for(int i = 0; i < apartmentDTO.getReleaseDates().size(); i++){
+				startDate = sdf.parse(apartmentDTO.getReleaseDates().get(0));
+				endDate = sdf.parse(apartmentDTO.getReleaseDates().get(1));
+			}
+			
+			ArrayList<Date> releaseDates = new ArrayList<>();
+			releaseDates.add(startDate);
+			releaseDates.add(endDate);
+			
+			
+			try {
+				apartment.setId(apartmentDTO.getId());
+				apartment.setTypeOfApartment(apartmentDTO.getTypeOfApartment());
+				apartment.setNumberOfRooms(apartmentDTO.getNumberOfRooms());
+				apartment.setNumberOfGuests(apartmentDTO.getNumberOfGuests());
+				apartment.setLocation(apartmentDTO.getLocation());
+				apartment.setReleaseDates(releaseDates);
+				apartment.setFreeDates(new ArrayList<Date>());
+				apartment.setHost(apartmentDTO.getHost());
+				apartment.setComments(apartmentDTO.getComments());
+				apartment.setPictures(apartmentDTO.getPictures());
+				apartment.setPricePerNight(apartmentDTO.getPricePerNight());
+				apartment.setCheckInTime(apartmentDTO.getCheckInTime());
+				apartment.setCheckOutTime(apartmentDTO.getCheckOutTime());
+				apartment.setStatusOfApartment(apartmentDTO.getStatusOfApartment());
+				apartment.setAmenities(apartmentDTO.getAmenities());
+				apartment.setReservations(apartmentDTO.getReservations());
+				apartment.setDeleted(apartmentDTO.getDeleted());
+			
+				
+			} catch (Exception e) {
+				System.out.println("Greska pri pravljenju apartmana");
+			}
+					
 			
 			if (apartmentDAO.getApartmetnID(apartment.getId().toLowerCase()) != null) {
 				
@@ -79,11 +128,7 @@ public class ApartmentService {
 					return "Apartman sa tim imenom veæ postoji!";
 				}		
 			}
-			
-			
-			
-			
-			
+		
 			ArrayList<Apartment> apartmetns = apartmentDAO.getApartmentsList(); 
 			apartmetns.add(apartment);		
 			apartmentDAO.setApartmentsList(apartmetns);
@@ -158,15 +203,60 @@ public class ApartmentService {
 			res.type("application/json");
 			
 			String payload = req.body();
-			String oldId = req.queryMap("oldId").value(); //Apartman1 stari
+			String oldId = req.queryMap("oldId").value();
 
-			Apartment a = null;
-			a = g.fromJson(payload, Apartment.class); //Apartman1 nije menjao //soba1
+			ApartmentDTO apartmentDTO;
+			Apartment a = new Apartment();
 			
-			if(a == null){
-				res.status(204);
-				return "Apartment is null";
+			
+			try {
+				apartmentDTO = g.fromJson(payload, ApartmentDTO.class); //uneo sva polja i dobio novi app
 			}
+			catch(Exception e) {
+				System.out.println("ovde");
+				res.status(400);
+				return g.toJson("Bad request");
+			}
+			
+			Date startDate = null;
+			Date endDate = null;
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+			
+			for(int i = 0; i < apartmentDTO.getReleaseDates().size(); i++){
+				startDate = sdf.parse(apartmentDTO.getReleaseDates().get(0));
+				endDate = sdf.parse(apartmentDTO.getReleaseDates().get(1));
+			}
+			
+			ArrayList<Date> releaseDates = new ArrayList<>();
+			releaseDates.add(startDate);
+			releaseDates.add(endDate);
+			
+			
+			try {
+				a.setId(apartmentDTO.getId());
+				a.setTypeOfApartment(apartmentDTO.getTypeOfApartment());
+				a.setNumberOfRooms(apartmentDTO.getNumberOfRooms());
+				a.setNumberOfGuests(apartmentDTO.getNumberOfGuests());
+				a.setLocation(apartmentDTO.getLocation());
+				a.setReleaseDates(releaseDates);
+				a.setFreeDates(new ArrayList<Date>());
+				a.setHost(apartmentDTO.getHost());
+				a.setComments(apartmentDTO.getComments());
+				a.setPictures(apartmentDTO.getPictures());
+				a.setPricePerNight(apartmentDTO.getPricePerNight());
+				a.setCheckInTime(apartmentDTO.getCheckInTime());
+				a.setCheckOutTime(apartmentDTO.getCheckOutTime());
+				a.setStatusOfApartment(apartmentDTO.getStatusOfApartment());
+				a.setAmenities(apartmentDTO.getAmenities());
+				a.setReservations(apartmentDTO.getReservations());
+				a.setDeleted(apartmentDTO.getDeleted());
+			
+				
+			} catch (Exception e) {
+				System.out.println("Greska pri pravljenju apartmana");
+			}
+					
+		
 
 			
 			ArrayList<Apartment> newListOfAp = apartmentDAO.getApartmentsList();

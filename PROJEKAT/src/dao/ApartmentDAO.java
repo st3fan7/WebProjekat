@@ -76,7 +76,7 @@ public class ApartmentDAO {
 		apartmentsList.get(index).setNumberOfRooms(a.getNumberOfRooms());
 		apartmentsList.get(index).setNumberOfGuests(a.getNumberOfGuests());
 		apartmentsList.get(index).setLocation(a.getLocation());
-		//apartmentsList.get(index).setReleaseDates(releaseDates);
+		apartmentsList.get(index).setReleaseDates(a.getReleaseDates());
 		apartmentsList.get(index).setComments(a.getComments());
 		apartmentsList.get(index).setHost(a.getHost());
 		apartmentsList.get(index).setFreeDates(a.getFreeDates());

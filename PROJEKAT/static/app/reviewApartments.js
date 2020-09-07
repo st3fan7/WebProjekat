@@ -354,7 +354,11 @@ Vue.component("reviewApartments", {
 			this.apAddress = a.location.address.street + " " + a.location.address.houseNumber + ", " + a.location.address.populatedPlace + " " + a.location.address.zipCode;
 			this.apStartTime = a.checkInTime;
 			this.apEndTime = a.checkOutTime;
-			//this.startDateModel = a.releaseDates;
+			
+			this.startDateModel = a.releaseDates[0];
+			this.endDateModel = a.releaseDates[1];
+			
+			
 			this.comments = a.comments;
 			this.reservations = a.reservations;
 			this.freeDates = a.freeDates;
@@ -367,6 +371,9 @@ Vue.component("reviewApartments", {
 			
 			var empty = false;
 			this.showNotification = false;
+			
+			var newStartDate = null;
+			var newEndDate = null;
 			
 			
 			if(this.apartmentId.length === 0) {
@@ -436,7 +443,7 @@ Vue.component("reviewApartments", {
 				var zip = cityAndZip[1].trim();
 			}
 			
-			/*
+			
 			if(this.startDateModel === null || this.startDateModel.length === 0) {
 				var red = document.getElementById("startDateID");
 				red.style.backgroundColor = "LightCoral"; 
@@ -444,6 +451,9 @@ Vue.component("reviewApartments", {
 			} else {
 				var red = document.getElementById("startDateID");
 				red.style.backgroundColor = "white"; 
+				
+				let localStartDate = moment(this.startDateModel).format("YYYY-MM-DD");
+				newStartDate = new Date(localStartDate);			
 			}
 			
 			if(this.endDateModel === null || this.endDateModel.length === 0) {
@@ -453,9 +463,12 @@ Vue.component("reviewApartments", {
 			} else {
 				var red = document.getElementById("endDateID");
 				red.style.backgroundColor = "white"; 
+				
+				let localEndDate = moment(this.endDateModel).format("YYYY-MM-DD");
+				newEndDate = new Date(localEndDate);
 			}
 			
-			*/
+			
 			
 			if(this.apType === null){
 				var red = document.getElementById("typeOfApartmentID");
@@ -472,7 +485,7 @@ Vue.component("reviewApartments", {
 					"typeOfApartment" : this.apType, "statusOfApartment" : this.apStatus, "numberOfGuests" : this.apNumberOfGuests,
 					"pricePerNight" : this.apPriceForNightName, "location" : { "latitude" : Latitude, "longitude" : longitude, 
 					"address" : {"street" : street, "houseNumber" : number, "populatedPlace" : city, "zipCode" : zip } },					
-					"releaseDates" : [], 
+					"releaseDates" : [newStartDate, newEndDate], 
 					"checkInTime" : '' + this.apStartTime, "checkOutTime" : '' + this.apEndTime, "host" : '' + this.activeUser.username,
 					"reservations" : this.reservations, "comments" : this.comments, "amenities" : this.checkedList, "pictures": this.pictures, "freeDates" : this.freeDates},
 				{params:{oldId:'' + this.oldId}})
