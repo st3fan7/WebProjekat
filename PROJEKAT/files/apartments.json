@@ -334,5 +334,53 @@
     ],
     "reservations": [],
     "deleted": 0
+  },
+  {
+    "id": "Sobe 18",
+    "typeOfApartment": "Soba",
+    "numberOfRooms": 2,
+    "numberOfGuests": 9,
+    "location": {
+      "latitude": 45.8187,
+      "longitude": 20.4515,
+      "address": {
+        "street": "Josifa Pančića",
+        "houseNumber": 1,
+        "populatedPlace": "Kikinda",
+        "zipCode": "23311"
+      }
+    },
+    "releaseDates": [
+      "Sep 18, 2020 12:00:00 AM",
+      "Sep 25, 2020 12:00:00 AM"
+    ],
+    "freeDates": [],
+    "host": "domacin1",
+    "comments": [],
+    "pictures": [],
+    "pricePerNight": 518,
+    "checkInTime": "14:00",
+    "checkOutTime": "10:00",
+    "statusOfApartment": "Neaktivan",
+    "amenities": [
+      {
+        "content": "sto",
+        "deleted": 0
+      },
+      {
+        "content": "stolica",
+        "deleted": 0
+      },
+      {
+        "content": "ogledalo",
+        "deleted": 0
+      },
+      {
+        "content": "lampa",
+        "deleted": 0
+      }
+    ],
+    "reservations": [],
+    "deleted": 0
   }
 ]

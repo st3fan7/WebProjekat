@@ -26,6 +26,7 @@ div.bg {
     
 }
 
+
 ul {
     z-index: 5;
     float: right;
@@ -549,12 +550,7 @@ label {
     color: #054f5294;
 }
 
-span {
-    display: inline-block;
-    height: 50px;
-    font-family: 'Suranna', serif;
-    font-size: 34px;
-}
+
 
 .spanAmenities {
     display: block;
@@ -880,6 +876,27 @@ span {
     font-size: 16px;
     font-family: 'Bentham', serif;
 }
+
+input[type=search], select {
+   
+    width: 100%;
+    padding: 12px 20px;
+    margin: 16px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 16px;
+    font-family: 'Bentham', serif;
+ 
+}
+
+input[type="search"]::placeholder{  
+    text-align: center; 
+}
+
+ 
 
 .filter-title input[type="text"]::placeholder,  .search-title2 input[type=text]::placeholder {  
     text-align: center; 
@@ -1687,3 +1704,34 @@ option {
   img.room-active {
     opacity: 1;
   }
+  
+  
+
+.search-box-container input[type=search] {
+  border: none;
+  border-bottom: 1px solid #cecece;
+  width: 100px;
+  font-size: 40px;
+  background: transparent;
+  padding: 0 !important;
+  outline: none;
+  height: 100px;
+  position: relative;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.predictive-box  {
+  height: auto;
+  width: 55px;
+  padding: 0 !important;
+  align-items: center;
+  position: aboslute;
+  border-bottom: 1px solid transparent;
+  
+}
+
+span.predictive-box-text {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 40px;
+  color: red;
+  height : 20px;
+}

@@ -1,3 +1,35 @@
+(function(global, factory) {
+  // CommonJS
+  if (typeof exports === 'object' && exports) {
+    module.exports = factory()
+  }
+  // AMD
+  else if (typeof define === 'function' && define.amd) {
+    define(factory)
+  }
+  // global
+  else {
+    global.cyrillicToLatin = factory()
+  }
+}
+(this, function () {
+
+  'use strict';
+
+  return function(string) {
+    var cyrillic = 'А_Б_В_Г_Д_Ђ_Е_Ё_Ж_З_И_Й_Ј_К_Л_Љ_М_Н_Њ_О_П_Р_С_Т_Ћ_У_Ф_Х_Ц_Ч_Џ_Ш_Щ_Ъ_Ы_Ь_Э_Ю_Я_а_б_в_г_д_ђ_е_ё_ж_з_и_й_ј_к_л_љ_м_н_њ_о_п_р_с_т_ћ_у_ф_х_ц_ч_џ_ш_щ_ъ_ы_ь_э_ю_я'.split('_')
+    var latin = 'A_B_V_G_D_Đ_E_Ë_Ž_Z_I_J_J_K_L_Lj_M_N_Nj_O_P_R_S_T_Ć_U_F_H_C_Č_Dž_Š_Ŝ_ʺ_Y_ʹ_È_Û_Â_a_b_v_g_d_đ_e_ë_ž_z_i_j_j_k_l_lj_m_n_nj_o_p_r_s_t_ć_u_f_h_c_č_dž_š_ŝ_ʺ_y_ʹ_è_û_â'.split('_')
+
+    return string.split('').map(function(char) {
+      var index = cyrillic.indexOf(char)
+      if (!~index)
+        return char
+      return latin[index]
+    }).join('')
+  }
+
+}));
+
 Vue.component("addNewApartment", {
 	data : function() {
 		return {
@@ -22,13 +54,23 @@ Vue.component("addNewApartment", {
 			endTimeInit : '',
 			amenitiesList : null,
 			checkedAmenities : [],
-			 state : {
+			places : null,
+		    city : '',
+		    zipCode : '',
+		    longitude : '',
+		    latitude : '',
+		    street : '',
+		    number : '',
+		    address: '',
+		    country : '',
+		    street : '',
+			state : {
 				    disabledDates: {
 				     to: new Date(),
 				     }
 				   }
-			 
-			
+		    
+		
 		}
 	},
 	template: `
@@ -130,13 +172,43 @@ Vue.component("addNewApartment", {
 
                         <label for="priceForNight">Cena po noći [RSD]:</label>
                         <input v-model="priceForNightModel" type="text" id="priceForNightID" name="priceForNightName" placeholder="Unesite cenu po noći..." pattern="[1-9][0-9]*([.][0-9]+)?" title="Primer validne cene: a) 2500 b) 2199.99">
-
+                        
+                        <!--
                         <label for="location">Lokacija:</label>
-                        <input v-model="locationModel" type="text" id="locationID" name="locationName" placeholder="Unesite GPS koordinate (lokacija)...">
+                        <input v-model="locationModel" type="text" id="locationID" name="locationName" placeholder="Unesite GPS koordinate (lokacija)..."> -->
+                     
                         
                         <label for="address">Adresa:</label>
-                        <input v-model="addressModel" type="text" id="addressID" name="addressName" placeholder="Unesite adresu apartmana..."  pattern="[A-Z][a-z A-Z]*[ ][1-9][0-9]*, [A-Z][a-z A-Z]* [0-9]{5}" title="Primer validne adrese: Cara Dusana 25, Novi Sad 21000">	
-							
+                        <!--
+                        <div id="searchbox">
+                        <div class="predictive-box" >
+                          <span class="predictive-box-text"></span>
+                        </div>
+                        <div class="search-box-container">
+                          <input autocapitalize="off"
+                            id="address"
+                            v-model="addressModel"
+                            autocomplete="off"
+                            autocorrect="off"
+                            role="textbox"
+                            spellcheck="false"
+                            type="search"
+                            >
+                        </div>
+                      </div>
+                      
+                      -->
+                        
+                        <input id="address" v-model="addressModel" placeholder="Unesite adresu apartmana..." type="search" >
+						
+                        <input id="latitude" hidden>
+                        <input id="longitude" hidden>
+                        <input id="city" hidden>
+                        <input id="zipCode" hidden>
+                        <input id="country" hidden>
+                        <input id="number" hidden>
+                       
+                       
 						<label for="dateFromPublishing">Datum od kojeg se izdaje:</label><br/>
                         <vuejs-datepicker v-model="startDateModel" id="startDateID" name="startDate" type="date"  format="dd.MM.yyyy." :disabledDates="state.disabledDates" placeholder="Izaberite datum od kojeg se izdaje..." ></vuejs-datepicker>
 						
@@ -178,6 +250,7 @@ Vue.component("addNewApartment", {
 	},
 	
 	computed : {
+		
 		newDateStart() {
   		
 			if(this.startDateModel !== ''){
@@ -186,9 +259,8 @@ Vue.component("addNewApartment", {
 		        }
 			}
 			
-				
-			
-		}
+		}		
+		
 		
 	},
 
@@ -248,6 +320,7 @@ Vue.component("addNewApartment", {
 				red.style.backgroundColor = "white"; 
 			}
 			
+			/*
 			if(this.locationModel.length === 0) {
 				var red = document.getElementById("locationID");
 				red.style.backgroundColor = "LightCoral"; 
@@ -277,6 +350,31 @@ Vue.component("addNewApartment", {
 				var cityAndZip = fullAddress[1].split(/(\d+)/);
 				var city = cityAndZip[0].trim();
 				var zip = cityAndZip[1].trim();
+			}
+			
+			*/
+			
+			//ako nije odabrao, uradi logiku
+			if(this.addressModel.length === 0 ){
+				var red = document.getElementById("address");
+				red.style.backgroundColor = "LightCoral"; 
+				empty = true;
+				
+			}else{
+				var red = document.getElementById("address");
+				red.style.backgroundColor = "white";
+				
+				this.address = document.querySelector('#address').value;
+				this.longitude = document.querySelector('#longitude').value;
+				this.latitude = document.querySelector('#latitude').value;
+				this.city = document.querySelector('#city').value;
+				this.zipCode = document.querySelector('#zipCode').value;
+				//this.number = document.querySelector('#number').value;
+				
+				var streetAndNum = this.address.split(/(\d+)/);
+				this.street = streetAndNum[0].trim();
+				this.number = streetAndNum[1].trim();			
+				
 			}
 			
 			if(this.startDateModel === null || this.startDateModel.length === 0) {
@@ -316,14 +414,15 @@ Vue.component("addNewApartment", {
 				red.style.backgroundColor = "white"; 
 			}
 		
+			//console.log(this.addressModel);
 			//console.log(newStartDate);
 			
 			
 			if(empty === false) {
 				axios.post('services/apartments/addNewApartment', {"id": '' + this.nameOfApartment, "numberOfRooms": this.numberOfRoomsModel,
 					"typeOfApartment" : this.typeOfApartment, "statusOfApartment" : this.statusOfApartment, "numberOfGuests" : this.numberOfGuestModel,
-					"pricePerNight" : this.priceForNightModel, "location" : { "latitude" : Latitude, "longitude" : longitude, 
-					"address" : {"street" : street, "houseNumber" : number, "populatedPlace" : city, "zipCode" : zip } },					
+					"pricePerNight" : this.priceForNightModel, "location" : { "latitude" : this.latitude, "longitude" : this.longitude, 
+					"address" : {"street" : this.street, "houseNumber" : this.number, "populatedPlace" : this.city, "zipCode" : this.zipCode } },					
 					"releaseDates" : [newStartDate, newEndDate], 
 					"checkInTime" : '' + this.checkinTimeModel, "checkOutTime" : '' + this.checkoutTimeModel, "host" : '' + this.activeUser.username,
 					"reservations" : [], "comments" : [], "amenities" : this.checkedAmenities, "pictures": []})
@@ -381,5 +480,37 @@ Vue.component("addNewApartment", {
 				
 
 		});	
+		
+		
+		this.places = places({
+			appId: 'plQ4P1ZY8JUZ',
+			apiKey: 'bc14d56a6d158cbec4cdf98c18aced26',
+			container: document.querySelector('#address'),
+			templates: {
+					value: function(suggestion){
+						return suggestion.name;
+				}
+			  }
+			}).configure({
+					type: 'address'			
+		});
+		
+		this.places.on('change', function getLocationData(e){
+			
+			document.querySelector('#address').value = e.suggestion.value || '';
+			document.querySelector('#city').value = e.suggestion.city || '';
+			document.querySelector('#longitude').value = e.suggestion.latlng.lng || '';
+			document.querySelector('#latitude').value = e.suggestion.latlng.lat || '';
+			document.querySelector('#zipCode').value = e.suggestion.postcode || '';
+			document.querySelector('#country').value = e.suggestion.country || '';
+			//document.querySelector('#number').value = e.suggestion.number || '';
+
+		
+		});
+		
+		
+		
+		
+		
 	}
 });
