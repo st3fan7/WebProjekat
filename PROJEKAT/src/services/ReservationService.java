@@ -30,6 +30,7 @@ public class ReservationService {
 		getAllReservationsByHostAndGuest();
 		getAllReservations();
 		saveChangedReservations();
+		filterByStatus();
 	}
 
 	private void getAllReservationsByHostAndGuest() {
@@ -139,6 +140,17 @@ public class ReservationService {
 
 		});
 	
+	}
+	
+	public void filterByStatus() {
+		get("services/reservation/filterByStatus", (req, res) -> {
+			res.type("application/json");
+			String payload = req.queryMap("checkedStatus").value();
+			System.out.println(payload);
+			
+            res.status(200);
+            return g.toJson(reservationDAO.getReservationsList() );
+		});
 	}
 	
 	

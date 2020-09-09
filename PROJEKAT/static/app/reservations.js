@@ -9,7 +9,9 @@ Vue.component("reservations", {
 			closeReservation : false,
 			searchUsername : '',
 			priceSortBy : '',
-			changedList : null
+			changedList : null,
+			statusList : ['Kreirana', 'Odbijena', 'Odustanak', 'Prihvacena', 'Zavrsena'],
+			checkedStatus : []
 		}
 	},
 	template: `
@@ -76,17 +78,19 @@ Vue.component("reservations", {
 
             <div class="filter-title">
                 <h1>Filtriraj rezervacije po:</h1>
-                <form id="formForFilter" action="#">
-                
-                    <select id="statusID" name="statusName">
-                        <option value="created">Kreirana</option>
-                        <option value="rejected">Odbijena</option>
-                        <option value="accepted">Prihvaćena</option>
-                        <option value="completed">Završena</option>
-                    </select>
+                <form id="formForFilter">
+                    
+                    <span class="spanAmenities" v-for="s in statusList">
+                    <br><label class="container">
+                        <input type="checkbox" :value="s" v-model="checkedStatus">
+                        <div class="text-checkbox">{{s}}</div>
+                        <span class="checkmark"></span>
+                        </label>
+                        <br>
+                    </span>
     
                     <div class="search-btn-user-reservation">
-                        <button id="searchInUserReservation" type="submit">Filtriraj</button>
+                        <button id="searchInUserReservation" type="button" @click="filterByStatus()">Filtriraj</button>
                     </div>
                 </form>           
             </div>
@@ -246,6 +250,20 @@ Vue.component("reservations", {
 				this.$router.go();
 			}
 			
+	   },
+	   
+	   filterByStatus : function() {
+		   axios.get('services/reservation/filterByStatus', {paramas: {"checkedStatus" : this.checkedStatus}}).
+		   then(response => {
+				if(response.status === 200)
+				{
+					toast("Rezervacije su uspešno izmenjenje!");
+				}
+				else{
+					
+					this.listOfReservations = this.listOfReservations;
+				}
+		   });
 	   }
 	   
 	   
