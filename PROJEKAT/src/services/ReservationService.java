@@ -143,13 +143,40 @@ public class ReservationService {
 	}
 	
 	public void filterByStatus() {
-		get("services/reservation/filterByStatus", (req, res) -> {
+		post("services/reservation/filterByStatus", (req, res) -> {
 			res.type("application/json");
-			String payload = req.queryMap("checkedStatus").value();
-			System.out.println(payload);
+			
+			String checkedStatus = req.queryParams("checkedStatus");
+			String[] partsOfCheckedStatus = checkedStatus.split(","); 
+			ArrayList<Reservation> filterReservation = new ArrayList<>();
+			
+			String payload = req.body();			
+			ArrayList<Reservation> reservations = null;
+			
+			try {
+				Type listType = new TypeToken<ArrayList<Reservation>>(){}.getType(); 
+				reservations = g.fromJson(payload, listType);	
+			}
+			catch(Exception e) {
+				res.status(400);
+				return g.toJson("Bad request");
+			}
+			
+			for(int i = 0; i < partsOfCheckedStatus.length; i++) {
+				for(Reservation r : reservations) {
+					if(r.getStatus().toString().equals(partsOfCheckedStatus[i])) {
+						filterReservation.add(r);
+					}
+				}
+			}
+			
+			if(filterReservation.isEmpty()) {
+				res.status(204);
+				return "No content";
+			}
 			
             res.status(200);
-            return g.toJson(reservationDAO.getReservationsList() );
+            return g.toJson(filterReservation);
 		});
 	}
 	

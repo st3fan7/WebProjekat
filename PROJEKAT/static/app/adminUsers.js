@@ -61,7 +61,7 @@ Vue.component("adminUsers",{
 			 <div class="sortAndFilterForUserOverview">
 			     <div class="filter-title">
 			         <h1>Pretraži po:</h1>
-			         
+			         	 <br><br>
 			             <label for="username" id="labelForUsername">Korisničko ime:</label>
 			             <input type="text" id="usernameID" name="usernameName" v-model="searchUsername" placeholder="Unesite korisničko ime...">
 			          <form id="formForSearch" >
@@ -72,7 +72,7 @@ Vue.component("adminUsers",{
 			                 <option value="domacin">Domaćin</option>
 			                 <option value="admin">Administrator</option>
 			             </select>
-			
+						<br><br>
 			             <label id="labelForGender" for="gender">Pol:</label>
 			             <select id="genderID" name="genderName" v-model="selectedGender">
 			             	 <option value="pol" selected>Pol</option>

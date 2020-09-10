@@ -3,24 +3,23 @@ package services;
 import static spark.Spark.post;
 import static spark.Spark.get;
 
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import beans.Amenities;
 import beans.Apartment;
-import beans.Comment;
 import beans.Host;
-import beans.Location;
 import dao.AdminDAO;
 import dao.ApartmentDAO;
 import dao.GuestDAO;
 import dao.HostDAO;
 import dto.ApartmentDTO;
 import enums.StatusOfApartment;
-import enums.TypeOfApartment;
 import spark.Session;
 
 public class ApartmentService {
@@ -37,6 +36,7 @@ public class ApartmentService {
 		changeApartment();
 		deleteApartment();
 		getAllApartments();
+		filterByAmenities();
 	}
 
 	public void getAllApartments() {
@@ -321,7 +321,53 @@ public class ApartmentService {
 		});
 	}
 	
-	
+	public void filterByAmenities() {
+		post("services/apartments/filterByAmenities", (req, res) -> {
+			res.type("application/json");
+			
+			String checkedAmenities = req.queryMap("checkedAmenities").value();
+			String[] partsOfCheckedAmenities = checkedAmenities.split(","); 
+			ArrayList<Apartment> filterApartments = new ArrayList<>();
+			
+			String payload = req.body();			
+			ArrayList<Apartment> apartments = null;
+			System.out.println("params" + checkedAmenities);
+			
+			try {
+				Type listType = new TypeToken<ArrayList<Apartment>>(){}.getType(); 
+				apartments = g.fromJson(payload, listType);	
+			}
+			catch(Exception e) {
+				res.status(400);
+				return g.toJson("Bad request");
+			}
+			
+			for(int i = 0; i < partsOfCheckedAmenities.length; i++) {
+				for(Apartment a : apartments) {
+					for(Amenities amenities : a.getAmenities()) {
+						if(amenities.getContent().equals(partsOfCheckedAmenities[i])) {
+							filterApartments.add(a);
+						} else {
+							if(filterApartments.contains(a)) {
+								filterApartments.remove(a);
+							}
+							
+							break;
+						}
+					}
+					
+				}
+			}
+			
+			if(filterApartments.isEmpty()) {
+				res.status(204);
+				return "No content";
+			}
+			
+            res.status(200);
+            return g.toJson(filterApartments);
+		});
+	}
 	
 	
 	

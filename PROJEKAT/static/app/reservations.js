@@ -11,7 +11,9 @@ Vue.component("reservations", {
 			priceSortBy : '',
 			changedList : null,
 			statusList : ['Kreirana', 'Odbijena', 'Odustanak', 'Prihvacena', 'Zavrsena'],
-			checkedStatus : []
+			checkedStatus : [],
+			allReservation : []
+			
 		}
 	},
 	template: `
@@ -253,15 +255,17 @@ Vue.component("reservations", {
 	   },
 	   
 	   filterByStatus : function() {
-		   axios.get('services/reservation/filterByStatus', {paramas: {"checkedStatus" : this.checkedStatus}}).
+		   axios.post('services/reservation/filterByStatus', this.allReservation, {params: {"checkedStatus" : [] +  this.checkedStatus}}).
 		   then(response => {
 				if(response.status === 200)
 				{
-					toast("Rezervacije su uspešno izmenjenje!");
-				}
-				else{
-					
-					this.listOfReservations = this.listOfReservations;
+					toast("Rezervacije su uspešno filtrirane!");
+					this.listOfReservations = response.data;
+				} else if(response.data === 400) {
+					this.$router.push({name : 'badRequest'});
+				} else{		
+					this.listOfReservations = [];
+					toast("Nema rezervacija za izbrane filtere!");
 				}
 		   });
 	   }
@@ -292,6 +296,7 @@ Vue.component("reservations", {
 				this.activeAdmin = true;
 				axios.get('services/reservations/getAllReservations').then(response => {
 					this.listOfReservations = response.data;
+					this.allReservation = response.data;
 				});
 			}else{
 				this.activeAdmin = false;
@@ -301,6 +306,7 @@ Vue.component("reservations", {
 				this.activeHost = true;
 				axios.get('services/reservations/getAllReservationsForHost').then(response => {
 					this.listOfReservations = response.data;
+					this.allReservation = response.data;
 				});
 			}else{
 				this.activeHost = false;
@@ -310,6 +316,7 @@ Vue.component("reservations", {
 				this.activeGuest = true;
 				axios.get('services/reservations/getAllReservationsForGuest').then(response => {
 					this.listOfReservations = response.data;
+					this.allReservation = response.data;
 				});
 			}else{
 				this.activeGuest = false;

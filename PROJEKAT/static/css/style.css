@@ -464,7 +464,7 @@ ul li.active a{
 label,
 .product-text h1,
 .text-for-adding-apartment h1,
-.product-price-btn p, .add-btn-amenities p, .delete-btn-in-amenities p, .cancel-btn-in-amenities p, .rasing-price-btn p, .change-btn-in-admin-change-apartment p, .cancel-btn-in-admin-change-apartment p,  .search-btn-user-reservation p, .search-btn-user-overview p, .review-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p, .sort-price-btn p, .filter-btn-active-apartment p, .change-btn p {
+.product-price-btn p, .add-btn-amenities p, .filter-btn-in-review-apartment p, .delete-btn-in-amenities p, .cancel-btn-in-amenities p, .rasing-price-btn p, .change-btn-in-admin-change-apartment p, .cancel-btn-in-admin-change-apartment p,  .search-btn-user-reservation p, .search-btn-user-overview p, .review-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p, .sort-price-btn p, .filter-btn-active-apartment p, .change-btn p {
     font-family: 'Bentham', serif;
 }
 
@@ -512,7 +512,7 @@ label {
     overflow: hidden;
 }
 
-.product-price-btn, .rasing-price-btn, .add-btn-amenities, .delete-btn-in-amenities, .cancel-btn-in-amenities, .change-btn-in-admin-change-apartment, .cancel-btn-in-admin-change-apartment,  .search-btn-user-reservation, .search-btn-user-overview, .review-btn, .falling-price-btn, .type-filter-btn, .content-filter-btn, .add-btn, .cancel-btn, .sort-price-btn, .filter-btn-active-apartment, .change-btn {
+.product-price-btn, .filter-btn-in-review-apartment, .rasing-price-btn, .add-btn-amenities, .delete-btn-in-amenities, .cancel-btn-in-amenities, .change-btn-in-admin-change-apartment, .cancel-btn-in-admin-change-apartment,  .search-btn-user-reservation, .search-btn-user-overview, .review-btn, .falling-price-btn, .type-filter-btn, .content-filter-btn, .add-btn, .cancel-btn, .sort-price-btn, .filter-btn-active-apartment, .change-btn {
     height: 103px;
     width: 327px;
     margin-top: 17px;
@@ -526,7 +526,7 @@ label {
     position: relative;
 }
 
-.product-price-btn p, .rasing-price-btn p, .add-btn-amenities p, .delete-btn-in-amenities p, .cancel-btn-in-amenities p, .change-btn-in-admin-change-apartment p, .cancel-btn-in-admin-change-apartment p,  .search-btn-user-reservation p, .search-btn-user-overview p, .review-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p, .sort-price-btn p, .filter-btn-active-apartment p, .change-btn p  {
+.product-price-btn p, .filter-btn-in-review-apartment p, .rasing-price-btn p, .add-btn-amenities p, .delete-btn-in-amenities p, .cancel-btn-in-amenities p, .change-btn-in-admin-change-apartment p, .cancel-btn-in-admin-change-apartment p,  .search-btn-user-reservation p, .search-btn-user-overview p, .review-btn p, .falling-price-btn p, .type-filter-btn p, .content-filter-btn p, .add-btn p, .cancel-btn p, .sort-price-btn p, .filter-btn-active-apartment p, .change-btn p  {
     display: inline-block;
     position: absolute;
     top: 7px;
@@ -559,7 +559,7 @@ label {
     font-size: 34px;
 }
 
-.product-price-btn button, .rasing-price-btn button, .add-btn-amenities button, .delete-btn-in-amenities button, .cancel-btn-in-amenities button, .change-btn-in-admin-change-apartment button, .cancel-btn-in-admin-change-apartment button, .search-btn-user-reservation button, .search-btn-user-overview button, .review-btn button, .falling-price-btn button, .type-filter-btn button, .content-filter-btn button, .add-btn button, .cancel-btn button, .sort-price-btn button, .filter-btn-active-apartment button, .change-btn button  {
+.product-price-btn button, .filter-btn-in-review-apartment button, .rasing-price-btn button, .add-btn-amenities button, .delete-btn-in-amenities button, .cancel-btn-in-amenities button, .change-btn-in-admin-change-apartment button, .cancel-btn-in-admin-change-apartment button, .search-btn-user-reservation button, .search-btn-user-overview button, .review-btn button, .falling-price-btn button, .type-filter-btn button, .content-filter-btn button, .add-btn button, .cancel-btn button, .sort-price-btn button, .filter-btn-active-apartment button, .change-btn button  {
     float: right;
     display: inline-block;
     height: 50px;
@@ -596,6 +596,10 @@ label {
 	margin: -5px  85px 0 16px;
 }
 
+.filter-btn-in-review-apartment button {
+	margin: -10px  85px 0 16px;
+}
+
 .change-btn-in-admin-change-apartment button {
     margin: 40px 125px 0 16px; 
 }
@@ -605,7 +609,7 @@ label {
 }
 
 .search-btn-user-reservation button {
-    margin: 35px 85px 0 16px;
+    margin: 12px 85px 0 16px;
 }
 
 .search-btn-user-overview button {
@@ -670,7 +674,7 @@ label {
     outline: none;
 }
 
-.product-price-btn button:hover, .delete-btn-in-amenities button:hover, .add-btn-amenities button:hover, .cancel-btn-in-amenities button:hover, .rasing-price-btn button:hover,  .change-btn-in-admin-change-apartment button:hover, .cancel-btn-in-admin-change-apartment button:hover, .search-btn-user-reservation button:hover,  .search-btn-user-overview button:hover, .review-btn button:hover, .falling-price-btn button:hover, .type-filter-btn button:hover, .add-btn button:hover, .cancel-btn button:hover, .sort-price-btn button:hover, .filter-btn-active-apartment button:hover, .change-btn button:hover{
+.product-price-btn button:hover, .filter-btn-in-review-apartment button:hover, .delete-btn-in-amenities button:hover, .add-btn-amenities button:hover, .cancel-btn-in-amenities button:hover, .rasing-price-btn button:hover,  .change-btn-in-admin-change-apartment button:hover, .cancel-btn-in-admin-change-apartment button:hover, .search-btn-user-reservation button:hover,  .search-btn-user-overview button:hover, .review-btn button:hover, .falling-price-btn button:hover, .type-filter-btn button:hover, .add-btn button:hover, .cancel-btn button:hover, .sort-price-btn button:hover, .filter-btn-active-apartment button:hover, .change-btn button:hover{
     background-color: #054f5294;
 }
 
@@ -700,7 +704,7 @@ label {
     z-index: 4;  
 }
 
-.sortAndFilter, .basicDataWrapper, .reservationForGuest, .commentForHost, .sortAndFilterForUserOverview,.confirm-cancel-field, .sortAndFilterForUserReservation {
+.sortAndFilter, .sortAndFilterReviewApartments, .basicDataWrapper, .reservationForGuest, .content-class-for-scroll, .content-class, .commentForHost, .sortAndFilterForUserOverview,.confirm-cancel-field, .sortAndFilterForUserReservation {
     position: fixed;
     width: 400px;
     height: 650px;
@@ -716,6 +720,10 @@ label {
 
     transition: 0.5 ease;
     cursor: pointer;
+}
+
+.sortAndFilterReviewApartments {
+	height: 770px;
 }
 
 .sortAndFilterMyRes{
@@ -748,6 +756,24 @@ label {
     border-radius: 0px 0px 30px 30px;
 }
 
+.content-class {
+	height: 390px;
+    margin-left: 73%;
+    background-color: #afd0c7;
+    margin-top: 19%;
+    border-radius: 0px 0px 30px 30px;
+    z-index: 1;
+}
+
+.content-class-for-scroll {
+	height: 50px;
+    margin-left: 73%;
+    background-color: #afd0c7;
+    margin-top: 36%;
+    border-radius: 0px 0px 30px 30px;
+    z-index: 2;
+}
+
 .basicDataWrapper {
     position: relative;
     height: 1410px;
@@ -775,7 +801,7 @@ label {
     height: 400px;
 }
 
-.sortAndFilter:hover, .confirm-cancel-field:hover {
+.sortAndFilter:hover, .sortAndFilterReviewApartments:hover, .confirm-cancel-field:hover {
     transform: scale(1.02);
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
 }
@@ -808,7 +834,7 @@ label {
 
 #labelForUsername {
     position: relative;
-    margin-left: 90px;
+    margin-left: 135px;
 }
 
 #dateID {
@@ -875,6 +901,16 @@ label {
     text-align: center;
     font-size: 16px;
     font-family: 'Bentham', serif;
+}
+
+.filter-title input[type=text], select {
+	width: 76%;
+ 	margin-left: 12%;
+}
+
+.search-title2 input[type=text], select {
+ 	width: 76%;
+ 	margin-left: 12%;
 }
 
 input[type=search], select {
@@ -1102,7 +1138,7 @@ option {
   }
   
 .previousInReservation {
-	margin-left: -28%;
+	margin-left: -26%;
 }  
 
 .previousInComments {

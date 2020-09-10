@@ -35,7 +35,8 @@ Vue.component("reviewApartments", {
 			reservations : [],
 			oldId : '',
 			freeDates : [],
-			pictures : []
+			pictures : [],
+			filteredAmenitiesList : []
 				
 			 
 			
@@ -95,7 +96,7 @@ Vue.component("reviewApartments", {
 	 </div>
 	 
 	 <div v-if="changeApartmentButtonClicked === false">
-		 <div class="sortAndFilter">
+		 <div class="sortAndFilterReviewApartments">
 		     <div class="price-title">
 		         <h1 id="sort-text-in-user-reservation">Sortiraj po ceni:</h1>
 		         <form id="formForSort" action="#">
@@ -116,24 +117,29 @@ Vue.component("reviewApartments", {
                      <option value="Tip" selected>Tip</option>
                      <option value="Soba">Soba</option>
                      <option value="Ceo apartman">Ceo apartman</option>
-                     </select>
-		             <form id="formForFilter" action="#">
-		             
-		               
-		                 <div class="content-filter-btn">
-		                     <button type="button">Sadržaju</button>
-		                 </div>
-		                 <div class="filter-btn-active-apartment">
-		                     <button id="searchInUserReservation" type="button" >Filtriraj</button>
-		                 </div>
-		             </form>           
+                     </select> 
+                     
+                      	<h1>Sadržaj:</h1>
+           
+			           <div  style="overflow-y:scroll;height:290px;">
+				            <span class="spanAmenities" v-for="a in amenitiesList">
+				            <br><label class="container">
+				                <input type="checkbox" :value="a.content" v-model="filteredAmenitiesList">
+				                <div class="text-checkbox">{{a.content}}</div>
+				                <span class="checkmark"></span>
+				                </label>
+				                <br>
+				            </span>
+				     	</div>
+				     	<form id="formForSearch">
+			                <div class="filter-btn-in-review-apartment">
+			                    <button type="button" @click="filterByAmenities()">Filtriraj</button>
+			                </div>
+			            </form>
 		         </div>
 		      </div>
 
 
-		 
-		
-		 
 		 <div class="titleForActiveApartments">
 		     <h1>Pregled aktivnih apartmana:</h1>
 		 </div> 
@@ -552,6 +558,24 @@ Vue.component("reviewApartments", {
 				
 			}
 			
+		},
+		
+		filterByAmenities : function() {
+			
+			
+			   axios.post('services/apartments/filterByAmenities', this.activeApartmentsForHost, {params: {"checkedAmenities" : [] +  this.filteredAmenitiesList}}).
+			   then(response => {
+					if(response.status === 200)
+					{
+						toast("Rezervacije su uspešno filtrirane!");
+						this.activeApartmentsForHost = response.data;
+					} else if(response.data === 400) {
+						this.$router.push({name : 'badRequest'});
+					} else{		
+						this.activeApartmentsForHost = [];
+						toast("Nema apartmana za izbrane filtere!");
+					}
+			   });
 		}
 		
 		
