@@ -89,9 +89,7 @@ Vue.component("reviewInActiveApartments", {
 	     <ul class="ulForSideComponents">
 	         <div v-if="activeHost"><li ><a href="#/reviewApartments">AKTIVNI</a></li></div><br v-if="activeHost">         
 	         <div v-if="activeHost"><li class="active"><a href="#/reviewInActiveApartments">NEAKTIVNI</a></li></div><br v-if="activeHost">
-	         <div v-if="activeHost"><li><a href="#/addNewApartment">DODAJ APARTMAN</a></li></div><br v-if="activeHost">	         
-	         <div v-if="activeAdmin"><li><a href="#/amenitiesChange">SADRŽAJ</a></li></div><br v-if="activeAdmin">
-		     <div v-if="activeAdmin"><li class="active"><a href="#/reviewInActiveApartments">PREGLED APARTMANA</a></li></div><br v-if="activeAdmin">  
+	         <div v-if="activeHost"><li><a href="#/addNewApartment">DODAJ APARTMAN</a></li></div><br v-if="activeHost">	                   
 	     </ul>
 	 </div>
 	 
@@ -511,20 +509,7 @@ Vue.component("reviewInActiveApartments", {
 			this.activeUser = response.data;
 			
 			if (this.activeUser.role === "admin"){
-				this.activeAdmin = true;
-				axios.get('services/apartments/getAllApartments').then(response => {
-					if(response.status === 200){
-						this.activeApartmentsForHost = response.data;
-					}else{
-						toast('Trenutno ne postoje apartmani')
-					}
-					
-				});	
-				
-				axios.get('services/amenities/getAllAmenities').then(response => {
-					this.amenitiesList = response.data;			
-				});
-				
+				this.activeAdmin = true;				
 			}else{
 				this.activeAdmin = false;
 			}		

@@ -7,7 +7,7 @@ Vue.component("reviewApartments", {
 			activeGuest : false,
 			activeApartmentsForHost : null,
 			priceSortBy : '',
-			typeOfApartmanFilter : '',
+			typeOfApartmanFilter : 'Tip',
 			UnActiveApartmanCheck : false,
 			changeApartmentButtonClicked : false,
 			apartmentId : '',
@@ -36,7 +36,9 @@ Vue.component("reviewApartments", {
 			oldId : '',
 			freeDates : [],
 			pictures : [],
-			filteredAmenitiesList : []
+			filteredAmenitiesList : [],
+			activeApartmentsNOTCHANGEDlist : [],
+			statusOfApartmentFilter : 'Status'
 				
 			 
 			
@@ -59,7 +61,7 @@ Vue.component("reviewApartments", {
 	         <ul class="menu-contents">
 	            <li id="onlyHomePage"><a href="#/">Početna</a></li>
 	            <li v-if="activeHost" class="active"><a href="#/reviewApartments">Moji apartmani</a></li>
-	            <li v-if="activeAdmin"><a href="#">Apartmani</a></li>
+	            <li v-if="activeAdmin" class="active"><a href="#/amenitiesChange">Apartmani</a></li>
                 <li v-if="activeHost || activeAdmin"><a href="#/reservations">Rezervacije</a></li>
                 <li v-if="activeHost || activeAdmin"><a href="#/comments">Komentari</a></li>   
                 <li v-if="activeHost || activeAdmin"><a href="#/adminUsers">Korisnici</a></li>   
@@ -89,9 +91,11 @@ Vue.component("reviewApartments", {
 	
 	 <div class="sideComponents">      
 	     <ul class="ulForSideComponents">
-	         <div><li class="active"><a href="#/reviewApartments">AKTIVNI</a></li></div><br/>         
-	         <div><li><a href="#/reviewInActiveApartments">NEAKTIVNI</a></li></div><br/>
-	         <div><li><a href="#/addNewApartment">DODAJ APARTMAN</a></li></div><br/>
+	         <div v-if="activeHost"><li class="active"><a href="#/reviewApartments">AKTIVNI</a></li></div><br v-if="activeHost">         
+	         <div v-if="activeHost"><li><a href="#/reviewInActiveApartments">NEAKTIVNI</a></li></div><br v-if="activeHost">
+	         <div v-if="activeHost"><li><a href="#/addNewApartment">DODAJ APARTMAN</a></li></div><br v-if="activeHost">
+	         <div v-if="activeAdmin"><li><a href="#/amenitiesChange">SADRŽAJ</a></li></div><br v-if="activeAdmin">
+		     <div v-if="activeAdmin"><li class="active"><a href="#/reviewActiveApartments">PREGLED APARTMANA</a></li></div><br v-if="activeAdmin"> 
 	     </ul>
 	 </div>
 	 
@@ -111,7 +115,7 @@ Vue.component("reviewApartments", {
 		                 </div>
 		             </form>
 		     </div>
-		     <div class="filter-title">
+		     <div class="filter-title" style="margin-top: -65px;">
 		             <h1>Filtriraj po:</h1>
 		             <select id="statusID" name="statusName" v-model="typeOfApartmanFilter">
                      <option value="Tip" selected>Tip</option>
@@ -119,9 +123,16 @@ Vue.component("reviewApartments", {
                      <option value="Ceo apartman">Ceo apartman</option>
                      </select> 
                      
+                     <select v-if="activeAdmin" id="statusID" name="statusName" v-model="statusOfApartmentFilter">
+                     <option value="Status" selected>Status</option>
+                     <option value="Neaktivan">Neaktivni</option>
+                     <option value="Aktivan">Aktivni</option>
+                     </select> 
+                  
+                     
                       	<h1>Sadržaj:</h1>
            
-			           <div  style="overflow-y:scroll;height:290px;">
+			           <div  style="overflow-y:scroll;height:13em;">
 				            <span class="spanAmenities" v-for="a in amenitiesList">
 				            <br><label class="container">
 				                <input type="checkbox" :value="a.content" v-model="filteredAmenitiesList">
@@ -141,7 +152,9 @@ Vue.component("reviewApartments", {
 
 
 		 <div class="titleForActiveApartments">
-		     <h1>Pregled aktivnih apartmana:</h1>
+		     <h1 v-if="activeHost">Pregled aktivnih apartmana:</h1>
+		     <h1 v-if="activeAdmin">Pregled svih apartmana:</h1>
+		     <a @click="resetAppButtonClicked()" class="previous"> Resetuj apartmane</a>
 		 </div> 
 		 
 		 <!-- Apartmani -->
@@ -162,7 +175,10 @@ Vue.component("reviewApartments", {
 		                 <p>Tip: {{a.typeOfApartment}}, Broj soba: {{a.numberOfRooms}}, Dozvoljen broj gostiju: {{a.numberOfGuests}} </br>
 		                 Adresa: {{a.location.address.street}} {{a.location.address.houseNumber}}, {{a.location.address.populatedPlace}} {{a.location.address.zipCode}}
 		                 </p>
-		             </div>
+		                 <p v-if="activeAdmin">Status: {{a.statusOfApartment}}<br/>
+		    			 Domaćin: {{a.host}}
+		                 </p>
+		                 </div>
 		             <div class="product-price-btn">
 		                 <button type="button" @click="deleteApartment(a)">obriši</button>
 		             </div>
@@ -279,10 +295,11 @@ Vue.component("reviewApartments", {
 	computed : {
 		filteredApartments() {
 	  		  
-	  		
+	  		if(this.activeHost){
+	  			  		
 			if (this.typeOfApartmanFilter === "Soba") {
       	return this.activeApartmentsForHost.filter((ap) => {
-        	return ap.typeOfApartment.startsWith(this.typeOfApartmanFilter);
+        	return ((ap.typeOfApartment.startsWith(this.typeOfApartmanFilter)));
         });
       }else if(this.typeOfApartmanFilter === "Ceo apartman"){	    	
     	  return this.activeApartmentsForHost.filter((ap) => {
@@ -292,9 +309,66 @@ Vue.component("reviewApartments", {
     	  return this.activeApartmentsForHost;
       }else{
     	  return this.activeApartmentsForHost;
-      		}      
+      		} 
+			
+	  }else if(this.activeAdmin){
+	  		
+		  /*
+		   * soba ne
+		   * soba akt
+		   * soba tip
+		   * 
+		   * ceo ne
+		   * ceo ak
+		   * ceo tip
+		   * 
+		   * tip status === sve
+		   * 
+		   * 
+		   * 
+		   * 
+		   * 
+		   */
+		  
+		  
+			if (this.typeOfApartmanFilter === "Soba" && this.statusOfApartmentFilter === "Neaktivan") {
+		      	return this.activeApartmentsForHost.filter((ap) => {
+		        	return ((ap.typeOfApartment.startsWith(this.typeOfApartmanFilter)) && (ap.statusOfApartment.startsWith("Neaktivan")));
+		        });
+		      }else if(this.typeOfApartmanFilter === "Ceo apartman"){	    	
+		    	  return this.activeApartmentsForHost.filter((ap) => {
+		          	return ap.typeOfApartment.startsWith("Ceo apartman");
+		          });    	  
+		      }else if(this.typeOfApartmanFilter === "Tip"){
+		    	  return this.activeApartmentsForHost;
+		      }else{
+		    	  return this.activeApartmentsForHost;
+		      		} 
+	  
+	  }
+	  		
+	  		
+			/*
+			if (this.statusOfApartmentFilter === "Neaktivan") {
+		      	return this.activeApartmentsForHost.filter((ap) => {
+		        	return ap.statusOfApartment.startsWith("Neaktivan");
+		        });
+		      }else if(this.statusOfApartmentFilter === "Aktivan"){	    	
+		    	  return this.activeApartmentsForHost.filter((ap) => {
+		          	return ap.statusOfApartment.startsWith("Aktivan");
+		          });    	  
+		      }else if(this.statusOfApartmentFilter === "Status"){
+		    	  return this.activeApartmentsForHost;
+		      }else{
+		    	  return this.activeApartmentsForHost;		      
+		      
+		      }
+		      
+		      */
       
 		},
+			
+		
 		
 		newDateStart() {
 	  		
@@ -514,22 +588,73 @@ Vue.component("reviewApartments", {
 		
 			
 		},		
-		previousButtonClicked : function(){
+		previousButtonClicked : function(){	
 			
-			
-			if(confirm('Da li ste sigurni da želite da se vratite na pregled aktivnih apartmana?')){
-				this.showNotification = false;
-				this.changeApartmentButtonClicked = false;
-				axios.get('services/apartments/getActiveApratmentsForHost').then(response => {
-					if(response.status === 200){
-						this.activeApartmentsForHost = response.data;
-					}else{
-					
-						toast('Trenutno ne postoje aktivni apartmani')
-					}
-					
-				});
+			if(this.activeHost) {
+				if(confirm('Da li ste sigurni da želite da se vratite na pregled aktivnih apartmana?') === true){ 
+					this.showNotification = false;
+					this.changeApartmentButtonClicked = false;
+					axios.get('services/apartments/getActiveApratmentsForHost').then(response => {
+						if(response.status === 200){
+							this.activeApartmentsForHost = response.data;
+						}else{
+						
+							toast('Trenutno ne postoje aktivni apartmani')
+						}
+						
+					});
+				}
 				
+			} else if(this.activeAdmin) {
+				if(confirm('Da li ste sigurni da želite da se vratite na pregled apartmana?') === true){ 
+					this.showNotification = false;
+					this.changeApartmentButtonClicked = false;
+					
+					axios.get('services/apartments/getAllApartments').then(response => {
+						if(response.status === 200){
+							this.activeApartmentsForHost = response.data;
+						}else{
+							toast('Trenutno ne postoje apartmani')
+						}
+						
+					});	
+				}
+				
+			}
+			
+			
+			
+			
+		},
+		
+		resetAppButtonClicked : function(){
+			
+			
+			if(confirm('Da li ste sigurni da želite da resetujete listu apartmana?')){
+				if(this.activeHost === true){
+					axios.get('services/apartments/getActiveApratmentsForHost').then(response => {
+						if(response.status === 200){
+							this.activeApartmentsForHost = response.data;
+						}else{
+						
+							toast('Trenutno ne postoje aktivni apartmani')
+						}
+						
+					});
+				}else if(this.activeAdmin === true){
+					
+						axios.get('services/apartments/getAllApartments').then(response => {
+							if(response.status === 200){
+								this.activeApartmentsForHost = response.data;
+							}else{
+							
+								toast('Trenutno ne postoje aktivni apartmani')
+							}
+							
+						});
+				
+				
+				}
 			}
 		},
 		
@@ -546,15 +671,28 @@ Vue.component("reviewApartments", {
 					
 				});
 				
-				axios.get('services/apartments/getActiveApratmentsForHost').then(response => {
-					if(response.status === 200){
-						this.activeApartmentsForHost = response.data;
-					}else{
-						this.activeApartmentsForHost = response.data;
-						toast('Trenutno ne postoje aktivni apartmani')
-					}
+				if(this.activeHost) {
 					
-				});
+					axios.get('services/apartments/getActiveApratmentsForHost').then(response => {
+						if(response.status === 200){
+							this.activeApartmentsForHost = response.data;
+						}else{
+							this.activeApartmentsForHost = response.data;
+							toast('Trenutno ne postoje aktivni apartmani')
+						}
+						
+					});
+				} else if(this.activeAdmin) {
+					axios.get('services/apartments/getAllApartments').then(response => {
+						if(response.status === 200){
+							this.activeApartmentsForHost = response.data;
+						}else{
+							this.activeApartmentsForHost = response.data;
+							toast('Trenutno ne postoje apartmani')
+						}
+						
+					});	
+				}
 				
 			}
 			
@@ -563,11 +701,11 @@ Vue.component("reviewApartments", {
 		filterByAmenities : function() {
 			
 			
-			   axios.post('services/apartments/filterByAmenities', this.activeApartmentsForHost, {params: {"checkedAmenities" : [] +  this.filteredAmenitiesList}}).
+			   axios.post('services/apartments/filterByAmenities', this.activeApartmentsNOTCHANGEDlist, {params: {"checkedAmenities" : [] +  this.filteredAmenitiesList}}).
 			   then(response => {
 					if(response.status === 200)
 					{
-						toast("Rezervacije su uspešno filtrirane!");
+						toast("Apartmani su uspešno filtrirani!");
 						this.activeApartmentsForHost = response.data;
 					} else if(response.data === 400) {
 						this.$router.push({name : 'badRequest'});
@@ -587,6 +725,20 @@ Vue.component("reviewApartments", {
 			
 			if (this.activeUser.role === "admin"){
 				this.activeAdmin = true;
+				axios.get('services/apartments/getAllApartments').then(response => {
+					if(response.status === 200){
+						this.activeApartmentsForHost = response.data;
+						this.activeApartmentsNOTCHANGEDlist = response.data;
+					}else{
+						toast('Trenutno ne postoje apartmani')
+					}
+					
+				});	
+				
+				axios.get('services/amenities/getAllAmenities').then(response => {
+					this.amenitiesList = response.data;			
+				});
+				
 			}else{
 				this.activeAdmin = false;
 			}		
@@ -595,6 +747,7 @@ Vue.component("reviewApartments", {
 				axios.get('services/apartments/getActiveApratmentsForHost').then(response => {
 					if(response.status === 200){
 						this.activeApartmentsForHost = response.data;
+						this.activeApartmentsNOTCHANGEDlist = response.data;
 					}else{
 						toast('Trenutno ne postoje aktivni apartmani')
 					}

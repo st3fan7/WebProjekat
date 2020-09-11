@@ -723,7 +723,7 @@ label {
 }
 
 .sortAndFilterReviewApartments {
-	height: 770px;
+	height: 72%;
 }
 
 .sortAndFilterMyRes{
@@ -794,7 +794,9 @@ label {
 }
 
 .sortAndFilterForUserReservation {
-    height: 770px; 
+	margin-top: -2%;
+	z-index: 5;
+    height: 46em; 
 }
 
 .confirm-cancel-field {
@@ -806,7 +808,7 @@ label {
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
 }
 
-.price-title h1, .filter-title h1, .search-title h1, .search-title2 h1, .price-title2 h1  {
+.price-title h1, .filter-title h1, .filter-titleRes h1, .search-title h1, .search-title2 h1, .price-title2 h1  {
     padding-top: 52px;
     font-size: 30px;
     color: #474747;
@@ -872,6 +874,10 @@ label {
     padding-top: 12px;
 }
 
+.filter-titleRes h1 {
+    margin-top: -70px;
+}
+
 #formForFilter {
     margin-top: 10px;
     margin-left: 50px;
@@ -890,7 +896,7 @@ label {
     width: 854px;
 }
 
-.filter-title input[type=text], .search-title2 input[type=text], select {
+.filter-title input[type=text], .search-title2 input[type=text], .filter-titleRes input[type=text], select {
     width: 100%;
     padding: 12px 20px;
     margin: 16px 0;
@@ -903,7 +909,7 @@ label {
     font-family: 'Bentham', serif;
 }
 
-.filter-title input[type=text], select {
+.filter-title input[type=text], .filter-titleRes input[type=text], select {
 	width: 76%;
  	margin-left: 12%;
 }
@@ -934,7 +940,7 @@ input[type="search"]::placeholder{
 
  
 
-.filter-title input[type="text"]::placeholder,  .search-title2 input[type=text]::placeholder {  
+.filter-title input[type="text"]::placeholder, .filter-titleRes input[type="text"]::placeholder, .search-title2 input[type=text]::placeholder {  
     text-align: center; 
 } 
 

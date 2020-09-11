@@ -331,7 +331,7 @@ public class ApartmentService {
 			
 			String payload = req.body();			
 			ArrayList<Apartment> apartments = null;
-			System.out.println("params" + checkedAmenities);
+
 			
 			try {
 				Type listType = new TypeToken<ArrayList<Apartment>>(){}.getType(); 
@@ -341,23 +341,28 @@ public class ApartmentService {
 				res.status(400);
 				return g.toJson("Bad request");
 			}
+
 			
-			for(int i = 0; i < partsOfCheckedAmenities.length; i++) {
-				for(Apartment a : apartments) {
-					for(Amenities amenities : a.getAmenities()) {
-						if(amenities.getContent().equals(partsOfCheckedAmenities[i])) {
-							filterApartments.add(a);
-						} else {
-							if(filterApartments.contains(a)) {
-								filterApartments.remove(a);
-							}
-							
-							break;
-						}
-					}
+			int count = 0;			
+			for(Apartment a : apartments){
+				count = 0;
+				for(Amenities amenities : a.getAmenities()){
+					for(int i = 0; i < partsOfCheckedAmenities.length; i++){
+						if(amenities.getContent().equals(partsOfCheckedAmenities[i])){
+							count++;
+						}																	
+			       }
 					
 				}
+				if(partsOfCheckedAmenities.length == count){
+					filterApartments.add(a);
+				}
 			}
+			
+			
+		
+			
+			
 			
 			if(filterApartments.isEmpty()) {
 				res.status(204);

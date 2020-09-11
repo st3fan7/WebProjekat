@@ -94,7 +94,7 @@ Vue.component("amenitiesChange", {
 		    <div class="sideComponents">      
 		        <ul class="ulForSideComponents">
 		            <div><li class="active"><a href="#">SADRŽAJ</a></li></div><br/>
-		            <div><li><a href="#/reviewInActiveApartments">PREGLED APARTMANA</a></li></div><br/>  
+		            <div><li><a href="#/reviewApartments">PREGLED APARTMANA</a></li></div><br/>  
 		        </ul>
 		    </div>
 		

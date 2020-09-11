@@ -32,7 +32,7 @@ Vue.component("reservations", {
             <ul class="menu-contents">
 	            <li id="onlyHomePage"><a href="#/">Početna</a></li>
 	            <li v-if="activeHost"><a href="#/reviewApartments">Moji apartmani</a></li>
-	            <li v-if="activeAdmin"><a href="#">Apartmani</a></li>
+	            <li v-if="activeAdmin"><a href="#/amenitiesChange">Apartmani</a></li>
                 <li v-if="activeHost || activeAdmin"  class="active"><a href="#/reservations">Rezervacije</a></li>
                 <li v-if="activeHost || activeAdmin"><a href="#/comments">Komentari</a></li>   
                 <li v-if="activeHost || activeAdmin"><a href="#/adminUsers">Korisnici</a></li>   
@@ -78,7 +78,7 @@ Vue.component("reservations", {
                 </form>
         </div>
 
-            <div class="filter-title">
+            <div class="filter-titleRes">
                 <h1>Filtriraj rezervacije po:</h1>
                 <form id="formForFilter">
                     
