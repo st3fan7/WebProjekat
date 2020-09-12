@@ -30,13 +30,13 @@
     "id": "R3"
   },
   {
-    "apartment": "Apartman1",
+    "apartment": "Soba 24",
     "startDate": "31.08.2020. 14:00",
     "numberOfNight": 3,
     "totalCost": 3800.0,
     "messageForReservation": "",
     "guest": "gost1",
-    "status": "Prihvacena",
+    "status": "Odbijena",
     "id": "R4"
   },
   {

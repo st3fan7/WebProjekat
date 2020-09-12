@@ -48,7 +48,16 @@
     ],
     "freeDates": [],
     "host": "domacin1",
-    "comments": [],
+    "comments": [
+      {
+        "guest": "gost1",
+        "apartment": "Soba 24",
+        "text": "Očajno",
+        "grade": "1",
+        "id": "comment 6",
+        "visibility": "Vidljiv"
+      }
+    ],
     "pictures": [],
     "pricePerNight": 1000,
     "checkInTime": "14:00",
@@ -109,22 +118,46 @@
     "freeDates": [],
     "host": "domacin1",
     "comments": [
-    	{
-    		"guest": "gost1",
-		    "apartment": "Apartman 212",
-		    "text": "Sve najbolje!",
-		    "grade": "1",
-		    "id": "comment 1",
-		    "visibility": "Vidljiv"
-    	}, 
-    	{
-		    "guest": "gost1",
-		    "apartment": "Apartman 212",
-		    "text": "Smestaj je los...",
-		    "grade": "2",
-		    "id": "comment 2",
-		    "visibility": "Sakriven"
-  		}
+      {
+        "guest": "gost1",
+        "apartment": "Apartman 212",
+        "text": "Sve najbolje!",
+        "grade": "1",
+        "id": "comment 1",
+        "visibility": "Vidljiv"
+      },
+      {
+        "guest": "gost1",
+        "apartment": "Apartman 212",
+        "text": "Smestaj je los...",
+        "grade": "2",
+        "id": "comment 2",
+        "visibility": "Vidljiv"
+      },
+      {
+        "guest": "gost1",
+        "apartment": "Apartman 212",
+        "text": "Sve ok!",
+        "grade": "3",
+        "id": "comment 4",
+        "visibility": "Vidljiv"
+      },
+      {
+        "guest": "gost1",
+        "apartment": "Apartman 212",
+        "text": "Biće bolje",
+        "grade": "1",
+        "id": "comment 5",
+        "visibility": "Vidljiv"
+      },
+      {
+        "guest": "gost1",
+        "apartment": "Apartman 212",
+        "text": "Super je",
+        "grade": "5",
+        "id": "comment 7",
+        "visibility": "Vidljiv"
+      }
     ],
     "pictures": [],
     "pricePerNight": 5000,
@@ -185,7 +218,7 @@
     "deleted": 0
   },
   {
-    "id": "Beogradski sobe 2",
+    "id": "Beogradsk sobe 2",
     "typeOfApartment": "Soba",
     "numberOfRooms": 2,
     "numberOfGuests": 5,
@@ -295,6 +328,10 @@
       {
         "content": "lampa",
         "deleted": 0
+      },
+      {
+        "content": "tv",
+        "deleted": 0
       }
     ],
     "reservations": [],
@@ -394,6 +431,62 @@
       },
       {
         "content": "lampa",
+        "deleted": 0
+      }
+    ],
+    "reservations": [],
+    "deleted": 0
+  },
+  {
+    "id": "Soba za izdavanje 1",
+    "typeOfApartment": "Soba",
+    "numberOfRooms": 1,
+    "numberOfGuests": 4,
+    "location": {
+      "latitude": 45.2518,
+      "longitude": 19.8372,
+      "address": {
+        "street": "Bulevar oslobodjenja",
+        "houseNumber": 111,
+        "populatedPlace": "Novi Sad",
+        "zipCode": "21000"
+      }
+    },
+    "releaseDates": [
+      "Oct 15, 2020 12:00:00 AM",
+      "Dec 10, 2020 12:00:00 AM"
+    ],
+    "freeDates": [],
+    "host": "domacin1",
+    "comments": [],
+    "pictures": [],
+    "pricePerNight": 356,
+    "checkInTime": "11:00",
+    "checkOutTime": "10:00",
+    "statusOfApartment": "Aktivan",
+    "amenities": [
+      {
+        "content": "sto",
+        "deleted": 0
+      },
+      {
+        "content": "stolica",
+        "deleted": 0
+      },
+      {
+        "content": "klima",
+        "deleted": 0
+      },
+      {
+        "content": "krevet",
+        "deleted": 0
+      },
+      {
+        "content": "kada",
+        "deleted": 0
+      },
+      {
+        "content": "grejanje",
         "deleted": 0
       }
     ],

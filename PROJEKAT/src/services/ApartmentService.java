@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 
 import beans.Amenities;
 import beans.Apartment;
+import beans.Comment;
 import beans.Host;
 import dao.AdminDAO;
 import dao.ApartmentDAO;
@@ -43,7 +44,7 @@ public class ApartmentService {
 	public void getAllActiveApartments() {
 		get("services/apartments/getAllActiveApartments", (req, res) -> {
 			ArrayList<Apartment> apratments = new ArrayList<>();
-					
+			ApartmentDAO apartmentDAO = new ApartmentDAO();
 			for(Apartment a : apartmentDAO.getApartmentsList()){
 				if((a.getDeleted() == 0) && (a.getStatusOfApartment().equals(StatusOfApartment.Aktivan))){
 					apratments.add(a);
@@ -55,6 +56,8 @@ public class ApartmentService {
 				res.status(204);
 				return g.toJson(apratments);
 			}
+			
+			
 				
 			res.status(200);
 			return g.toJson(apratments);
@@ -65,7 +68,7 @@ public class ApartmentService {
 	public void getAllApartments() {
 		get("services/apartments/getAllApartments", (req, res) -> {
 			ArrayList<Apartment> apratments = new ArrayList<>();
-					
+			apartmentDAO = new ApartmentDAO();
 			for(Apartment a : apartmentDAO.getApartmentsList()){
 				if(a.getDeleted() == 0){
 					apratments.add(a);
@@ -77,6 +80,9 @@ public class ApartmentService {
 				res.status(204);
 				return g.toJson(apratments);
 			}
+			
+		
+		
 				
 			res.status(200);
 			return g.toJson(apratments);
@@ -88,6 +94,8 @@ public class ApartmentService {
 	public void addNewApartment() {
 		post("services/apartments/addNewApartment", (req, res) -> {
 			res.type("application/json");
+			Session ss = req.session(true);
+			Host host = ss.attribute("user");
 			String payload = req.body();
 			ApartmentDTO apartmentDTO;
 			Apartment apartment = new Apartment();
@@ -146,6 +154,7 @@ public class ApartmentService {
 				if(apartmentDAO.getApartmentsMap().get(apartment.getId().toLowerCase()).getDeleted() == 1){ 
 					//apartmentDAO.getApartmentsMap().remove(apartment.getId().toLowerCase()); 
 					apartmentDAO.getApartmentsList().remove(apartmentDAO.getApartmentsMap().get(apartment.getId().toLowerCase()));
+					
 				}else{
 					res.status(201);
 					return "Apartman sa tim imenom veæ postoji!";
@@ -158,6 +167,15 @@ public class ApartmentService {
 			ApartmentDAO.writeApartmentsInFile(apartmentDAO.getApartmentsList());
 			apartmentDAO.fillMapWithApartments();
 			
+			for(Host host1 : hostDAO.getHostList()){
+				if(host1.getUsername().equals(host.getUsername())){
+					host1.getApartmentsForRent().add(apartment.getId());
+				}
+			}
+			
+			hostDAO.setHostList(hostDAO.getHostList());
+			HostDAO.writeHostInFile(hostDAO.getHostList());
+			hostDAO.fillMapWithHosts();
 			
 			res.status(200);
 			return g.toJson("Ok");
@@ -170,6 +188,8 @@ public class ApartmentService {
 		get("services/apartments/getActiveApratmentsForHost", (req, res) -> {
 			Session ss = req.session(true);
 			Host h = ss.attribute("user");
+			//apartmentDAO = new ApartmentDAO();
+			
 			ArrayList<Apartment> apratments = new ArrayList<>();
 			
 			
@@ -326,17 +346,32 @@ public class ApartmentService {
 		post("services/apartments/deleteApartment", (req, res) -> {
 			res.type("application/json");
 			String payload = req.body();
-		
+			Session ss = req.session(true);
+			Host host = ss.attribute("user");
+			//apartmentDAO = new ApartmentDAO();
+			ArrayList<Apartment> apartments = apartmentDAO.getApartmentsList();
 			
-			for(Apartment a : apartmentDAO.getApartmentsList()){
+			for(Apartment a : apartments){
 				if(a.getId().equals(payload)){
 					a.setDeleted(1);
 					break;
 				}
 			}
 			
+			for(Host host1 : hostDAO.getHostList()){
+				if(host1.getUsername().equals(host.getUsername())){
+					host1.getApartmentsForRent().remove(payload);
+				}
+			}
+			
+			
+			apartmentDAO.setApartmentsList(apartments);
 			ApartmentDAO.writeApartmentsInFile(apartmentDAO.getApartmentsList());
 			apartmentDAO.fillMapWithApartments();
+			
+			hostDAO.setHostList(hostDAO.getHostList());
+			HostDAO.writeHostInFile(hostDAO.getHostList());
+			hostDAO.fillMapWithHosts();
 			
 			res.status(200);	
 			return "ok";

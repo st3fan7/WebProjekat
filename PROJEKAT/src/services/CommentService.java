@@ -9,14 +9,17 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import beans.Apartment;
 import beans.Comment;
 import beans.Host;
 import dao.CommentDAO;
 import spark.Session;
+import dao.ApartmentDAO;
 
 public class CommentService {
 	private static Gson g = new Gson();
 	CommentDAO commentDAO = new CommentDAO();
+	ApartmentDAO apartmentDAO = new ApartmentDAO();
 	
 	public CommentService() {
 		getVisibleComments();
@@ -27,12 +30,14 @@ public class CommentService {
 		getAllComments();
 	}
 	
+	//URADJENO
 	private void getVisibleComments() {
 		post("services/comments/getVisibleComments", (req, res) -> {
 			res.type("application/json");
 			String payload = req.body();
 			ArrayList<Comment> comments = null; 
 			ArrayList<Comment> visibleComments = new ArrayList<>(); 
+			
 			
 			try {
 				Type listType = new TypeToken<ArrayList<Comment>>(){}.getType(); 
@@ -61,10 +66,13 @@ public class CommentService {
 		});
 	}
 	
+	//URADJENO
 	private void getCommentID() {
 		get("services/comments/getCommentID", (req, res) -> {
-			int maxID = 1;
+			int maxID = 0;
 			
+			
+			/*
 			for(int i = 0; i < commentDAO.getCommentsList().size(); i++) {
 				
 					String[] iNumberParts = commentDAO.getCommentsList().get(i).getId().split(" ");
@@ -73,6 +81,19 @@ public class CommentService {
 						maxID = Integer.parseInt(iNumberParts[1]);
 					} 
 			}
+			
+			*/
+			
+			for(Apartment a : apartmentDAO.getApartmentsList()){
+				for(Comment c : a.getComments()){
+					String[] iNumberParts = c.getId().split(" ");
+
+					if(Integer.parseInt(iNumberParts[1]) > maxID) {
+						maxID = Integer.parseInt(iNumberParts[1]);
+					}
+				}
+			}
+			
 
 			maxID++;
 			
@@ -82,12 +103,15 @@ public class CommentService {
 		});
 	}
 	
+	//URADJENO
 	private void addNewCommet() {
 		post("services/comments/addNewCommet", (req, res) -> {
 			res.type("application/json");
 			String payload = req.body();
 			
 			Comment comment = null;
+			
+			
 			try {
 				comment = g.fromJson(payload, Comment.class);	
 			}
@@ -96,10 +120,24 @@ public class CommentService {
 				return g.toJson("Bad request");
 			}
 			// treba da se upise i u apartman
-			
+			/*
 			commentDAO.getCommentsList().add(comment);
 			CommentDAO.writeCommentsInFile(commentDAO.getCommentsList());
 			commentDAO.fillMapWithComments();
+			*/
+			
+			
+			for(Apartment a : apartmentDAO.getApartmentsList()){
+				if(a.getId().equals(comment.getApartment())){
+					a.getComments().add(comment);
+				}
+			}
+			
+			apartmentDAO.setApartmentsList(apartmentDAO.getApartmentsList());
+			ApartmentDAO.writeApartmentsInFile(apartmentDAO.getApartmentsList());
+			apartmentDAO.fillMapWithApartments();
+			
+			
 			
 			res.status(200);
 			return "OK";
@@ -107,12 +145,13 @@ public class CommentService {
 		
 	}
 	
+	//URADJENO
 	private void saveChangedComments() {
 		post("services/comments/saveChangedComments", (req, res) -> {
 			res.type("application/json");
 			String payload = req.body();
 			ArrayList<Comment> comments = null; 
-			ArrayList<Comment> allComments = commentDAO.getCommentsList(); 
+			ArrayList<Comment> allComments = new ArrayList<Comment>();
 			ArrayList<Comment> allCommentsEmpty = new ArrayList<Comment>();
 			
 			try {
@@ -124,20 +163,20 @@ public class CommentService {
 				return g.toJson("Bad request");
 			}
 			
-			for(Comment c1 : allComments){ 
-				for(Comment c2 : comments){ 
-					if(c1.getId().equals(c2.getId())){
-						allCommentsEmpty.add(c1); 
+			ArrayList<Apartment> newApList = apartmentDAO.getApartmentsList();
+			for(Apartment a : newApList){
+				for(Comment c : a.getComments()){
+					for(Comment commentSent : comments){
+						if(c.getId().equals(commentSent.getId())){
+							c.setVisibility(commentSent.getVisibility());
+						}
 					}
 				}
 			}
 			
-			allComments.removeAll(allCommentsEmpty);		
-			allComments.addAll(comments);
-			
-			commentDAO.setCommentsList(allComments);
-			CommentDAO.writeCommentsInFile(commentDAO.getCommentsList());
-			commentDAO.fillMapWithComments();
+			apartmentDAO.setApartmentsList(newApList);
+			ApartmentDAO.writeApartmentsInFile(apartmentDAO.getApartmentsList());
+			apartmentDAO.fillMapWithApartments();
 			
 			res.status(200);
 			return g.toJson("ok");
@@ -145,14 +184,23 @@ public class CommentService {
 		});
 	
 	}
-	
+	//URADJENO
 	private void getAllCommentsForHost() {
 		
 		get("services/comments/getAllCommentsForHost", (req, res) -> {
             Session ss = req.session(true);
             Host host = ss.attribute("user");
             ArrayList<Comment> comments = new ArrayList<>();
-
+            
+            for(Apartment a : apartmentDAO.getApartmentsList()){
+            	for(String aHost : host.getApartmentsForRent()){
+            		if(a.getId().equals(aHost)){
+            			comments.addAll(a.getComments());
+            		}
+            	}
+            }
+            
+            /*
             for(Comment c : commentDAO.getCommentsList()){
             	for(String apartment : host.getApartmentsForRent()){
             		if(c.getApartment().equals(apartment)){
@@ -160,6 +208,8 @@ public class CommentService {
             		}
             	}
             }
+            
+            */
 
             if(comments.isEmpty()) {
                 res.status(204);
@@ -172,9 +222,18 @@ public class CommentService {
         });
 	}
 	
+	//Uradjeno
 	public void getAllComments() {
 		get("services/comments/getAllComments", (req, res) -> {
-			ArrayList<Comment> comments = commentDAO.getCommentsList();
+			ArrayList<Comment> comments = new ArrayList<>();
+			
+
+			for(Apartment a : apartmentDAO.getApartmentsList()){
+				for(Comment c : a.getComments()){
+					comments.add(c);
+				}
+			}
+			
 			
 			if(comments.isEmpty()) {
 				res.status(204);

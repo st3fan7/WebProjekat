@@ -1,18 +1,3 @@
 [
-  {
-    "guest": "gost1",
-    "apartment": "Apartman 212",
-    "text": "Sve najbolje!",
-    "grade": "5",
-    "id": "comment 1",
-    "visibility": "Vidljiv"
-  },
-  {
-    "guest": "gost1",
-    "apartment": "Apartman 212",
-    "text": "Smestaj je los...",
-    "grade": "2",
-    "id": "comment 2",
-    "visibility": "Sakriven"
-  }
+  
 ]
