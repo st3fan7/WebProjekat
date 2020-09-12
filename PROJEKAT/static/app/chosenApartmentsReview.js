@@ -374,7 +374,6 @@ Vue.component("chosenApartmentsReview", {
 				this.activeGuest = false;
 			}
 				
-
 		});	
 	}
 });
