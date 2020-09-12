@@ -149,8 +149,15 @@ Vue.component("registration", {
 								params:{username: this.username}		
 					}).then(response => {
 						if(response.status === 200){ 
-							toast('Dobrodošli ' + this.name);
-							this.$router.push({ name: 'homePage' })	
+							if(this.$route.params.goToReservation === true) {
+								toast('Dobrodošli ' + this.name);
+								router.push({ name: 'chosenApartmentsReview', params: { apartment: this.$route.params.apartment } })
+							} else {
+								toast('Dobrodošli ' + this.name);
+								this.$router.push({ name: 'homePage' })	
+							}
+							
+							
 						}
 						else if(response.status === 201){
 							this.showNotification = true;
@@ -164,7 +171,11 @@ Vue.component("registration", {
 		},
 		
 		signIn : function() {
+			if(this.$route.params.goToReservation === true) {
+				this.$router.push({ name: 'login', params: { goToReservation : true, apartment: this.$route.params.apartment }})
+			} else {
 				this.$router.push({ name: 'login' })
+			}
 		}
 	},
 	mounted() {

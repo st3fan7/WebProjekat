@@ -62,7 +62,7 @@ Vue.component("homePage", {
 	                <input type="text" class="search-field price" placeholder="Cena (Od-Do)">
 	                <input type="text" class="search-field rooms" placeholder="Broj soba (Od-Do)">
 	                <input type="text" class="search-field persons" placeholder="Broj osoba">
-	                <button class="search-btn" type="button">Pretraži</button>
+	                <button class="search-btn" type="button" @click="search()">Pretraži</button>
 	            </div>
 	        </form>
 	    </div>
@@ -84,6 +84,10 @@ Vue.component("homePage", {
 				this.$router.push({ name: 'homePage' })
 			}
 			
+		},
+		
+		search : function() {
+			this.$router.push({ name: 'searchedApartments' })
 		}
 	
 		},

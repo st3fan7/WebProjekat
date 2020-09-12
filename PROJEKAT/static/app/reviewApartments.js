@@ -312,59 +312,47 @@ Vue.component("reviewApartments", {
       		} 
 			
 	  }else if(this.activeAdmin){
-	  		
-		  /*
-		   * soba ne
-		   * soba akt
-		   * soba tip
-		   * 
-		   * ceo ne
-		   * ceo ak
-		   * ceo tip
-		   * 
-		   * tip status === sve
-		   * 
-		   * 
-		   * 
-		   * 
-		   * 
-		   */
-		  
-		  
-			if (this.typeOfApartmanFilter === "Soba" && this.statusOfApartmentFilter === "Neaktivan") {
+	  			  
+			  if (this.typeOfApartmanFilter === "Soba" && this.statusOfApartmentFilter === "Neaktivan") {
 		      	return this.activeApartmentsForHost.filter((ap) => {
-		        	return ((ap.typeOfApartment.startsWith(this.typeOfApartmanFilter)) && (ap.statusOfApartment.startsWith("Neaktivan")));
+		        	return ((ap.typeOfApartment.startsWith("Soba")) && (ap.statusOfApartment.startsWith("Neaktivan")));
 		        });
-		      }else if(this.typeOfApartmanFilter === "Ceo apartman"){	    	
+		      }else if(this.typeOfApartmanFilter === "Soba" && this.statusOfApartmentFilter === "Aktivan"){	    	
 		    	  return this.activeApartmentsForHost.filter((ap) => {
-		          	return ap.typeOfApartment.startsWith("Ceo apartman");
-		          });    	  
-		      }else if(this.typeOfApartmanFilter === "Tip"){
-		    	  return this.activeApartmentsForHost;
+			        	return ((ap.typeOfApartment.startsWith("Soba")) && (ap.statusOfApartment.startsWith("Aktivan")));
+			       });   	  
+		      }else if(this.typeOfApartmanFilter === "Soba" && this.statusOfApartmentFilter === "Status"){	    	
+		    	  return this.activeApartmentsForHost.filter((ap) => {
+			        	return ((ap.typeOfApartment.startsWith("Soba")));
+			       });   	  
+		      }else if(this.typeOfApartmanFilter === "Ceo apartman" && this.statusOfApartmentFilter === "Neaktivan"){	    	
+		    	  return this.activeApartmentsForHost.filter((ap) => {
+			        	return ((ap.typeOfApartment.startsWith("Ceo apartman")) && (ap.statusOfApartment.startsWith("Neaktivan")));
+			       });   	  
+		      }else if(this.typeOfApartmanFilter === "Ceo apartman" && this.statusOfApartmentFilter === "Aktivan"){	    	
+		    	  return this.activeApartmentsForHost.filter((ap) => {
+			        	return ((ap.typeOfApartment.startsWith("Ceo apartman")) && (ap.statusOfApartment.startsWith("Aktivan")));
+			       });   	  
+		      }else if(this.typeOfApartmanFilter === "Ceo apartman" && this.statusOfApartmentFilter === "Status"){	    	
+		    	  return this.activeApartmentsForHost.filter((ap) => {
+			        	return ((ap.typeOfApartment.startsWith("Ceo apartman")));
+			       });   	  
+		      }else if(this.typeOfApartmanFilter === "Tip" && this.statusOfApartmentFilter === "Status"){	    	
+		    	  return this.activeApartmentsForHost;  
+		      }else if(this.typeOfApartmanFilter === "Tip" && this.statusOfApartmentFilter === "Neaktivan"){	    	
+		    	  return this.activeApartmentsForHost.filter((ap) => {
+		    		  return (ap.statusOfApartment.startsWith("Neaktivan"));
+			       });   	  
+		      }else if(this.typeOfApartmanFilter === "Tip" && this.statusOfApartmentFilter === "Aktivan"){	    	
+		    	  return this.activeApartmentsForHost.filter((ap) => {
+		    		  return (ap.statusOfApartment.startsWith("Aktivan"));
+			       });   	  
 		      }else{
 		    	  return this.activeApartmentsForHost;
-		      		} 
+		      } 
 	  
 	  }
-	  		
-	  		
-			/*
-			if (this.statusOfApartmentFilter === "Neaktivan") {
-		      	return this.activeApartmentsForHost.filter((ap) => {
-		        	return ap.statusOfApartment.startsWith("Neaktivan");
-		        });
-		      }else if(this.statusOfApartmentFilter === "Aktivan"){	    	
-		    	  return this.activeApartmentsForHost.filter((ap) => {
-		          	return ap.statusOfApartment.startsWith("Aktivan");
-		          });    	  
-		      }else if(this.statusOfApartmentFilter === "Status"){
-		    	  return this.activeApartmentsForHost;
-		      }else{
-		    	  return this.activeApartmentsForHost;		      
-		      
-		      }
-		      
-		      */
+
       
 		},
 			

@@ -108,7 +108,24 @@
     ],
     "freeDates": [],
     "host": "domacin1",
-    "comments": [],
+    "comments": [
+    	{
+    		"guest": "gost1",
+		    "apartment": "Apartman 212",
+		    "text": "Sve najbolje!",
+		    "grade": "1",
+		    "id": "comment 1",
+		    "visibility": "Vidljiv"
+    	}, 
+    	{
+		    "guest": "gost1",
+		    "apartment": "Apartman 212",
+		    "text": "Smestaj je los...",
+		    "grade": "2",
+		    "id": "comment 2",
+		    "visibility": "Sakriven"
+  		}
+    ],
     "pictures": [],
     "pricePerNight": 5000,
     "checkInTime": "22:00",

@@ -31,6 +31,36 @@ public class ReservationService {
 		getAllReservations();
 		saveChangedReservations();
 		filterByStatus();
+		checkGuestReservationsForChosenApartment();
+	}
+	
+	private void checkGuestReservationsForChosenApartment() {
+		get("services/reservations/checkGuestReservationsForChosenApartment", (req, res) -> {
+			res.type("application/json");
+			String apartment = req.queryMap("apartmentID").value();
+			String wantedGuest = req.queryParams("guest");
+			
+			Guest guest = null;
+			for(Guest g : guestDAO.getGuestList()) {
+				if(g.getUsername().equals(wantedGuest)) {
+					guest = g;
+					break;
+				}
+			}
+
+			for(String guestsReservation : guest.getReservations()) {
+					if(reservationDAO.getReservationsMap().get(guestsReservation).getApartment().equals(apartment) &&
+							(reservationDAO.getReservationsMap().get(guestsReservation).getStatus().toString().equals("Odbijena") ||
+									reservationDAO.getReservationsMap().get(guestsReservation).getStatus().toString().equals("Zavrsena"))) {
+						res.status(200);
+						return "ok";
+					}	
+			}
+
+			
+			res.status(204);
+			return "No content";	
+		});
 	}
 
 	private void getAllReservationsByHostAndGuest() {

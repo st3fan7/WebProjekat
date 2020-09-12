@@ -1,26 +1,18 @@
 [
   {
     "guest": "gost1",
-    "apartment": "Apartman1",
-    "text": "Usluga je odlična, sve pohvale!",
-    "grade": "5 (pet)",
-    "id": "komentar1",
+    "apartment": "Apartman 212",
+    "text": "Sve najbolje!",
+    "grade": "5",
+    "id": "comment 1",
     "visibility": "Vidljiv"
-  },  
-   {
-    "guest": "gost1",
-    "apartment": "Apartman2",
-    "text": "Usluga je odlična!",
-    "grade": "5 (pet)",
-    "id": "komentar2",
-    "visibility": "Sakriven"
   },
   {
     "guest": "gost1",
-    "apartment": "Apartman3",
-    "text": "Smeštaj nije najbolji!",
-    "grade": "3 (tri)",
-    "id": "komentar3",
+    "apartment": "Apartman 212",
+    "text": "Smestaj je los...",
+    "grade": "2",
+    "id": "comment 2",
     "visibility": "Sakriven"
   }
 ]

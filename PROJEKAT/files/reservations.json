@@ -50,13 +50,13 @@
     "id": "R5"
   },
   {
-    "apartment": "Apartman3",
+    "apartment": "Apartman 212",
     "startDate": "21.11.2020. 14:00",
     "numberOfNight": 21,
     "totalCost": 44800.0,
     "messageForReservation": "",
     "guest": "gost1",
-    "status": "Kreirana",
+    "status": "Zavrsena",
     "id": "R6"
   }
 ]

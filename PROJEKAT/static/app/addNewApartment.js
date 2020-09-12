@@ -428,7 +428,7 @@ Vue.component("addNewApartment", {
 					"reservations" : [], "comments" : [], "amenities" : this.checkedAmenities, "pictures": []})
 					.then(response => {
 						if(response.status === 200){
-							toast('Apartman je uspšeno dodat!')
+							toast('Apartman je uspešno dodat!')
 						} else if(response.status === 201){
 							toast('Apartman sa tim imenom već postoji!')
 						}else {

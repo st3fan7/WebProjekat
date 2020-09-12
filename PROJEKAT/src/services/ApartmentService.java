@@ -30,6 +30,7 @@ public class ApartmentService {
 	ApartmentDAO apartmentDAO = new ApartmentDAO();
 	
 	public ApartmentService() {
+		getAllActiveApartments();
 		addNewApartment();
 		getActiveApratmentsForHost();
 		getInActiveApratmentsForHost();
@@ -39,6 +40,28 @@ public class ApartmentService {
 		filterByAmenities();
 	}
 
+	public void getAllActiveApartments() {
+		get("services/apartments/getAllActiveApartments", (req, res) -> {
+			ArrayList<Apartment> apratments = new ArrayList<>();
+					
+			for(Apartment a : apartmentDAO.getApartmentsList()){
+				if((a.getDeleted() == 0) && (a.getStatusOfApartment().equals(StatusOfApartment.Aktivan))){
+					apratments.add(a);
+				}
+				
+			}	
+					
+			if(apratments.isEmpty()){
+				res.status(204);
+				return g.toJson(apratments);
+			}
+				
+			res.status(200);
+			return g.toJson(apratments);
+			
+		});
+	}
+	
 	public void getAllApartments() {
 		get("services/apartments/getAllApartments", (req, res) -> {
 			ArrayList<Apartment> apratments = new ArrayList<>();

@@ -57,6 +57,7 @@ Vue.component("login", {
 	,
 	methods: {
 		onSubmit : function() {
+			
 			document.getElementById("form").setAttribute("onsubmit","return false;");
 			if(this.username.length === 0 ){
 				this.usernameInput = true;			
@@ -80,7 +81,15 @@ Vue.component("login", {
 				if (response.data.toString() === ("200")){
 					this.notification = false;
 					this.returnData = "";
-					this.$router.push({ name: 'homePage' })
+					
+					if(this.$route.params.goToReservation === true) {
+						toast('Dobrodošli');
+						router.push({ name: 'chosenApartmentsReview', params: { apartment: this.$route.params.apartment } })
+					} else {
+						toast('Dobrodošli');
+						this.$router.push({ name: 'homePage' })
+					}
+					
 				
 				}
 				else if(response.data.toString() === ("204")){
@@ -98,7 +107,12 @@ Vue.component("login", {
 			},
 			
 			singUp : function() {
-				this.$router.push({ name: 'registration' })
+				if(this.$route.params.goToReservation === true) {
+					this.$router.push({ name: 'registration', params: { goToReservation : true, apartment: this.$route.params.apartment }})
+				} else {
+					this.$router.push({ name: 'registration' })
+				}
+				
 		}
 		},
 	mounted(){

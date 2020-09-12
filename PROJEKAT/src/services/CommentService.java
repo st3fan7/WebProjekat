@@ -19,9 +19,92 @@ public class CommentService {
 	CommentDAO commentDAO = new CommentDAO();
 	
 	public CommentService() {
+		getVisibleComments();
+		getCommentID();
+		addNewCommet();
 		saveChangedComments();
 		getAllCommentsForHost();
 		getAllComments();
+	}
+	
+	private void getVisibleComments() {
+		post("services/comments/getVisibleComments", (req, res) -> {
+			res.type("application/json");
+			String payload = req.body();
+			ArrayList<Comment> comments = null; 
+			ArrayList<Comment> visibleComments = new ArrayList<>(); 
+			
+			try {
+				Type listType = new TypeToken<ArrayList<Comment>>(){}.getType(); 
+				comments = g.fromJson(payload, listType);	
+			}
+			catch(Exception e) {
+				res.status(400);
+				return g.toJson("Bad request");
+			}
+			
+			for(Comment comment : comments) {
+				if(comment.getVisibility().toString().equals("Vidljiv")) {
+					visibleComments.add(comment);
+				}
+			}
+			
+			if(visibleComments.isEmpty()) {
+	            res.status(204);
+	            return "No content";
+			}
+			
+
+            res.status(200);
+            return g.toJson(visibleComments);
+			
+		});
+	}
+	
+	private void getCommentID() {
+		get("services/comments/getCommentID", (req, res) -> {
+			int maxID = 1;
+			
+			for(int i = 0; i < commentDAO.getCommentsList().size(); i++) {
+				
+					String[] iNumberParts = commentDAO.getCommentsList().get(i).getId().split(" ");
+					
+					if(Integer.parseInt(iNumberParts[1]) > maxID) {
+						maxID = Integer.parseInt(iNumberParts[1]);
+					} 
+			}
+
+			maxID++;
+			
+            res.status(200);
+            return g.toJson(maxID);
+			
+		});
+	}
+	
+	private void addNewCommet() {
+		post("services/comments/addNewCommet", (req, res) -> {
+			res.type("application/json");
+			String payload = req.body();
+			
+			Comment comment = null;
+			try {
+				comment = g.fromJson(payload, Comment.class);	
+			}
+			catch(Exception e) {
+				res.status(400);
+				return g.toJson("Bad request");
+			}
+			// treba da se upise i u apartman
+			
+			commentDAO.getCommentsList().add(comment);
+			CommentDAO.writeCommentsInFile(commentDAO.getCommentsList());
+			commentDAO.fillMapWithComments();
+			
+			res.status(200);
+			return "OK";
+		}) ;
+		
 	}
 	
 	private void saveChangedComments() {
