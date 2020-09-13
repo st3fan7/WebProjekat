@@ -39,7 +39,7 @@ public class ReservationDAO {
 	public void fillMapWithReservations() {
 		if(reservationsList != null){
 			for (int i = 0; i < reservationsList.size(); i++) {
-				reservationsMap.put(reservationsList.get(i).getId(), reservationsList.get(i));
+				reservationsMap.put(reservationsList.get(i).getId().toLowerCase(), reservationsList.get(i));
 			}
 		}
 		else{

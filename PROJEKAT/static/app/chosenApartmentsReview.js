@@ -278,7 +278,7 @@ Vue.component("chosenApartmentsReview", {
 	},
 	computed : {
 		disabledDates() {
-				
+				/*
 				let listDates = [];
 				listDates.push( {to: moment(this.startDateOfRent).startOf('day').toDate(),
 							from: moment(this.endDateOfRent).startOf('day').add(1, 'days').toDate()});
@@ -286,10 +286,11 @@ Vue.component("chosenApartmentsReview", {
 				let disabledObj = {};
 				disabledObj["ranges"] = listDates;
 				disabledObj["to"] = new Date(Date.now()); 
+				
 				return {to: moment(this.startDateOfRent).startOf('day').toDate(),
 							from: moment(this.endDateOfRent).startOf('day').add(1, 'days').toDate()};
 				
-				
+				*/
 				/*
 				console.log(listDates)
 				
@@ -311,6 +312,41 @@ Vue.component("chosenApartmentsReview", {
 				console.log(disabledObj)
 				return disabledObj;
 				*/
+			/*
+				var listDates = [];
+				listDates.push({to: moment(this.startDateOfRent).startOf('day').toDate(),
+					from: moment(this.endDateOfRent).startOf('day').add(1, 'days').toDate()});
+			
+				var disabledObj = {};
+				disabledObj["from"] =  moment(this.endDateOfRent).startOf('day').add(1, 'days').toDate();
+				disabledObj["ranges"] = listDates;
+				disabledObj["to"] = new Date(Date.now()); 
+				console.log(disabledObj)
+				return disabledObj;
+				*/
+			
+			var startDateFromList = null;
+			var endDateFromList = null;
+			var listDates = [];
+			
+			for(r of this.reservationsForApartmentList){
+				startDateFromList = moment(r.startDate);
+				startDateFromList = new Date(startDateFromList);
+				
+				endDateFromList = new Date(startDateFromList.getTime() + r.numberOfNight*24*60*60*1000);
+				
+				listDates.push({from: startDateFromList, to: endDateFromList});
+			}
+			  
+			var state = {
+					  disabledDates: {
+					    to: moment(this.startDateOfRent).startOf('day').toDate(), 
+					    from: moment(this.endDateOfRent).startOf('day').add(1, 'days').toDate(),
+					    ranges: listDates
+					  }
+					}
+			
+			return state.disabledDates;
 			
 		}
 	},
@@ -418,11 +454,11 @@ Vue.component("chosenApartmentsReview", {
 					"guest" :'' +  this.activeUser.username, "status" : "Kreirana"})
 				.then(response => {
 					if(response.status === 200){
-						toast('Rezervacija je uspešno kreirana!')
+						toast('Rezervacija je uspešno kreirana!');
 					} else if(response.status === 400) {
 						this.$router.push({ name: 'badRequest'});
-					}else if(response.status === 403){
-						toast('Rezervacija nije kreirana, pogresan unos datuma i noci!')
+					}else if(response.status === 201){
+						toast('Rezervacija nije kreirana, pogresan unos datuma i noci!');
 					}
 					
 				});

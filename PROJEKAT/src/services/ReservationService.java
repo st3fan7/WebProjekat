@@ -58,11 +58,14 @@ public class ReservationService {
 					break;
 				}
 			}
-
+			
+			
+			
 			for(String guestsReservation : guest.getReservations()) {
-					if(reservationDAO.getReservationsMap().get(guestsReservation).getApartment().equals(apartment) &&
-							(reservationDAO.getReservationsMap().get(guestsReservation).getStatus().toString().equals("Odbijena") ||
-									reservationDAO.getReservationsMap().get(guestsReservation).getStatus().toString().equals("Zavrsena"))) {
+				
+					if(reservationDAO.getReservationsMap().get(guestsReservation.toLowerCase()).getApartment().equals(apartment) &&
+							(reservationDAO.getReservationsMap().get(guestsReservation.toLowerCase()).getStatus().toString().equals("Odbijena") ||
+									reservationDAO.getReservationsMap().get(guestsReservation.toLowerCase()).getStatus().toString().equals("Zavrsena"))) {
 						res.status(200);
 						return "ok";
 					}	
@@ -230,7 +233,7 @@ public class ReservationService {
 			Guest guest = ss.attribute("user");
 			ReservationDTO reservationDTO;
 			Reservation reservation = new Reservation();
-			System.out.println(payload);
+			//System.out.println(payload);
 			
 			try {
 				reservationDTO = g.fromJson(payload, ReservationDTO.class);
@@ -260,19 +263,27 @@ public class ReservationService {
 				System.out.println("Greska pri kreiranju rezervacije");
 			}
 			
-			Date endDateOfRes  = new Date(startDateOfRes.getTime() + reservation.getNumberOfNight()*24*60*60*1000);
+			
+			Date endDateOfRes  = new Date(reservation.getStartDate().getTime() + reservation.getNumberOfNight()*24L*60*60*1000);
+			
 		
 			boolean flag = true;
 			for(Reservation r : reservationDAO.getReservationsList()){
 				if(r.getApartment().equals(reservation.getApartment())){
-					Date endDateTemp = new Date(r.getStartDate().getTime() + r.getNumberOfNight()*24*60*60*1000);
+					
+					Date endDateTemp = new Date(r.getStartDate().getTime() + r.getNumberOfNight()*24L*60*60*1000);			
+					
 					if(startDateOfRes.compareTo(r.getStartDate()) >= 0 && (endDateOfRes.compareTo(endDateTemp) <= 0)){ //ne sme: unutar postojeceg
 						flag = false;
 					}else if(startDateOfRes.compareTo(r.getStartDate()) <= 0 && (endDateOfRes.compareTo(endDateTemp) <= 0) && 
-							(endDateOfRes.compareTo(r.getStartDate()) >= 0)){ //ne sme: pocetni je ok ali krajnji je unutar
+							(endDateOfRes.compareTo(r.getStartDate()) > 0)){ //ne sme: pocetni je ok ali krajnji je unutar
 						flag = false;
-					}else if(startDateOfRes.compareTo(r.getStartDate()) <= 0 && (startDateOfRes.compareTo(endDateTemp) >= 0) &&
-							(endDateOfRes.compareTo(endDateTemp) >= 0)){ //ne sme: pocetni je unutar ali krajnji je van
+					}else if(startDateOfRes.compareTo(r.getStartDate()) >= 0 && (startDateOfRes.compareTo(endDateTemp) < 0) &&
+							(endDateOfRes.compareTo(endDateTemp) >= 0)){ //ne sme: pocetni je unutar ali krajnji je van  
+						flag = false;
+					}else if(startDateOfRes.compareTo(r.getStartDate()) <= 0 && ((endDateOfRes.compareTo(r.getStartDate()) > 0)
+							|| endDateOfRes.compareTo(endDateTemp) >= 0)){
+							//moja 29.9                postoji 30.9              moja 29.10              postoji15.10      moja njpoc njegrakj mojkraj
 						flag = false;
 					}
 				}
@@ -314,7 +325,7 @@ public class ReservationService {
 			return g.toJson("Ok");
 			}
 			else{
-				res.status(403);
+				res.status(201);
 				return g.toJson("Greska pri unosu datuma");
 			}
 
