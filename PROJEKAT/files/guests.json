@@ -2,12 +2,24 @@
   {
     "rentApartments": [
       "Apartman1",
-      "Apartman1"
+      "Apartman1",
+      "Soba 24",
+      "Apartman 212",
+      "Soba 24",
+      "Apartmani 111",
+      "Soba za izdavanje 1",
+      "Soba 24"
     ],
     "reservations": [
       "R1",
       "R4",
-      "R6"
+      "R6",
+      "R7",
+      "R8",
+      "R7",
+      "R8",
+      "R9",
+      "R10"
     ],
     "username": "gost1",
     "password": "gost1",

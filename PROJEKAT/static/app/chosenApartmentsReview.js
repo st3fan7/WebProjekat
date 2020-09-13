@@ -13,7 +13,16 @@ Vue.component("chosenApartmentsReview", {
 			showNotificationForMark : false,
 			maxIdNumber : '',
 			visibility : 'Sakriven',
-			commentsList : []
+			commentsList : [],
+			startDateOfRent : null,
+			endDateOfRent : null,
+			showNotificationForErrorReservation : false,
+			startDateModel : '',
+			numberOfNightsModel : '',
+			messageModel : '',
+			showNotificationForErrorReservationImput : false,
+			maxIdNumberForReservation : ''
+			
 		}
 	},
 	
@@ -64,18 +73,20 @@ Vue.component("chosenApartmentsReview", {
             <h1>Rezervacija:</h1>
             <form id="formForSearch" action="#">
                 <label for="username" id="labelForStartDate">Izaberite početni datum:</label>
-                <vuejs-datepicker v-model="startDateModel" id="startDateID" name="startDate" type="date"  format="dd.MM.yyyy." placeholder="Izaberite početni datum..." ></vuejs-datepicker>
+                <vuejs-datepicker v-model="startDateModel" id="startDateID" name="startDate" type="date"  format="dd.MM.yyyy."  :disabledDates="disabledDates"   placeholder="Izaberite početni datum..." ></vuejs-datepicker>
             
                 <label for="numberOfNight" id="labelNumberOfNight">Broj noćenja:</label>
-                <input type="text" id="numberOfNightID" name="numberOfNightName" placeholder="Unesite broj noćenja...">
+                <input type="text" v-model="numberOfNightsModel" id="numberOfNightID" name="numberOfNightName" placeholder="Unesite broj noćenja...">
             
 
                 <label for="message" id="labelMessage">Poruka za domaćina:</label>
-                <input type="text" id="messageID" name="messageName" placeholder="Unesite poruku za domaćina...">
+                <input type="text" v-model="messageModel" id="messageID" name="messageName" placeholder="Unesite poruku za domaćina...">
             
-
+                <label v-if="showNotificationForErrorReservation" style="color:#c63939; margin-left:0%; text-align:center;">Rezervaciju nije moguće <br> izvršiti za navedene datume!</label>
+                <label v-if="showNotificationForErrorReservationImput" style="color:#c63939; margin-left:0%; text-align:center;">Popunite sva potrebna polja za rezervaciju!</label>
+                
                 <div class="search-btn-user-overview">
-                    <button type="button">Rezerviši</button>
+                    <button type="button" @click="apartmanReservationClick()">Rezerviši</button>
                 </div>
             </form>
         </div>
@@ -264,6 +275,17 @@ Vue.component("chosenApartmentsReview", {
 	components : {
 		vuejsDatepicker
 	},
+	computed : {
+		disabledDates() {
+			
+				return {
+		            to: moment(this.startDateOfRent).startOf('day').toDate(),
+		            from: moment(this.endDateOfRent).startOf('day').add(1, 'days').toDate()
+		        }
+			
+		}
+	},
+	
 	
 	methods: {	
 		logOut : function(event)
@@ -323,6 +345,62 @@ Vue.component("chosenApartmentsReview", {
 					
 				});
 			}
+		},
+		
+		apartmanReservationClick : function(){
+			var empty = false;
+			this.showNotificationForErrorReservation = false;
+			this.showNotificationForErrorReservationImput = false;
+			var newStartDate = null;
+			
+			if(this.startDateModel.length === 0){
+				empty = true;
+				this.showNotificationForErrorReservationImput = true;
+			} else {
+				this.showNotificationForErrorReservationImput = false;
+				//console.log(this.startDateModel)
+				let localStartDate = moment(this.startDateModel).format("YYYY-MM-DD");
+				//console.log(localStartDate)
+				newStartDate = new Date(localStartDate);
+				console.log(newStartDate)
+			}
+			
+			if(this.numberOfNightsModel.length === 0){
+				empty = true;
+				this.showNotificationForErrorReservationImput = true;
+			} else {
+				this.showNotificationForErrorReservationImput = false;
+			}
+			
+			if(this.messageModel.length === 0){
+				empty = true;
+				this.showNotificationForErrorReservationImput = true;
+			} else {
+				this.showNotificationForErrorReservationImput = false;
+			}
+			
+			var totalCost = this.apartment.pricePerNight * this.numberOfNightsModel;
+			
+			
+			
+			if(!empty){
+				axios.post('services/reservation/createReservation', {"apartment" : '' + this.apartment.id, "startDate" : newStartDate,
+					"numberOfNight" : this.numberOfNightsModel, "totalCost" : totalCost, "id": '' + "R" + this.maxIdNumberForReservation, "messageForReservation" : '' + this.messageModel,
+					"guest" :'' +  this.activeUser.username, "status" : "Kreirana"})
+				.then(response => {
+					if(response.status === 200){
+						toast('Rezervacija je uspešno kreirana!')
+					} else if(response.status === 400) {
+						this.$router.push({ name: 'badRequest'});
+					}else {
+						toast('Rezervacija nije kreirana, pokušajte ponovo!')
+					}
+					
+				});
+			}
+			
+			
+			
 		}
 		
 	},
@@ -330,6 +408,9 @@ Vue.component("chosenApartmentsReview", {
 	mounted() {
 		
 		this.apartment = this.$route.params.apartment;
+		this.startDateOfRent = this.apartment.releaseDates[0];
+		this.endDateOfRent = this.apartment.releaseDates[1];
+		
 		
 		axios.post('services/comments/getVisibleComments', this.apartment.comments).then(response => {
 			if(response.status === 200){
@@ -343,6 +424,10 @@ Vue.component("chosenApartmentsReview", {
 		
 		axios.get('services/comments/getCommentID').then(response => {
 			this.maxIdNumber = response.data;
+		});
+		
+		axios.get('services/reservations/getReservationID').then(response => {
+			this.maxIdNumberForReservation = response.data;
 		});
 		
 		axios.get('services/users/getActiveUser').then(response => {

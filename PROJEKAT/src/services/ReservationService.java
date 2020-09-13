@@ -4,18 +4,26 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 
+import beans.Apartment;
+import beans.Comment;
 import beans.Guest;
 import beans.Host;
 import beans.Reservation;
 import dao.AdminDAO;
+import dao.ApartmentDAO;
 import dao.GuestDAO;
 import dao.HostDAO;
 import dao.ReservationDAO;
+import dto.ApartmentDTO;
+import dto.ReservationDTO;
+import enums.StatusOfReservation;
 import spark.Session;
 
 public class ReservationService {
@@ -32,6 +40,8 @@ public class ReservationService {
 		saveChangedReservations();
 		filterByStatus();
 		checkGuestReservationsForChosenApartment();
+		createReservation();
+		getReservationID();
 	}
 	
 	private void checkGuestReservationsForChosenApartment() {
@@ -93,6 +103,7 @@ public class ReservationService {
             Session ss = req.session(true);
             Guest guest = ss.attribute("user");
             ArrayList<Reservation> reservations = new ArrayList<>();
+            ReservationDAO reservationDAO = new ReservationDAO();
 
             for(Reservation r : reservationDAO.getReservationsList()){
             	for(String rg : guest.getReservations()){
@@ -207,6 +218,109 @@ public class ReservationService {
 			
             res.status(200);
             return g.toJson(filterReservation);
+		});
+	}
+	
+	public void createReservation() {
+		post("services/reservation/createReservation", (req, res) -> {
+			res.type("application/json");
+			String payload = req.body();
+			Session ss = req.session(true);
+			Guest guest = ss.attribute("user");
+			ReservationDTO reservationDTO;
+			Reservation reservation = new Reservation();
+			System.out.println(payload);
+			
+			try {
+				reservationDTO = g.fromJson(payload, ReservationDTO.class);
+			}
+			catch(Exception e) {
+				System.out.println("ovde");
+				res.status(400);
+				return g.toJson("Bad request");
+			}
+			
+			Date startDateOfRes = null;
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+			startDateOfRes = sdf.parse(reservationDTO.getStartDate());
+			
+			try {
+				reservation.setId(reservationDTO.getId());
+				reservation.setApartment(reservationDTO.getApartment());
+				reservation.setNumberOfNight(reservationDTO.getNumberOfNight());
+				reservation.setTotalCost(reservationDTO.getTotalCost());
+				reservation.setMessageForReservation(reservationDTO.getMessageForReservation());
+				reservation.setGuest(reservationDTO.getGuest());
+				reservation.setStartDate(startDateOfRes);
+				reservation.setStatus(StatusOfReservation.Kreirana);
+			
+				
+			} catch (Exception e) {
+				System.out.println("Greska pri kreiranju rezervacije");
+			}
+			
+			
+		
+			ArrayList<Reservation> resevations = reservationDAO.getReservationsList(); 
+			resevations.add(reservation);		
+			reservationDAO.setReservationsList(resevations);
+			ReservationDAO.writeReservationsInFile(reservationDAO.getReservationsList());
+			reservationDAO.fillMapWithReservations();
+			
+			
+			for(Guest guest1 : guestDAO.getGuestList()){
+				if(guest1.getUsername().equals(guest.getUsername())){
+					guest1.getReservations().add(reservation.getId());
+					guest1.getRentApartments().add(reservation.getApartment());
+				}
+			}
+			
+			guestDAO.setGuestList(guestDAO.getGuestList());
+			GuestDAO.writeGuestInFile(guestDAO.getGuestList());
+			guestDAO.fillMapWithGuests();
+			
+			
+			ApartmentDAO apartmentDAO = new ApartmentDAO();
+			for(Apartment a : apartmentDAO.getApartmentsList()){
+				if(a.getId().equals(reservation.getApartment())){
+					a.getReservations().add(reservation.getId());
+				}
+			}
+			
+			apartmentDAO.setApartmentsList(apartmentDAO.getApartmentsList());
+			ApartmentDAO.writeApartmentsInFile(apartmentDAO.getApartmentsList());
+			apartmentDAO.fillMapWithApartments();
+			
+			res.status(200);
+			return g.toJson("Ok");
+
+		});
+	}
+	
+	private void getReservationID() {
+		get("services/reservations/getReservationID", (req, res) -> {
+			int maxID = 0;
+			
+			
+			
+			for(int i = 0; i < reservationDAO.getReservationsList().size(); i++) {
+				
+					String iNumberParts = reservationDAO.getReservationsList().get(i).getId().substring(1);
+					
+					if(Integer.parseInt(iNumberParts) > maxID) {
+						maxID = Integer.parseInt(iNumberParts);
+					} 
+			}
+		
+			
+			
+			
+
+			maxID++;
+			
+            res.status(200);
+            return g.toJson(maxID);
+			
 		});
 	}
 	

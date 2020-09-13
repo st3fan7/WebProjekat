@@ -13,7 +13,6 @@ Vue.component("reservations", {
 			statusList : ['Kreirana', 'Odbijena', 'Odustanak', 'Prihvacena', 'Zavrsena'],
 			checkedStatus : [],
 			allReservation : []
-			
 		}
 	},
 	template: `
@@ -164,12 +163,15 @@ Vue.component("reservations", {
 			let currentDate =  moment(String(currentDateObj)).format('DD.MM.YYYY. HH:mm')
 			console.log("Danasnji datum: " + currentDate)
 
-			var momentObj = moment(startDate, 'DD.MM.YYYY. HH:mm');
-			var momentString = momentObj.format('DD.MM.YYYY. HH:mm'); 
-			console.log("Datum iz fajla koji zadovoljava uslov: " + momentString)
+			console.log("startDAte " + startDate )
+			var momentObj = moment(startDate).format('DD.MM.YYYY. HH:mm');
+			console.log("momentOBj " + momentObj)
+			//var momentString = momentObj.format('DD.MM.YYYY. HH:mm'); 
+			//console.log("Datum iz fajla koji zadovoljava uslov: " + momentString)
 
+			
 			// splitovanje datuma iz fajla
-			var parts = momentString.split('.');
+			var parts = momentObj.split('.');
 			
 			var timeParts = parts[3].substring(1).split(':'); // " HH:mm"
 					
@@ -187,7 +189,7 @@ Vue.component("reservations", {
 			if(currentDateObj >= newDateObj) {
 				return true;
 			}
-					
+				
 			return false;
 		},
 	

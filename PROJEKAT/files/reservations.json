@@ -1,7 +1,7 @@
 [
   {
     "apartment": "Apartman1",
-    "startDate": "11.08.2020. 14:00",
+    "startDate": "Sep 12, 2020 2:00:00 PM",
     "numberOfNight": 10,
     "totalCost": 14800.0,
     "messageForReservation": "",
@@ -11,17 +11,17 @@
   },
   {
     "apartment": "Apartman1",
-    "startDate": "21.08.2020. 14:00",
+    "startDate": "Aug 21, 2020 12:00:00 AM",
     "numberOfNight": 6,
     "totalCost": 14800.0,
     "messageForReservation": "",
     "guest": "gost1",
-    "status": "Zavrsena",
+    "status": "Prihvacena",
     "id": "R2"
   },
   {
     "apartment": "Apartman1",
-    "startDate": "27.08.2020. 14:00",
+    "startDate": "Aug 27, 2020 12:00:00 AM",
     "numberOfNight": 4,
     "totalCost": 4800.0,
     "messageForReservation": "",
@@ -31,7 +31,7 @@
   },
   {
     "apartment": "Soba 24",
-    "startDate": "31.08.2020. 14:00",
+    "startDate": "Nov 5, 2020 12:00:00 AM",
     "numberOfNight": 3,
     "totalCost": 3800.0,
     "messageForReservation": "",
@@ -41,7 +41,7 @@
   },
   {
     "apartment": "Apartman2",
-    "startDate": "21.10.2020. 14:00",
+    "startDate": "Sep 13, 2020 12:00:00 AM",
     "numberOfNight": 21,
     "totalCost": 44800.0,
     "messageForReservation": "",
@@ -51,12 +51,52 @@
   },
   {
     "apartment": "Apartman 212",
-    "startDate": "21.11.2020. 14:00",
+    "startDate": "Nov 21, 2020 12:00:00 AM",
     "numberOfNight": 21,
     "totalCost": 44800.0,
     "messageForReservation": "",
     "guest": "gost1",
-    "status": "Zavrsena",
+    "status": "Prihvacena",
     "id": "R6"
+  },
+  {
+    "apartment": "Soba 24",
+    "startDate": "Nov 12, 2020 12:00:00 AM",
+    "numberOfNight": 10,
+    "totalCost": 10000.0,
+    "messageForReservation": "Hej",
+    "guest": "gost1",
+    "status": "Kreirana",
+    "id": "R7"
+  },
+  {
+    "apartment": "Apartmani 111",
+    "startDate": "Sep 30, 2020 12:00:00 AM",
+    "numberOfNight": 15,
+    "totalCost": 18465.0,
+    "messageForReservation": "Caoo",
+    "guest": "gost1",
+    "status": "Kreirana",
+    "id": "R8"
+  },
+  {
+    "apartment": "Soba za izdavanje 1",
+    "startDate": "Oct 15, 2020 12:00:00 AM",
+    "numberOfNight": 5,
+    "totalCost": 1780.0,
+    "messageForReservation": "Hej",
+    "guest": "gost1",
+    "status": "Kreirana",
+    "id": "R9"
+  },
+  {
+    "apartment": "Soba 24",
+    "startDate": "Nov 19, 2020 12:00:00 AM",
+    "numberOfNight": 15,
+    "totalCost": 15000.0,
+    "messageForReservation": "Sve ok!",
+    "guest": "gost1",
+    "status": "Kreirana",
+    "id": "R10"
   }
 ]
