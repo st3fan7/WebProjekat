@@ -42,6 +42,7 @@ public class ReservationService {
 		checkGuestReservationsForChosenApartment();
 		createReservation();
 		getReservationID();
+		getReservationForApartment();
 	}
 	
 	private void checkGuestReservationsForChosenApartment() {
@@ -259,8 +260,26 @@ public class ReservationService {
 				System.out.println("Greska pri kreiranju rezervacije");
 			}
 			
-			
+			Date endDateOfRes  = new Date(startDateOfRes.getTime() + reservation.getNumberOfNight()*24*60*60*1000);
 		
+			boolean flag = true;
+			for(Reservation r : reservationDAO.getReservationsList()){
+				if(r.getApartment().equals(reservation.getApartment())){
+					Date endDateTemp = new Date(r.getStartDate().getTime() + r.getNumberOfNight()*24*60*60*1000);
+					if(startDateOfRes.compareTo(r.getStartDate()) >= 0 && (endDateOfRes.compareTo(endDateTemp) <= 0)){ //ne sme: unutar postojeceg
+						flag = false;
+					}else if(startDateOfRes.compareTo(r.getStartDate()) <= 0 && (endDateOfRes.compareTo(endDateTemp) <= 0) && 
+							(endDateOfRes.compareTo(r.getStartDate()) >= 0)){ //ne sme: pocetni je ok ali krajnji je unutar
+						flag = false;
+					}else if(startDateOfRes.compareTo(r.getStartDate()) <= 0 && (startDateOfRes.compareTo(endDateTemp) >= 0) &&
+							(endDateOfRes.compareTo(endDateTemp) >= 0)){ //ne sme: pocetni je unutar ali krajnji je van
+						flag = false;
+					}
+				}
+			}
+			
+			
+			if(flag == true){
 			ArrayList<Reservation> resevations = reservationDAO.getReservationsList(); 
 			resevations.add(reservation);		
 			reservationDAO.setReservationsList(resevations);
@@ -293,6 +312,11 @@ public class ReservationService {
 			
 			res.status(200);
 			return g.toJson("Ok");
+			}
+			else{
+				res.status(403);
+				return g.toJson("Greska pri unosu datuma");
+			}
 
 		});
 	}
@@ -311,15 +335,36 @@ public class ReservationService {
 						maxID = Integer.parseInt(iNumberParts);
 					} 
 			}
-		
-			
-			
-			
 
 			maxID++;
 			
             res.status(200);
             return g.toJson(maxID);
+			
+		});
+	}
+	
+	private void getReservationForApartment() {
+		get("services/reservations/getReservationForApartment", (req, res) -> {
+			
+			String aprtmentId = req.queryMap("id").value();
+			ArrayList<Reservation> reservations = new ArrayList<Reservation>();
+			ReservationDAO reservationDAO = new ReservationDAO();
+			
+			for(Reservation r : reservationDAO.getReservationsList()){
+				if(r.getApartment().equals(aprtmentId)){
+					reservations.add(r);
+				}
+			}
+			
+			if(reservations.isEmpty()){
+				res.status(204);
+				return "No content";
+			}
+			
+			
+			res.status(200);
+			return g.toJson(reservations);
 			
 		});
 	}

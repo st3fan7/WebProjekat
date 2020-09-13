@@ -21,7 +21,8 @@ Vue.component("chosenApartmentsReview", {
 			numberOfNightsModel : '',
 			messageModel : '',
 			showNotificationForErrorReservationImput : false,
-			maxIdNumberForReservation : ''
+			maxIdNumberForReservation : '',
+			reservationsForApartmentList : []
 			
 		}
 	},
@@ -277,11 +278,39 @@ Vue.component("chosenApartmentsReview", {
 	},
 	computed : {
 		disabledDates() {
+				
+				let listDates = [];
+				listDates.push( {to: moment(this.startDateOfRent).startOf('day').toDate(),
+							from: moment(this.endDateOfRent).startOf('day').add(1, 'days').toDate()});
 			
-				return {
-		            to: moment(this.startDateOfRent).startOf('day').toDate(),
-		            from: moment(this.endDateOfRent).startOf('day').add(1, 'days').toDate()
-		        }
+				let disabledObj = {};
+				disabledObj["ranges"] = listDates;
+				disabledObj["to"] = new Date(Date.now()); 
+				return {to: moment(this.startDateOfRent).startOf('day').toDate(),
+							from: moment(this.endDateOfRent).startOf('day').add(1, 'days').toDate()};
+				
+				
+				/*
+				console.log(listDates)
+				
+				let startDateFromList = null;
+				let endDateFromList = null;
+			/*	
+				for(r of this.reservationsForApartmentList){
+					startDateFromList = moment(r.startDate);
+					startDateFromList = new Date(startDateFromList);
+					
+					endDateFromList = new Date(startDateFromList.getTime() + r.numberOfNight*24*60*60*1000);
+					
+					listDates.push({from: startDateFromList, to: endDateFromList});
+				}
+				*/
+				/*
+				let disabledObj = {};
+				disabledObj["ranges"] = listDates;
+				console.log(disabledObj)
+				return disabledObj;
+				*/
 			
 		}
 	},
@@ -392,8 +421,8 @@ Vue.component("chosenApartmentsReview", {
 						toast('Rezervacija je uspešno kreirana!')
 					} else if(response.status === 400) {
 						this.$router.push({ name: 'badRequest'});
-					}else {
-						toast('Rezervacija nije kreirana, pokušajte ponovo!')
+					}else if(response.status === 403){
+						toast('Rezervacija nije kreirana, pogresan unos datuma i noci!')
 					}
 					
 				});
@@ -429,6 +458,11 @@ Vue.component("chosenApartmentsReview", {
 		axios.get('services/reservations/getReservationID').then(response => {
 			this.maxIdNumberForReservation = response.data;
 		});
+		
+		axios.get('services/reservations/getReservationForApartment' , {params: {"id" : '' + this.apartment.id}}).then(response => {
+			this.reservationsForApartmentList = response.data;
+		});
+		
 		
 		axios.get('services/users/getActiveUser').then(response => {
 			this.activeUser = response.data;
