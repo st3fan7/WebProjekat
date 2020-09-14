@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
@@ -99,10 +100,113 @@ public class ApartmentDAO {
 	}
 	
 	
+	public ArrayList<Apartment> getApartmentsByDateRange(Date startDate, Date endDate){
+		ArrayList<Apartment> apartments = new ArrayList<>();
+		if(startDate != null && endDate != null && startDate.compareTo(endDate) < 0) {
+			for(Apartment a : apartmentsList) {
+				for(int i = 0; i < a.getReleaseDates().size(); i++) {
+					if(startDate.compareTo(a.getReleaseDates().get(0)) >= 0 && endDate.compareTo(a.getReleaseDates().get(1)) <= 0) {
+						apartments.add(a);
+					}
+				}
+			}
+		} else if(startDate != null && endDate == null) {
+			for(Apartment a : apartmentsList) {
+				for(int i = 0; i < a.getReleaseDates().size(); i++) {
+					if(startDate.compareTo(a.getReleaseDates().get(0)) >= 0 && startDate.compareTo(a.getReleaseDates().get(1)) <= 0) {
+						apartments.add(a);
+					}
+				}
+			}
+		} else if(startDate == null && endDate != null) {
+			for(Apartment a : apartmentsList) {
+				for(int i = 0; i < a.getReleaseDates().size(); i++) {
+					if(endDate.compareTo(a.getReleaseDates().get(0)) >= 0 && endDate.compareTo(a.getReleaseDates().get(1)) <= 0) {
+						apartments.add(a);
+					}
+				}
+			}
+		} 
+					
+		return apartments;
+	}
 	
 	
+	public ArrayList<Apartment> getApartmentsByLocation(String city, String country) {
+		ArrayList<Apartment> apartments = new ArrayList<>();
+		
+		for(Apartment a : apartmentsList) {
+			if(country.equals("") && city.equals("")) {
+				break;
+			} else if(!country.equals("") && city.equals("")) {
+				if(country.equals(a.getLocation().getAddress().getCountry())) {
+					apartments.add(a);
+				}
+			} else if(country.equals("") && !city.equals("")) {
+				if(city.equals(a.getLocation().getAddress().getPopulatedPlace())) {
+					apartments.add(a);
+				}
+			} else {
+				if(city.equals(country)) {
+					if(country.equals(a.getLocation().getAddress().getCountry()) || city.equals(a.getLocation().getAddress().getPopulatedPlace())) {
+						apartments.add(a);
+						
+					}
+				} else {
+					if(country.equals(a.getLocation().getAddress().getCountry()) && city.equals(a.getLocation().getAddress().getPopulatedPlace())) {
+						apartments.add(a);
+						
+					}
+				}
+				
+			}
+		}
+			
+		return apartments;
+	}
 	
+	public ArrayList<Apartment> getApartmentsByPrice(int priceFrom, int priceTo) {
+		ArrayList<Apartment> apartments = new ArrayList<>();
+		
+		for(Apartment a : apartmentsList) {		
+			if(priceFrom != -1 && priceTo != -1) {
+				if(priceFrom <= a.getPricePerNight() && priceTo >= a.getPricePerNight()) {
+					apartments.add(a);
+				}
+			}
+		}
+			
+		return apartments;
+	}
 	
+	public ArrayList<Apartment> getApartmentsByNumberOfRooms(int numberOfRoomsFrom, int numberOfRoomsTo) {
+		ArrayList<Apartment> apartments = new ArrayList<>();
+		
+		for(Apartment a : apartmentsList) {
+			if(numberOfRoomsFrom != -1 && numberOfRoomsTo != -1) {
+				if(numberOfRoomsFrom <= a.getNumberOfRooms() && numberOfRoomsTo >= a.getNumberOfRooms()) {
+					apartments.add(a);
+				}
+			}
+			
+		}
+			
+		return apartments;
+	}
+	
+	public ArrayList<Apartment> getApartmentsByNumberOfGuests (int numberOfGuests) {
+		ArrayList<Apartment> apartments = new ArrayList<>();
+		
+		if(numberOfGuests != -1) {
+			for(Apartment a : apartmentsList) {				
+					if(numberOfGuests <= a.getNumberOfGuests() ) {
+						apartments.add(a);
+					}						
+			}
+		}
+	
+		return apartments;
+	}
 	
 	// getter and setter
 

@@ -4,8 +4,14 @@ Vue.component("homePage", {
 			activeUser : null,
 			activeAdmin : false,
 			activeHost : false,
-			activeGuest : false
-			
+			activeGuest : false,
+			dateFromModel : null,
+			dateToModel : null,
+			locationModel : '',
+			priceModel : '',
+			roomsModel : '',
+			guestsModel : '',
+			searchedApartments : []
 		}
 	},
 	template:`
@@ -57,11 +63,12 @@ Vue.component("homePage", {
 	        <form>
 	            <h1>Gde putujete?</h1>
 	            <div class="form-box">
-	                <input type="datetime" class="search-field date" placeholder="Datum">
-	                <input type="text" class="search-field location" placeholder="Lokacija (Grad, Država)">
-	                <input type="text" class="search-field price" placeholder="Cena (Od-Do)">
-	                <input type="text" class="search-field rooms" placeholder="Broj soba (Od-Do)">
-	                <input type="text" class="search-field persons" placeholder="Broj osoba">
+	                <input v-model="dateFromModel" type="date" class="search-field date" placeholder="Od datuma">
+	                <input v-model="dateToModel" type="date" class="search-field date" placeholder="Do datuma">
+	                <input v-model="locationModel" type="text" class="search-field location" placeholder="Lokacija (Grad, Država)">
+	                <input v-model="priceModel" type="text" class="search-field price" placeholder="Cena (Od-Do)">
+	                <input v-model="roomsModel" type="text" class="search-field rooms" placeholder="Broj soba (Od-Do)">
+	                <input v-model="guestsModel" type="text" class="search-field persons" placeholder="Broj osoba">
 	                <button class="search-btn" type="button" @click="search()">Pretraži</button>
 	            </div>
 	        </form>
@@ -87,7 +94,21 @@ Vue.component("homePage", {
 		},
 		
 		search : function() {
-			this.$router.push({ name: 'searchedApartments' })
+			
+			axios.get('services/apartments/getSearchedApartments', {params : {"dateFrom" : this.dateFromModel, "dateTo" : this.dateToModel,
+				"location" : '' + this.locationModel, "price" : '' + this.priceModel, "rooms" : '' + this.roomsModel, "guests" : '' + this.guestsModel }})
+			.then(response => {
+				if(response.status === 200) {
+					this.searchedApartments = response.data;
+				} else {
+					this.searchedApartments = [];
+				}
+				
+				this.$router.push({ name: 'searchedApartments', params : {searchedApartments : this.searchedApartments}});
+				
+			});
+			
+			
 		}
 	
 		},

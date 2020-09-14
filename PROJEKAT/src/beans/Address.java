@@ -5,17 +5,27 @@ public class Address {
 	private int houseNumber;
 	private String populatedPlace;
 	private String zipCode;
+	private String country;
 	
 	public Address() {
 		super();
 	}
 
-	public Address(String street, int houseNumber, String populatedPlace, String zipCode) {
+	public Address(String street, int houseNumber, String populatedPlace, String zipCode,  String country) {
 		super();
 		this.street = street;
 		this.houseNumber = houseNumber;
 		this.populatedPlace = populatedPlace;
 		this.zipCode = zipCode;
+		this.country = country;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 	public String getStreet() {
@@ -48,12 +58,6 @@ public class Address {
 
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
-	}
-
-	@Override
-	public String toString() {
-		return "Address [street=" + street + ", houseNumber=" + houseNumber + ", populatedPlace=" + populatedPlace
-				+ ", zipCode=" + zipCode + "]";
 	}
 	
 	

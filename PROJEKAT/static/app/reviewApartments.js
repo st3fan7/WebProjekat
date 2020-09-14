@@ -419,7 +419,7 @@ Vue.component("reviewApartments", {
 			this.apPriceForNightName = a.pricePerNight;
 			this.checkedList = a.amenities;
 			this.apLocation = a.location.latitude + "," + a.location.longitude;
-			this.apAddress = a.location.address.street + " " + a.location.address.houseNumber + ", " + a.location.address.populatedPlace + " " + a.location.address.zipCode;
+			this.apAddress = a.location.address.street + " " + a.location.address.houseNumber + ", " + a.location.address.populatedPlace + " " + a.location.address.zipCode + ", " + a.location.address.country;
 			this.apStartTime = a.checkInTime;
 			this.apEndTime = a.checkOutTime;
 			
@@ -509,6 +509,8 @@ Vue.component("reviewApartments", {
 				var cityAndZip = fullAddress[1].split(/(\d+)/);
 				var city = cityAndZip[0].trim();
 				var zip = cityAndZip[1].trim();
+				
+				var country = fullAddress[2].trim();
 			}
 			
 			
@@ -552,7 +554,7 @@ Vue.component("reviewApartments", {
 				axios.post('services/apartments/changeApartment', {"id": '' + this.apartmentId, "numberOfRooms": this.apRooms,
 					"typeOfApartment" : this.apType, "statusOfApartment" : this.apStatus, "numberOfGuests" : this.apNumberOfGuests,
 					"pricePerNight" : this.apPriceForNightName, "location" : { "latitude" : Latitude, "longitude" : longitude, 
-					"address" : {"street" : street, "houseNumber" : number, "populatedPlace" : city, "zipCode" : zip } },					
+					"address" : {"street" : street, "houseNumber" : number, "populatedPlace" : city, "zipCode" : zip, "country" : country } },					
 					"releaseDates" : [newStartDate, newEndDate], 
 					"checkInTime" : '' + this.apStartTime, "checkOutTime" : '' + this.apEndTime, "host" : '' + this.activeUser.username,
 					"reservations" : this.reservations, "comments" : this.comments, "amenities" : this.checkedList, "pictures": this.pictures, "freeDates" : this.freeDates},

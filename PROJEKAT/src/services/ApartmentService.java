@@ -1,19 +1,19 @@
 package services;
 
-import static spark.Spark.post;
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import beans.Amenities;
 import beans.Apartment;
-import beans.Comment;
 import beans.Host;
 import dao.AdminDAO;
 import dao.ApartmentDAO;
@@ -39,6 +39,165 @@ public class ApartmentService {
 		deleteApartment();
 		getAllApartments();
 		filterByAmenities();
+		getSearchedApartments();
+	}
+	
+	
+	// uradi
+	private void getSearchedApartments() {
+		get("services/apartments/getSearchedApartments", (req, res) -> {
+			res.type("application/json");
+			
+			String dateFrom = req.queryMap("dateFrom").value(); 
+			String dateTo = req.queryMap("dateTo").value();
+			String location = req.queryMap("location").value(); 
+			String price = req.queryMap("price").value();
+			String rooms = req.queryMap("rooms").value();
+			String guests = req.queryMap("guests").value();
+			
+			System.out.println(dateFrom + " " + dateTo + " "  + location + " " + price + " " + rooms + " " + guests );
+			
+			Date startDate = null;
+			Date endDate = null;
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			
+			if(dateFrom != null) {
+				startDate = sdf.parse(dateFrom);
+			}
+			if(dateTo != null) {
+				endDate = sdf.parse(dateTo);
+			}
+			
+			
+			String city = "";
+			String country = "";
+			
+			if(!location.equals("")) {
+				if(location.contains(",")) {
+					String[] locationParts = location.split(",");
+					city = locationParts[0].trim();
+					country = locationParts[1].trim();
+				} else {
+					city = location;
+					country = location;
+				}
+				
+			}
+			
+			int priceFrom = -1;
+			int priceTo = -1;
+			
+			if(!price.equals("")) {
+				String[] priceParts = price.split("-");
+				priceFrom = Integer.parseInt(priceParts[0].trim());
+				priceTo = Integer.parseInt(priceParts[1].trim());				
+			}
+			
+			int roomsFrom = -1;
+			int roomsTo = -1;
+			
+			if(!rooms.equals("")) {
+				String[] roomsParts = rooms.split("-");
+				roomsFrom = Integer.parseInt(roomsParts[0].trim());
+				roomsTo = Integer.parseInt(roomsParts[1].trim());				
+			}
+			
+			int numberOfGuests = -1;
+			
+			if(!guests.equals("")) {
+				numberOfGuests = Integer.parseInt(guests);
+			}
+			
+			 
+			ArrayList<Apartment> searchedApartments = new ArrayList<>();
+			
+			searchedApartments.addAll(apartmentDAO.getApartmentsByDateRange(startDate, endDate));
+			searchedApartments.addAll(apartmentDAO.getApartmentsByLocation(city, country));
+			searchedApartments.addAll(apartmentDAO.getApartmentsByPrice(priceFrom, priceTo));
+			searchedApartments.addAll(apartmentDAO.getApartmentsByNumberOfRooms(roomsFrom, roomsTo));
+			searchedApartments.addAll(apartmentDAO.getApartmentsByNumberOfGuests(numberOfGuests));
+
+			
+			LinkedHashSet<Apartment> hashSet = new LinkedHashSet<>(searchedApartments);
+			ArrayList<Apartment> apartmentsListWithoutDuplicates = new ArrayList<>(hashSet);
+			
+			ArrayList<Apartment> apartments = new ArrayList<>();
+
+			for(Apartment a : apartmentsListWithoutDuplicates){
+				if((a.getDeleted() == 0) && (a.getStatusOfApartment().equals(StatusOfApartment.Aktivan))){
+					apartments.add(a);
+				}
+				
+			}	
+			
+			ArrayList<Apartment> finalSearchedApartments = new ArrayList<>();
+			
+			for(Apartment a : apartments) {
+				Boolean check = false;
+				
+				if(dateFrom != null) {
+					if(a.getReleaseDates().get(0).compareTo(startDate) > 0) {
+						continue;
+					}
+				}
+				if(dateTo != null) {
+					if(a.getReleaseDates().get(1).compareTo(endDate) < 0) {
+						continue;
+					}
+				}
+				// grad   drzava   oba
+				if(!city.equals("")) {
+					if(!a.getLocation().getAddress().getPopulatedPlace().equals(city)) {
+						check = false;
+					} else {
+						check = true;
+						
+					}
+				}
+				if(!country.equals("") && !check) {
+					if(!a.getLocation().getAddress().getCountry().equals(country)) {
+						continue;
+					}
+				}
+				if(priceFrom != -1) {
+					if(a.getPricePerNight() < priceFrom) {
+						continue;
+					}
+				}
+				if(priceTo != -1) {
+					if(a.getPricePerNight() > priceTo) {
+						continue;
+					}
+				}
+				if(roomsFrom != -1) {
+					if(a.getNumberOfRooms() < roomsFrom) {
+						continue;
+					}
+				}
+				if(roomsTo != -1) {
+					if(a.getNumberOfRooms() > roomsTo) {
+						continue;
+					}
+				}
+				if(numberOfGuests != -1) {
+					if(a.getNumberOfGuests() < numberOfGuests) {
+						continue;
+					}
+				}
+
+				finalSearchedApartments.add(a);
+			}
+			
+			
+			if(finalSearchedApartments.isEmpty()){
+				res.status(204);
+				return g.toJson(finalSearchedApartments);
+			}
+						
+			res.status(200);
+			return g.toJson(finalSearchedApartments);
+			
+		});
 	}
 
 	public void getAllActiveApartments() {

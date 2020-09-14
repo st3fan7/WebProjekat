@@ -22,7 +22,8 @@ Vue.component("chosenApartmentsReview", {
 			messageModel : '',
 			showNotificationForErrorReservationImput : false,
 			maxIdNumberForReservation : '',
-			reservationsForApartmentList : []
+			reservationsForApartmentList : [],
+			searchedApartments : []
 			
 		}
 	},
@@ -193,7 +194,7 @@ Vue.component("chosenApartmentsReview", {
                 <label class="labelWithoutItalicFontStyle">{{this.apartment.pricePerNight}}</label><br/><br/><br/>
 
                 <label class="labelFontSize">Adresa:</label><br/><br/>
-                <label class="labelWithoutItalicFontStyle">{{this.apartment.location.address.street}} {{this.apartment.location.address.houseNumber}}, {{this.apartment.location.address.populatedPlace}} {{this.apartment.location.address.zipCode}} </label><br/><br/><br/>
+                <label class="labelWithoutItalicFontStyle">{{this.apartment.location.address.street}} {{this.apartment.location.address.houseNumber}}, {{this.apartment.location.address.populatedPlace}} {{this.apartment.location.address.zipCode}}, {{this.apartment.location.address.country}} </label><br/><br/><br/>
 
 				<label class="labelFontSize">Lokacija:</label><br/><br/>
                 <label class="labelWithoutItalicFontStyle">{{this.apartment.location.latitude}}, {{this.apartment.location.longitude }}</label><br/><br/><br/>
@@ -369,7 +370,7 @@ Vue.component("chosenApartmentsReview", {
 		
 		previousButtonClicked : function() {
 			if(confirm('Da li ste sigurni da želite da se vratite na pregled rezultata pretrage?') === true){ 
-				this.$router.push({ name: 'searchedApartments' })
+				this.$router.push({ name: 'searchedApartments', params : { searchedApartments  : this.searchedApartments } })
 			}
 		},
 		
@@ -475,7 +476,7 @@ Vue.component("chosenApartmentsReview", {
 		this.apartment = this.$route.params.apartment;
 		this.startDateOfRent = this.apartment.releaseDates[0];
 		this.endDateOfRent = this.apartment.releaseDates[1];
-		
+		this.searchedApartments = this.$route.params.activeApartmentsNOTCHANGEDlist;
 		
 		axios.post('services/comments/getVisibleComments', this.apartment.comments).then(response => {
 			if(response.status === 200){

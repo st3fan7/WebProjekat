@@ -11,7 +11,8 @@
         "street": "Novosadska",
         "houseNumber": 1,
         "populatedPlace": "Novi Sad",
-        "zipCode": "21000"
+        "zipCode": "21000",
+        "country": "Srbija"
       }
     },
     "releaseDates": [],
@@ -39,7 +40,8 @@
         "street": "Cara Dusana",
         "houseNumber": 75,
         "populatedPlace": "Novi Sad",
-        "zipCode": "21000"
+        "zipCode": "21000",
+        "country": "Srbija"
       }
     },
     "releaseDates": [
@@ -111,7 +113,8 @@
         "street": "Stepa Stepanović",
         "houseNumber": 2,
         "populatedPlace": "Beograd",
-        "zipCode": "11000"
+        "zipCode": "11000",
+        "country": "Srbija"
       }
     },
     "releaseDates": [
@@ -232,7 +235,8 @@
         "street": "Beogradska",
         "houseNumber": 55,
         "populatedPlace": "Beograd",
-        "zipCode": "11000"
+        "zipCode": "11000",
+        "country": "Srbija"
       }
     },
     "releaseDates": [
@@ -300,7 +304,8 @@
         "street": "Cara Dusana",
         "houseNumber": 75,
         "populatedPlace": "Novi Sad",
-        "zipCode": "21000"
+        "zipCode": "21000",
+        "country": "Srbija"
       }
     },
     "releaseDates": [
@@ -354,7 +359,8 @@
         "street": "Svetosavska",
         "houseNumber": 3,
         "populatedPlace": "Stara Pazova",
-        "zipCode": "22308"
+        "zipCode": "22308",
+        "country": "Srbija"
       }
     },
     "releaseDates": [
@@ -406,7 +412,8 @@
         "street": "Josifa Pančića",
         "houseNumber": 1,
         "populatedPlace": "Kikinda",
-        "zipCode": "23311"
+        "zipCode": "23311",
+        "country": "Srbija"
       }
     },
     "releaseDates": [
@@ -454,7 +461,8 @@
         "street": "Bulevar oslobodjenja",
         "houseNumber": 111,
         "populatedPlace": "Novi Sad",
-        "zipCode": "21000"
+        "zipCode": "21000",
+        "country": "Makedonija"
       }
     },
     "releaseDates": [
@@ -498,6 +506,47 @@
     "reservations": [
       "R9"
     ],
+    "deleted": 0
+  },
+  {
+    "id": "Moj ap",
+    "typeOfApartment": "Ceo apartman",
+    "numberOfRooms": 2,
+    "numberOfGuests": 2,
+    "location": {
+      "latitude": 45.2497,
+      "longitude": 19.8555,
+      "address": {
+        "street": "Bulverar Cara Lazara",
+        "houseNumber": 1,
+        "populatedPlace": "Novi Sad",
+        "zipCode": "21000",
+        "country": "Srbija"
+      }
+    },
+    "releaseDates": [
+      "Sep 17, 2020 12:00:00 AM",
+      "Sep 19, 2020 12:00:00 AM"
+    ],
+    "freeDates": [],
+    "host": "domacin1",
+    "comments": [],
+    "pictures": [],
+    "pricePerNight": 1200,
+    "checkInTime": "14:00",
+    "checkOutTime": "10:00",
+    "statusOfApartment": "Aktivan",
+    "amenities": [
+      {
+        "content": "sto",
+        "deleted": 0
+      },
+      {
+        "content": "stolica",
+        "deleted": 0
+      }
+    ],
+    "reservations": [],
     "deleted": 0
   }
 ]

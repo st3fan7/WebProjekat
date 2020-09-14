@@ -369,11 +369,16 @@ Vue.component("addNewApartment", {
 				this.latitude = document.querySelector('#latitude').value;
 				this.city = document.querySelector('#city').value;
 				this.zipCode = document.querySelector('#zipCode').value;
+				this.country = document.querySelector('#country').value;
 				//this.number = document.querySelector('#number').value;
 				
 				var streetAndNum = this.address.split(/(\d+)/);
 				this.street = streetAndNum[0].trim();
-				this.number = streetAndNum[1].trim();			
+				this.number = streetAndNum[1].trim();	
+				
+				if(this.country === "Serbia"){
+					this.country = "Srbija";
+				}
 				
 			}
 			
@@ -422,7 +427,7 @@ Vue.component("addNewApartment", {
 				axios.post('services/apartments/addNewApartment', {"id": '' + this.nameOfApartment, "numberOfRooms": this.numberOfRoomsModel,
 					"typeOfApartment" : this.typeOfApartment, "statusOfApartment" : this.statusOfApartment, "numberOfGuests" : this.numberOfGuestModel,
 					"pricePerNight" : this.priceForNightModel, "location" : { "latitude" : this.latitude, "longitude" : this.longitude, 
-					"address" : {"street" : this.street, "houseNumber" : this.number, "populatedPlace" : this.city, "zipCode" : this.zipCode } },					
+					"address" : {"street" : this.street, "houseNumber" : this.number, "populatedPlace" : this.city, "zipCode" : this.zipCode, "country" : this.country } },					
 					"releaseDates" : [newStartDate, newEndDate], 
 					"checkInTime" : '' + this.checkinTimeModel, "checkOutTime" : '' + this.checkoutTimeModel, "host" : '' + this.activeUser.username,
 					"reservations" : [], "comments" : [], "amenities" : this.checkedAmenities, "pictures": []})

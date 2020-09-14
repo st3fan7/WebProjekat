@@ -161,7 +161,7 @@ Vue.component("searchedApartments", {
 		                 <h2>Cena po noći: {{a.pricePerNight}}[RSD]</h2>
 		                 <h3> </h3>
 		                 <p>Tip: {{a.typeOfApartment}}, Broj soba: {{a.numberOfRooms}}, Dozvoljen broj gostiju: {{a.numberOfGuests}} </br>
-		                 Adresa: {{a.location.address.street}} {{a.location.address.houseNumber}}, {{a.location.address.populatedPlace}} {{a.location.address.zipCode}}
+		                 Adresa: {{a.location.address.street}} {{a.location.address.houseNumber}}, {{a.location.address.populatedPlace}} {{a.location.address.zipCode}}, {{a.location.address.country}}
 		                 </p>
 		                 <p>
 		    			 Domaćin: {{a.host}}
@@ -244,15 +244,9 @@ Vue.component("searchedApartments", {
 			
 			
 			if(confirm('Da li ste sigurni da želite da resetujete listu apartmana?')){
-					axios.get('services/apartments/getAllActiveApartments').then(response => {
-						if(response.status === 200){
-							this.activeApartmentsForHost = response.data;
-						}else{
-						
-							toast('Trenutno ne postoje aktivni apartmani')
-						}
-						
-					});
+
+							this.activeApartmentsForHost = this.activeApartmentsNOTCHANGEDlist;
+
 				
 			}
 		},
@@ -276,22 +270,25 @@ Vue.component("searchedApartments", {
 		},
 		
 		viewApartment : function(apartment) {
-			router.push({ name: 'chosenApartmentsReview', params: { apartment: apartment } })
+			router.push({ name: 'chosenApartmentsReview', params: { apartment: apartment, activeApartmentsNOTCHANGEDlist : this.activeApartmentsNOTCHANGEDlist} })
 		}
 		
 		
 	},
 	mounted() {
 		
-		axios.get('services/apartments/getAllActiveApartments').then(response => {
-			if(response.status === 200){
-				this.activeApartmentsForHost = response.data;
-				this.activeApartmentsNOTCHANGEDlist = response.data;
-			}else{
-				toast('Trenutno ne postoje apartmani')
-			}
-			
-		});	
+//		axios.get('services/apartments/getSearchedApartments').then(response => {
+//			if(response.status === 200){
+//				this.activeApartmentsForHost = response.data;
+//				this.activeApartmentsNOTCHANGEDlist = response.data;
+//			}else{
+//				toast('Trenutno ne postoje apartmani')
+//			}
+//			
+//		});	
+		
+		this.activeApartmentsForHost = this.$route.params.searchedApartments;
+		this.activeApartmentsNOTCHANGEDlist = this.$route.params.searchedApartments;
 		
 		axios.get('services/amenities/getAllAmenities').then(response => {
 			this.amenitiesList = response.data;			
