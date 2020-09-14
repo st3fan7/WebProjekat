@@ -331,12 +331,16 @@ Vue.component("chosenApartmentsReview", {
 			var listDates = [];
 			
 			for(r of this.reservationsForApartmentList){
-				startDateFromList = moment(r.startDate);
-				startDateFromList = new Date(startDateFromList);
 				
-				endDateFromList = new Date(startDateFromList.getTime() + r.numberOfNight*24*60*60*1000);
-				
-				listDates.push({from: startDateFromList, to: endDateFromList});
+				if(r.status === 'Kreirana' || r.status === 'Prihvacena'){
+					startDateFromList = moment(r.startDate);
+					startDateFromList = new Date(startDateFromList);
+					
+					endDateFromList = new Date(startDateFromList.getTime() + r.numberOfNight*24*60*60*1000);
+					
+					listDates.push({from: startDateFromList, to: endDateFromList});
+				}
+		
 			}
 			  
 			var state = {
@@ -456,6 +460,9 @@ Vue.component("chosenApartmentsReview", {
 				.then(response => {
 					if(response.status === 200){
 						toast('Rezervacija je uspešno kreirana!');
+						axios.get('services/reservations/getReservationForApartment' , {params: {"id" : '' + this.apartment.id}}).then(response => {
+							this.reservationsForApartmentList = response.data;
+						});
 					} else if(response.status === 400) {
 						this.$router.push({ name: 'badRequest'});
 					}else if(response.status === 201){

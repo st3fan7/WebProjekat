@@ -50,12 +50,12 @@ public class ApartmentService {
 			
 			String dateFrom = req.queryMap("dateFrom").value(); 
 			String dateTo = req.queryMap("dateTo").value();
-			String location = req.queryMap("location").value(); 
+			String city = req.queryMap("city").value(); 
+			String country = req.queryMap("country").value(); 
 			String price = req.queryMap("price").value();
 			String rooms = req.queryMap("rooms").value();
 			String guests = req.queryMap("guests").value();
-			
-			System.out.println(dateFrom + " " + dateTo + " "  + location + " " + price + " " + rooms + " " + guests );
+		
 			
 			Date startDate = null;
 			Date endDate = null;
@@ -68,7 +68,7 @@ public class ApartmentService {
 				endDate = sdf.parse(dateTo);
 			}
 			
-			
+			/*
 			String city = "";
 			String country = "";
 			
@@ -83,6 +83,8 @@ public class ApartmentService {
 				}
 				
 			}
+			
+			*/
 			
 			int priceFrom = -1;
 			int priceTo = -1;
@@ -135,6 +137,7 @@ public class ApartmentService {
 			for(Apartment a : apartments) {
 				Boolean check = false;
 				
+				
 				if(dateFrom != null) {
 					if(a.getReleaseDates().get(0).compareTo(startDate) > 0) {
 						continue;
@@ -148,10 +151,7 @@ public class ApartmentService {
 				// grad   drzava   oba
 				if(!city.equals("")) {
 					if(!a.getLocation().getAddress().getPopulatedPlace().equals(city)) {
-						check = false;
-					} else {
-						check = true;
-						
+						continue;
 					}
 				}
 				if(!country.equals("") && !check) {
@@ -159,6 +159,8 @@ public class ApartmentService {
 						continue;
 					}
 				}
+				
+				
 				if(priceFrom != -1) {
 					if(a.getPricePerNight() < priceFrom) {
 						continue;

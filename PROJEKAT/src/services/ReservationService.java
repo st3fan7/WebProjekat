@@ -108,11 +108,31 @@ public class ReservationService {
             Guest guest = ss.attribute("user");
             ArrayList<Reservation> reservations = new ArrayList<>();
             ReservationDAO reservationDAO = new ReservationDAO();
-
+            GuestDAO guestDAO = new GuestDAO();
+            
+            for(Guest guestOne : guestDAO.getGuestList()){
+            	if(guestOne.getUsername().equals(guest.getUsername())){
+            		guest = guestOne;
+            	}
+            }
+            
+            
+            System.out.println("gost");
+            for(String s : guest.getReservations()){
+            	System.out.println(s);
+            }
+            
+            System.out.println("rez");
+            for(Reservation r : reservationDAO.getReservationsList()){
+            	System.out.println(r.getId());
+            }
+            
+            
             for(Reservation r : reservationDAO.getReservationsList()){
             	for(String rg : guest.getReservations()){
             		if(r.getId().equals(rg)){
             			reservations.add(r);
+            			
             		}
             	}
             }
@@ -269,7 +289,8 @@ public class ReservationService {
 		
 			boolean flag = true;
 			for(Reservation r : reservationDAO.getReservationsList()){
-				if(r.getApartment().equals(reservation.getApartment())){
+				if(r.getApartment().equals(reservation.getApartment()) &&  
+						(r.getStatus().equals(StatusOfReservation.Kreirana) || r.getStatus().equals(StatusOfReservation.Prihvacena))){
 					
 					Date endDateTemp = new Date(r.getStartDate().getTime() + r.getNumberOfNight()*24L*60*60*1000);			
 					

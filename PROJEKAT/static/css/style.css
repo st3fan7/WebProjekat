@@ -256,7 +256,8 @@ ul li.active a{
 }
 
 .location {
-    width: 150px;
+    width: 250px;
+     border-radius: 25px;
 }
 
 .price {
@@ -299,7 +300,7 @@ ul li.active a{
     background: rgba(0,0,0,0.6);
     padding: 30px;
     border-radius: 25px;
-    width: 1280px;
+    width: 1380px;
 }
 
 .dropbtn {
@@ -1787,3 +1788,58 @@ span.predictive-box-text {
   color: red;
   height : 20px;
 }
+
+.algolia-autocomplete {
+        width: 250px;
+        height: 40px;
+      
+      }
+
+      .ad-example-dropdown-menu {
+        width: 250px;
+        color: black;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-top: none;
+        border-radius: 25px;
+        padding: 0.5em;
+        box-shadow: 1px 1px 32px -10px rgba(0, 0, 0, 0.62);
+      }
+
+      .ad-example-dropdown-menu .ad-example-suggestion {
+        cursor: pointer;
+        padding: 5px 4px;
+      }
+
+      .ad-example-dropdown-menu .ad-example-suggestion img {
+        height: 2em;
+        margin-top: 0.5em;
+        margin-right: 10px;
+        float: left;
+      }
+
+      .ad-example-dropdown-menu .ad-example-suggestion small {
+        font-size: 0.8em;
+        color: #bbb;
+      }
+
+      .ad-example-dropdown-menu .ad-example-suggestion.ad-example-cursor {
+        background-color: #b2d7ff;
+      }
+
+      .ad-example-dropdown-menu .ad-example-suggestion em {
+        font-weight: bold;
+        font-style: normal;
+      }
+
+      .ad-example-header {
+        font-weight: bold;
+        padding: 0.5em 0;
+        margin-bottom: 1em;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .form-control {
+        min-width: 250px;
+         margin-button: 150px;
+      }
