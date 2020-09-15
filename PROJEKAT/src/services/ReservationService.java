@@ -15,6 +15,7 @@ import beans.Apartment;
 import beans.Comment;
 import beans.Guest;
 import beans.Host;
+import beans.PeriodOfRent;
 import beans.Reservation;
 import dao.AdminDAO;
 import dao.ApartmentDAO;
@@ -23,6 +24,7 @@ import dao.HostDAO;
 import dao.ReservationDAO;
 import dto.ApartmentDTO;
 import dto.ReservationDTO;
+import enums.StatusOfApartment;
 import enums.StatusOfReservation;
 import spark.Session;
 
@@ -287,7 +289,41 @@ public class ReservationService {
 			Date endDateOfRes  = new Date(reservation.getStartDate().getTime() + reservation.getNumberOfNight()*24L*60*60*1000);
 			
 		
+			
+			//ovde proveravam da li je dobro zakazao rezervaciju na osnovu vec postojecih rezervacija
 			boolean flag = true;
+			
+			ApartmentDAO apartmentdao = new ApartmentDAO();
+			//ovde proveravam da li je dobro zakazao rezervaciju na osnovu datuma vazenja apartmana koji zadaje domacin
+			
+			for(Apartment a : apartmentdao.getApartmentsList()){ //kroz sve apartmane, daj mi taj apartman da je aktivan i nije obrisan
+				if(a.getId().equals(reservation.getApartment()) && (a.getStatusOfApartment().equals(StatusOfApartment.Aktivan)) && (a.getDeleted() == 0)){
+					for(PeriodOfRent p : a.getReleaseDates()){
+						
+						/*
+						if(startDateOfRes.compareTo(p.getStartDate()) < 0 && endDateOfRes.compareTo(p.getEndDate()) > 0){ 
+							//ap vazi od 15.9 do 20.9
+							//uneo sam   14.9 do 21.9
+							flag = false;
+						}else if(startDateOfRes.compareTo(p.getStartDate()) > 0 && endDateOfRes.compareTo(p.getEndDate()) > 0){
+							flag = false;
+							//ap vazi od 15.9 do 20.9
+							//uneo sam    17.9. do 23.9
+						}*/
+						
+						if(startDateOfRes.compareTo(p.getStartDate()) >= 0 && endDateOfRes.compareTo(p.getEndDate()) <= 0){
+							flag = true;
+							break;
+						}else {
+							flag = false;
+						}
+						
+					}
+					
+				}				
+			}
+			
+			
 			for(Reservation r : reservationDAO.getReservationsList()){
 				if(r.getApartment().equals(reservation.getApartment()) &&  
 						(r.getStatus().equals(StatusOfReservation.Kreirana) || r.getStatus().equals(StatusOfReservation.Prihvacena))){
@@ -309,6 +345,12 @@ public class ReservationService {
 					}
 				}
 			}
+			
+			
+			
+			
+			
+			
 			
 			
 			if(flag == true){
