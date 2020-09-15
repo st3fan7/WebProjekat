@@ -35,7 +35,8 @@ Vue.component("reviewInActiveApartments", {
 			reservations : [],
 			oldId : '',
 			freeDates : [],
-			pictures : []
+			pictures : [],
+			newApartment : null
 			 
 			
 		}
@@ -197,10 +198,10 @@ Vue.component("reviewInActiveApartments", {
 	                        <input  type="text" id="addressID" name="addressName" v-model="apAddress" placeholder="Unesite adresu apartmana..."  pattern="[A-Z][a-z A-Z]*[ ][1-9][0-9]*, [A-Z][a-z A-Z]* [0-9]{5}" title="Primer validne adrese: Cara Dusana 25, Novi Sad 21000">	
 
 	                        <label for="dateFromPublishing">Datum od kojeg se izdaje:</label><br/>
-	                        <vuejs-datepicker v-model="startDateModel" id="startDateID" name="startDate" type="date"  format="dd.MM.yyyy." :disabledDates="state.disabledDates" placeholder="Izaberite datum od kojeg se izdaje..." ></vuejs-datepicker>
+	                        <vuejs-datepicker v-model="startDateModel" id="startDateID" name="startDate" type="date"  format="dd.MM.yyyy." :disabledDates="disabledDates" placeholder="Izaberite datum od kojeg se izdaje..." ></vuejs-datepicker>
 							
 							<label for="dateToPublishing">Datum do kojeg se izdaje:</label><br/>
-	                        <vuejs-datepicker v-model="endDateModel" id="endDateID" name="endDate" type="date"  format="dd.MM.yyyy."  :open-date="startDateModel" :disabledDates="newDateStart" v-bind:disabled="startDateModel === ''" placeholder="Izaberite datum do kojeg se izdaje..." ></vuejs-datepicker>
+	                        <vuejs-datepicker v-model="endDateModel" id="endDateID" name="endDate" type="date"  format="dd.MM.yyyy."  :open-date="startDateModel" :disabledDates="disabledDatesTo" v-bind:disabled="startDateModel === ''" placeholder="Izaberite datum do kojeg se izdaje..." ></vuejs-datepicker>
 
 	                        <label for="check-inTime">Vreme za prijavu:</label><br/>
 	                        <input type="time" id="check-inTimeID" name="check-inTimeName" v-model="apStartTime" placeholder="Izaberite inicijalno vreme za prijavu...">
@@ -232,6 +233,94 @@ Vue.component("reviewInActiveApartments", {
 	</div>
 	
 	`
+	, 
+	
+	computed : {
+		
+		disabledDates() {
+
+			var startDateFromList = null;
+			var endDateFromList = null;
+			var listDates = [];
+			
+			for(period of this.newApartment.releaseDates){
+				
+				
+					startDateFromList = moment(period.startDate);
+					startDateFromList = new Date(startDateFromList);
+					
+					endDateFromList =  moment(period.endDate);
+					endDateFromList = new Date(endDateFromList);
+					
+					listDates.push({from: startDateFromList, to: endDateFromList});
+				
+		
+			}
+			  
+			var state = {
+					  disabledDates: {
+					    to: new Date(), 
+					    ranges: listDates
+					  }
+					}
+			
+			return state.disabledDates;
+		
+		},
+		
+		disabledDatesTo() {
+			var startDateFromList = null;
+			var endDateFromList = null;
+			var listDates = [];
+		
+			for(period of this.newApartment.releaseDates){
+				
+				
+					startDateFromList = moment(period.startDate);
+					startDateFromList = new Date(startDateFromList);
+					
+					endDateFromList =  moment(period.endDate);
+					endDateFromList = new Date(endDateFromList);
+					
+					listDates.push({from: startDateFromList, to: endDateFromList});
+				
+		
+			}
+			
+			var currentDate =  this.startDateModel;
+			
+			/*
+			 * prodjemo kroz sve datume
+			 * uzmemo sve vece od trenutnog(start)
+			 * prodjemo kroz novu listu
+			 * uzmemo najmanji pocetni
+			 * od tog datuma zabranimo
+			 * 
+			 */
+			
+			var listOfNewDates = [];
+			
+			for(disabledDate of listDates){
+				console.log(disabledDate)
+				if(currentDate < disabledDate.from) {
+					listOfNewDates.push(disabledDate.from);
+				}
+			}
+			
+			var minDate = null;
+			minDate = listOfNewDates[0];
+			  
+			var state = {
+					  disabledDates: {
+					    to: moment(this.startDateModel).startOf('day').toDate(),
+					    from: minDate,
+					    ranges: listDates
+					  }
+					}
+			
+			return state.disabledDates;
+		}
+	}
 	,
 	components : {
 		vuejsDatepicker
@@ -259,7 +348,7 @@ Vue.component("reviewInActiveApartments", {
 		changeApartment : function(a)
 		{
 			this.changeApartmentButtonClicked = true;
-			
+			this.newApartment = a;
 			this.oldId = a.id;
 			
 			this.apartmentId = a.id;
@@ -273,8 +362,8 @@ Vue.component("reviewInActiveApartments", {
 			this.apAddress = a.location.address.street + " " + a.location.address.houseNumber + ", " + a.location.address.populatedPlace + " " + a.location.address.zipCode + ", " + a.location.address.country;
 			this.apStartTime = a.checkInTime;
 			this.apEndTime = a.checkOutTime;
-			this.startDateModel = a.releaseDates[0];
-			this.endDateModel = a.releaseDates[1];
+//			this.startDateModel = a.releaseDates[0];
+//			this.endDateModel = a.releaseDates[1];
 			this.comments = a.comments;
 			this.reservations = a.reservations;
 			this.freeDates = a.freeDates;

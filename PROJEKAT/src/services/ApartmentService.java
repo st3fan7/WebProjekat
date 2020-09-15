@@ -451,30 +451,44 @@ public class ApartmentService {
 			Date endDate = null;
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 			
-			for(int i = 0; i < apartmentDTO.getReleaseDates().size(); i++){
-				startDate = sdf.parse(apartmentDTO.getReleaseDates().get(0));
-				endDate = sdf.parse(apartmentDTO.getReleaseDates().get(1));
+			if(apartmentDTO.getReleaseDates().get(0) != null && apartmentDTO.getReleaseDates().get(1) != null) {
+				for(int i = 0; i < apartmentDTO.getReleaseDates().size(); i++){
+					startDate = sdf.parse(apartmentDTO.getReleaseDates().get(0));
+					endDate = sdf.parse(apartmentDTO.getReleaseDates().get(1));
+				}
 			}
+			
 			
 //			ArrayList<Date> releaseDates = new ArrayList<>();
 //			releaseDates.add(startDate);
 //			releaseDates.add(endDate);
 			
 			PeriodOfRent periodOfRent = new PeriodOfRent();
-			periodOfRent.setStartDate(startDate);
-			periodOfRent.setEndDate(endDate);
-			
 			ArrayList<PeriodOfRent> oldPeriodsList = new ArrayList<>();
+			Apartment apartmentForSet = null;
 			
-			for(Apartment ap : apartmentDAO.getApartmentsList()) {
-				if(ap.getId().equals(oldId)) {
-					for(PeriodOfRent p : ap.getReleaseDates()) {
-						oldPeriodsList.add(p);
-					}
+			for(Apartment oldAp : apartmentDAO.getApartmentsList()) {
+				if(oldAp.getId().equals(oldId)) {
+					apartmentForSet = oldAp;
 				}
 			}
 			
-			oldPeriodsList.add(periodOfRent);
+			
+			if(startDate != null || endDate != null) {
+				periodOfRent.setStartDate(startDate);
+				periodOfRent.setEndDate(endDate);
+			
+				for(Apartment ap : apartmentDAO.getApartmentsList()) {
+					if(ap.getId().equals(oldId)) {
+						for(PeriodOfRent p : ap.getReleaseDates()) {
+							oldPeriodsList.add(p);
+						}
+					}
+				}
+				
+				oldPeriodsList.add(periodOfRent);
+			}
+
 			
 		
 			try {
@@ -483,7 +497,11 @@ public class ApartmentService {
 				a.setNumberOfRooms(apartmentDTO.getNumberOfRooms());
 				a.setNumberOfGuests(apartmentDTO.getNumberOfGuests());
 				a.setLocation(apartmentDTO.getLocation());
-				a.setReleaseDates(oldPeriodsList);
+				if(startDate != null || endDate != null) {
+					a.setReleaseDates(oldPeriodsList);
+				} else {
+					a.setReleaseDates(apartmentForSet.getReleaseDates());
+				}
 				a.setFreeDates(new ArrayList<Date>());
 				a.setHost(apartmentDTO.getHost());
 				a.setComments(apartmentDTO.getComments());

@@ -123,6 +123,10 @@
       {
         "startDate": "Oct 10, 2020 12:00:00 AM",
         "endDate": "Dec 19, 2020 12:00:00 AM"
+      },
+      {
+        "startDate": "Oct 1, 2020 12:00:00 AM",
+        "endDate": "Oct 8, 2020 12:00:00 AM"
       }
     ],
     "freeDates": [],
@@ -590,6 +594,10 @@
       {
         "startDate": "Oct 21, 2020 12:00:00 AM",
         "endDate": "Oct 25, 2020 12:00:00 AM"
+      },
+      {
+        "startDate": "Nov 18, 2020 12:00:00 AM",
+        "endDate": "Nov 25, 2020 12:00:00 AM"
       }
     ],
     "freeDates": [],

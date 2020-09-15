@@ -39,7 +39,11 @@ Vue.component("reviewApartments", {
 			filteredAmenitiesList : [],
 			activeApartmentsNOTCHANGEDlist : [],
 			statusOfApartmentFilter : 'Status',
-			newApartment : null	
+			newApartment : null	,
+			errorForNameOfApartment : false,
+		    errorNumberOfRoomsModel : false,
+		    errorNumberOfGuest : false,
+		    errorPriceForNight : false
 			 
 			
 		}
@@ -256,7 +260,7 @@ Vue.component("reviewApartments", {
 	                        <vuejs-datepicker v-model="startDateModel" id="startDateID" name="startDate" type="date"  format="dd.MM.yyyy." :disabledDates="disabledDates" placeholder="Izaberite datum od kojeg se izdaje..." ></vuejs-datepicker>
 							
 							<label for="dateToPublishing">Novi datum do kojeg se izdaje:</label><br/>
-	                        <vuejs-datepicker v-model="endDateModel" id="endDateID" name="endDate" type="date"  format="dd.MM.yyyy."  :open-date="startDateModel" :disabledDates="newDateStart" v-bind:disabled="startDateModel === ''" placeholder="Izaberite datum do kojeg se izdaje..." ></vuejs-datepicker>
+	                        <vuejs-datepicker v-model="endDateModel" id="endDateID" name="endDate" type="date"  format="dd.MM.yyyy."  :open-date="startDateModel" :disabledDates="disabledDatesTo" v-bind:disabled="startDateModel === ''" placeholder="Izaberite datum do kojeg se izdaje..." ></vuejs-datepicker>
 
 	                        <label for="check-inTime">Vreme za prijavu:</label><br/>
 	                        <input type="time" id="check-inTimeID" name="check-inTimeName" v-model="apStartTime" placeholder="Izaberite inicijalno vreme za prijavu...">
@@ -399,6 +403,59 @@ Vue.component("reviewApartments", {
 			
 			return state.disabledDates;
 		
+	},
+	
+	disabledDatesTo() {
+		var startDateFromList = null;
+		var endDateFromList = null;
+		var listDates = [];
+	
+		for(period of this.newApartment.releaseDates){
+			
+			
+				startDateFromList = moment(period.startDate);
+				startDateFromList = new Date(startDateFromList);
+				
+				endDateFromList =  moment(period.endDate);
+				endDateFromList = new Date(endDateFromList);
+				
+				listDates.push({from: startDateFromList, to: endDateFromList});
+			
+	
+		}
+		
+		var currentDate =  this.startDateModel;
+		
+		/*
+		 * prodjemo kroz sve datume
+		 * uzmemo sve vece od trenutnog(start)
+		 * prodjemo kroz novu listu
+		 * uzmemo najmanji pocetni
+		 * od tog datuma zabranimo
+		 * 
+		 */
+		
+		var listOfNewDates = [];
+		
+		for(disabledDate of listDates){
+			console.log(disabledDate)
+			if(currentDate < disabledDate.from) {
+				listOfNewDates.push(disabledDate.from);
+			}
+		}
+		
+		var minDate = null;
+		minDate = listOfNewDates[0];
+		  
+		var state = {
+				  disabledDates: {
+				    to: moment(this.startDateModel).startOf('day').toDate(),
+				    from: minDate,
+				    ranges: listDates
+				  }
+				}
+		
+		return state.disabledDates;
 	}
 		
 	},
@@ -548,28 +605,44 @@ Vue.component("reviewApartments", {
 			}
 			
 			
-			if(this.startDateModel === null || this.startDateModel.length === 0) {
-				var red = document.getElementById("startDateID");
-				red.style.backgroundColor = "LightCoral"; 
-				empty = true;
-			} else {
-				var red = document.getElementById("startDateID");
-				red.style.backgroundColor = "white"; 
-				
-				let localStartDate = moment(this.startDateModel).format("YYYY-MM-DD");
-				newStartDate = new Date(localStartDate);			
-			}
+//			if(this.startDateModel === null || this.startDateModel.length === 0) {
+//				var red = document.getElementById("startDateID");
+//				red.style.backgroundColor = "LightCoral"; 
+//				empty = true;
+//			} else {
+//				var red = document.getElementById("startDateID");
+//				red.style.backgroundColor = "white"; 
+//				
+//				let localStartDate = moment(this.startDateModel).format("YYYY-MM-DD");
+//				newStartDate = new Date(localStartDate);			
+//			}
+//			
+//			if(this.endDateModel === null || this.endDateModel.length === 0) {
+//				var red = document.getElementById("endDateID");
+//				red.style.backgroundColor = "LightCoral"; 
+//				empty = true;
+//			} else {
+//				var red = document.getElementById("endDateID");
+//				red.style.backgroundColor = "white"; 
+//				
+//				let localEndDate = moment(this.endDateModel).format("YYYY-MM-DD");
+//				newEndDate = new Date(localEndDate);
+//			}
 			
-			if(this.endDateModel === null || this.endDateModel.length === 0) {
-				var red = document.getElementById("endDateID");
-				red.style.backgroundColor = "LightCoral"; 
-				empty = true;
-			} else {
-				var red = document.getElementById("endDateID");
-				red.style.backgroundColor = "white"; 
-				
-				let localEndDate = moment(this.endDateModel).format("YYYY-MM-DD");
-				newEndDate = new Date(localEndDate);
+			
+			// uneo prvi a nije drugi, uneo oba
+			if(this.startDateModel !== null || this.startDateModel.length !== 0) {
+				if(this.endDateModel !== null || this.endDateModel.length !== 0){
+					let localStartDate = moment(this.startDateModel).format("YYYY-MM-DD");
+					newStartDate = new Date(localStartDate);
+					
+					let localEndDate = moment(this.endDateModel).format("YYYY-MM-DD");
+					newEndDate = new Date(localEndDate);
+				} else {
+					var red = document.getElementById("endDateID");
+					red.style.backgroundColor = "LightCoral"; 
+					empty = true;
+				}
 			}
 			
 			

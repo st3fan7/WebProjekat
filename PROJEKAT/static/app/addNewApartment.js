@@ -49,7 +49,11 @@ Vue.component("addNewApartment", {
 				    disabledDates: {
 				     to: new Date(),
 				     }
-				   }
+				   },
+		    errorForNameOfApartment : false,
+		    errorNumberOfRoomsModel : false,
+		    errorNumberOfGuest : false,
+		    errorPriceForNight : false
 		    
 		
 		}
@@ -132,6 +136,9 @@ Vue.component("addNewApartment", {
                     <h1>Obavezni podaci:</h1>
                         <label for="apartmentName">Naziv apartmana (ID):</label>
                         <input v-model="nameOfApartment" type="text" id="aName" name="apartmentname" placeholder="Unesite naziv apartmana..." pattern="[A-Z][A-Za-z0-9 ]*" title="Možete uneti slova i brojeve i prvo slovo mora biti veliko!">
+                    	<label v-if="errorForNameOfApartment" style="color:red; font-size: 16px">Možete uneti slova i brojeve i prvo slovo mora biti veliko!</label><br>
+                    
+                    
                     
                         <label for="typeOfApartment">Tip apartmana:</label>
                         <select id="typeOfApartmentID" name="typeOfApartmentName" v-model="typeOfApartment">
@@ -147,12 +154,15 @@ Vue.component("addNewApartment", {
 
                         <label for="numberOfRooms">Broj soba:</label>
                         <input v-model="numberOfRoomsModel" type="text" id="numberOfRoomsID" name="numberOfRoomsName" placeholder="Unesite broj soba..." pattern="[1-9][0-9]*" title="Možete uneti samo brojeve počevši od 1!">
+						 <label v-if="errorNumberOfRoomsModel" style="color:red; font-size: 16px">Možete uneti samo brojeve počevši od 1!</label><br>
 
                         <label for="numberOfGuest">Broj gostiju:</label>
                         <input v-model="numberOfGuestModel" type="text" id="numberOfGuestID" name="numberOfGuestName" placeholder="Unesite maksimalan broj gostiju..." pattern="[1-9][0-9]*" title="Možete uneti samo brojeve počevši od 1!">
-
+						<label v-if="errorNumberOfGuest" style="color:red; font-size: 16px">Možete uneti samo brojeve počevši od 1!</label><br>
+						
                         <label for="priceForNight">Cena po noći [RSD]:</label>
                         <input v-model="priceForNightModel" type="text" id="priceForNightID" name="priceForNightName" placeholder="Unesite cenu po noći..." pattern="[1-9][0-9]*([.][0-9]+)?" title="Primer validne cene: a) 2500 b) 2199.99">
+                        <label v-if="errorPriceForNight" style="color:red; font-size: 16px">Primer validne cene: a) 2500 b) 2199.99</label><br>
                         
                         <!--
                         <label for="location">Lokacija:</label>
@@ -264,12 +274,21 @@ Vue.component("addNewApartment", {
 			this.showNotification = false;
 			var newStartDate = null;
 			var newEndDate = null;
+			this.errorForNameOfApartment = false;
+			this.errorNumberOfRoomsModel = false;
+			this.errorNumberOfGuest = false;
+			this.errorPriceForNight = false;
+			
 			
 			if(this.nameOfApartment.length === 0) {
 				var red = document.getElementById("aName");
 				red.style.backgroundColor = "LightCoral"; 
 				empty = true;
 			} else {
+				if(!this.nameOfApartment.match(/^[A-Z][A-Za-z0-9 ]*$/)){
+					this.errorForNameOfApartment = true;
+					empty = true;
+				}
 				var red = document.getElementById("aName");
 				red.style.backgroundColor = "white"; 
 			}
@@ -279,6 +298,10 @@ Vue.component("addNewApartment", {
 				red.style.backgroundColor = "LightCoral"; 
 				empty = true;
 			} else {
+				if(!this.numberOfRoomsModel.match(/^[1-9][0-9]*$/)){
+					this.errorNumberOfRoomsModel = true;
+					empty = true;
+				}
 				var red = document.getElementById("numberOfRoomsID");
 				red.style.backgroundColor = "white"; 
 			}
@@ -288,6 +311,10 @@ Vue.component("addNewApartment", {
 				red.style.backgroundColor = "LightCoral"; 
 				empty = true;
 			} else {
+				if(!this.numberOfGuestModel.match(/^[1-9][0-9]*$/)){
+					this.errorNumberOfGuest = true;
+					empty = true;
+				}
 				var red = document.getElementById("numberOfGuestID");
 				red.style.backgroundColor = "white"; 
 			}
@@ -297,6 +324,10 @@ Vue.component("addNewApartment", {
 				red.style.backgroundColor = "LightCoral"; 
 				empty = true;
 			} else {
+				if(!this.priceForNightModel.match(/^[1-9][0-9]*([.][0-9]+)?$/)){
+					this.errorPriceForNight = true;
+					empty = true;
+				}
 				var red = document.getElementById("priceForNightID");
 				red.style.backgroundColor = "white"; 
 			}
