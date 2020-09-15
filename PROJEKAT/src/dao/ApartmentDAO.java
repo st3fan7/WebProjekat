@@ -16,6 +16,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import beans.Apartment;
+import beans.PeriodOfRent;
 
 public class ApartmentDAO {
 	private static Gson gson = new Gson();
@@ -101,27 +102,54 @@ public class ApartmentDAO {
 	
 	
 	public ArrayList<Apartment> getApartmentsByDateRange(Date startDate, Date endDate){
+//		ArrayList<Apartment> apartments = new ArrayList<>();
+//		if(startDate != null && endDate != null && startDate.compareTo(endDate) < 0) {
+//			for(Apartment a : apartmentsList) {
+//				for(int i = 0; i < a.getReleaseDates().size(); i++) {
+//					if(startDate.compareTo(a.getReleaseDates().get(0)) >= 0 && endDate.compareTo(a.getReleaseDates().get(1)) <= 0) {
+//						apartments.add(a);
+//					}
+//				}
+//			}
+//		} else if(startDate != null && endDate == null) {
+//			for(Apartment a : apartmentsList) {
+//				for(int i = 0; i < a.getReleaseDates().size(); i++) {
+//					if(startDate.compareTo(a.getReleaseDates().get(0)) >= 0 && startDate.compareTo(a.getReleaseDates().get(1)) <= 0) {
+//						apartments.add(a);
+//					}
+//				}
+//			}
+//		} else if(startDate == null && endDate != null) {
+//			for(Apartment a : apartmentsList) {
+//				for(int i = 0; i < a.getReleaseDates().size(); i++) {
+//					if(endDate.compareTo(a.getReleaseDates().get(0)) >= 0 && endDate.compareTo(a.getReleaseDates().get(1)) <= 0) {
+//						apartments.add(a);
+//					}
+//				}
+//			}
+//		} 
+		
 		ArrayList<Apartment> apartments = new ArrayList<>();
 		if(startDate != null && endDate != null && startDate.compareTo(endDate) < 0) {
 			for(Apartment a : apartmentsList) {
-				for(int i = 0; i < a.getReleaseDates().size(); i++) {
-					if(startDate.compareTo(a.getReleaseDates().get(0)) >= 0 && endDate.compareTo(a.getReleaseDates().get(1)) <= 0) {
-						apartments.add(a);
-					}
+				for(PeriodOfRent periodOfRent : a.getReleaseDates()) {
+						if(startDate.compareTo(periodOfRent.getStartDate()) >= 0 && endDate.compareTo(periodOfRent.getEndDate()) <= 0) {
+							apartments.add(a);
+						}
 				}
 			}
 		} else if(startDate != null && endDate == null) {
 			for(Apartment a : apartmentsList) {
-				for(int i = 0; i < a.getReleaseDates().size(); i++) {
-					if(startDate.compareTo(a.getReleaseDates().get(0)) >= 0 && startDate.compareTo(a.getReleaseDates().get(1)) <= 0) {
+				for(PeriodOfRent periodOfRent : a.getReleaseDates()) {
+					if(startDate.compareTo(periodOfRent.getStartDate()) >= 0 && startDate.compareTo(periodOfRent.getEndDate()) <= 0) {
 						apartments.add(a);
 					}
 				}
 			}
 		} else if(startDate == null && endDate != null) {
 			for(Apartment a : apartmentsList) {
-				for(int i = 0; i < a.getReleaseDates().size(); i++) {
-					if(endDate.compareTo(a.getReleaseDates().get(0)) >= 0 && endDate.compareTo(a.getReleaseDates().get(1)) <= 0) {
+				for(PeriodOfRent periodOfRent : a.getReleaseDates()) {
+					if(endDate.compareTo(periodOfRent.getStartDate()) >= 0 && endDate.compareTo(periodOfRent.getEndDate()) <= 0) {
 						apartments.add(a);
 					}
 				}

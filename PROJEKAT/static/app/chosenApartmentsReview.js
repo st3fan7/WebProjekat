@@ -279,52 +279,6 @@ Vue.component("chosenApartmentsReview", {
 	},
 	computed : {
 		disabledDates() {
-				/*
-				let listDates = [];
-				listDates.push( {to: moment(this.startDateOfRent).startOf('day').toDate(),
-							from: moment(this.endDateOfRent).startOf('day').add(1, 'days').toDate()});
-			
-				let disabledObj = {};
-				disabledObj["ranges"] = listDates;
-				disabledObj["to"] = new Date(Date.now()); 
-				
-				return {to: moment(this.startDateOfRent).startOf('day').toDate(),
-							from: moment(this.endDateOfRent).startOf('day').add(1, 'days').toDate()};
-				
-				*/
-				/*
-				console.log(listDates)
-				
-				let startDateFromList = null;
-				let endDateFromList = null;
-			/*	
-				for(r of this.reservationsForApartmentList){
-					startDateFromList = moment(r.startDate);
-					startDateFromList = new Date(startDateFromList);
-					
-					endDateFromList = new Date(startDateFromList.getTime() + r.numberOfNight*24*60*60*1000);
-					
-					listDates.push({from: startDateFromList, to: endDateFromList});
-				}
-				*/
-				/*
-				let disabledObj = {};
-				disabledObj["ranges"] = listDates;
-				console.log(disabledObj)
-				return disabledObj;
-				*/
-			/*
-				var listDates = [];
-				listDates.push({to: moment(this.startDateOfRent).startOf('day').toDate(),
-					from: moment(this.endDateOfRent).startOf('day').add(1, 'days').toDate()});
-			
-				var disabledObj = {};
-				disabledObj["from"] =  moment(this.endDateOfRent).startOf('day').add(1, 'days').toDate();
-				disabledObj["ranges"] = listDates;
-				disabledObj["to"] = new Date(Date.now()); 
-				console.log(disabledObj)
-				return disabledObj;
-				*/
 			
 			var startDateFromList = null;
 			var endDateFromList = null;
@@ -342,11 +296,89 @@ Vue.component("chosenApartmentsReview", {
 				}
 		
 			}
-			  
+			
+//			var startDateFromList2 = null;
+//			var endDateFromList2 = null;
+			
+//			for(period of this.apartment.releaseDates){
+//				
+//				
+//				startDateFromList2 = moment(period.startDate); 
+//				startDateFromList2 = new Date(startDateFromList2);
+//				console.log('start: ' + startDateFromList2)
+//				
+//				endDateFromList2 =  moment(period.endDate); 
+//				endDateFromList2= new Date(endDateFromList2);
+//				console.log('end: ' + endDateFromList2)
+//				
+//				
+//				listDates.push({to: startDateFromList2 });
+//
+//			}
+			
+			/*
+			 * ------10.9-20.9-----1.10-10.10-------23.10-28.10-------
+			 * I
+			 * prvi datum < trenutni datum = pocetni je trenutni
+			 * 
+			 * prvi > trenutni = pocetni je prvi
+			 * 
+			 * daj poslednji u tom periodu 20.9
+			 * 
+			 * zabrani poslednju u prethdnom i prvi u narednom
+			 * 
+			 * daj poslednji u narednom
+			 * 
+			 * ...
+			 * 
+			 * krajnjeg (SVUDA PROVERA DA LI JE POSLEDNJI TAJ DATUM)
+			 * 
+			 * uzeti duzinu liste, brojac     period = 1
+			 * 
+			 * ako je stigao do kraja u promenljivu dodaj taj kranji i zabrani do kraja
+			 * 
+			 */
+			
+			var currentDate = new Date();
+			var legthOfListDates = this.apartment.releaseDates.length; // ili size
+			console.log('duzina ' + legthOfListDates)
+			
+			var startDateForRent = null;
+			var firstEndDate = null;
+			
+			if(this.apartment.releaseDates.length !== 0){
+				firstEndDate = this.apartment.releaseDates[0].endDate;
+				
+				if(moment(currentDate) > moment(this.apartment.releaseDates[0].startDate)){
+					startDateForRent = currentDate;
+				} else {
+					startDateForRent = this.apartment.releaseDates[0].startDate;
+				}
+			}
+			
+			
+			var i;
+			var j = 0;
+			
+			for (i = 0; i < this.apartment.releaseDates.length; i++) {
+				j = i + 1;
+				if(legthOfListDates === (i + 1)){
+					break;
+				}		
+				console.log(moment(this.apartment.releaseDates[j].startDate).startOf('day').toDate()) // 21
+				console.log(moment(this.apartment.releaseDates[i].endDate).startOf('day').toDate() ) // 15
+				listDates.push({to: moment(this.apartment.releaseDates[j].startDate).startOf('day').toDate(), from: moment(this.apartment.releaseDates[i].endDate).startOf('day').toDate() });	
+			}
+			
+			
+			
+			
+//			console.log(listDates)
+				
 			var state = {
 					  disabledDates: {
-					    to: moment(this.startDateOfRent).startOf('day').toDate(), 
-					    from: moment(this.endDateOfRent).startOf('day').add(1, 'days').toDate(),
+						  to : moment(startDateForRent).startOf('day').toDate(),
+						  from : moment(this.apartment.releaseDates[this.apartment.releaseDates.length - 1 ].endDate).startOf('day').toDate(),
 					    ranges: listDates
 					  }
 					}

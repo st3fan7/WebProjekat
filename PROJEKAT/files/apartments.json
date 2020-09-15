@@ -45,8 +45,10 @@
       }
     },
     "releaseDates": [
-      "Nov 5, 2020 12:00:00 AM",
-      "Dec 4, 2020 12:00:00 AM"
+      {
+        "startDate": "Nov 5, 2020 12:00:00 AM",
+        "endDate": "Dec 4, 2020 12:00:00 AM"
+      }
     ],
     "freeDates": [],
     "host": "domacin1",
@@ -118,8 +120,10 @@
       }
     },
     "releaseDates": [
-      "Oct 10, 2020 12:00:00 AM",
-      "Dec 19, 2020 12:00:00 AM"
+      {
+        "startDate": "Oct 10, 2020 12:00:00 AM",
+        "endDate": "Dec 19, 2020 12:00:00 AM"
+      }
     ],
     "freeDates": [],
     "host": "domacin1",
@@ -240,8 +244,10 @@
       }
     },
     "releaseDates": [
-      "Oct 8, 2020 12:00:00 AM",
-      "Oct 30, 2020 12:00:00 AM"
+      {
+        "startDate": "Oct 8, 2020 12:00:00 AM",
+        "endDate": "Oct 30, 2020 12:00:00 AM"
+      }
     ],
     "freeDates": [],
     "host": "domacin1",
@@ -309,8 +315,10 @@
       }
     },
     "releaseDates": [
-      "Sep 29, 2020 12:00:00 AM",
-      "Dec 31, 2020 12:00:00 AM"
+      {
+        "startDate": "Sep 29, 2020 12:00:00 AM",
+        "endDate": "Dec 31, 2020 12:00:00 AM"
+      }
     ],
     "freeDates": [],
     "host": "domacin1",
@@ -365,8 +373,10 @@
       }
     },
     "releaseDates": [
-      "Sep 10, 2020 12:00:00 AM",
-      "Oct 8, 2020 12:00:00 AM"
+      {
+        "startDate": "Sep 10, 2020 12:00:00 AM",
+        "endDate": "Oct 8, 2020 12:00:00 AM"
+      }
     ],
     "freeDates": [],
     "host": "domacin1",
@@ -418,8 +428,10 @@
       }
     },
     "releaseDates": [
-      "Sep 18, 2020 12:00:00 AM",
-      "Sep 25, 2020 12:00:00 AM"
+      {
+        "startDate": "Sep 18, 2020 12:00:00 AM",
+        "endDate": "Sep 25, 2020 12:00:00 AM"
+      }
     ],
     "freeDates": [],
     "host": "domacin1",
@@ -467,8 +479,10 @@
       }
     },
     "releaseDates": [
-      "Oct 15, 2020 12:00:00 AM",
-      "Dec 10, 2020 12:00:00 AM"
+      {
+        "startDate": "Oct 15, 2020 12:00:00 AM",
+        "endDate": "Dec 10, 2020 12:00:00 AM"
+      }
     ],
     "freeDates": [],
     "host": "domacin1",
@@ -526,8 +540,10 @@
       }
     },
     "releaseDates": [
-      "Sep 17, 2020 12:00:00 AM",
-      "Sep 19, 2020 12:00:00 AM"
+      {
+        "startDate": "Sep 17, 2020 12:00:00 AM",
+        "endDate": "Sep 19, 2020 12:00:00 AM"
+      }
     ],
     "freeDates": [],
     "host": "domacin1",
@@ -544,6 +560,61 @@
       },
       {
         "content": "stolica",
+        "deleted": 0
+      }
+    ],
+    "reservations": [],
+    "deleted": 0
+  },
+  {
+    "id": "Novi apartman",
+    "typeOfApartment": "Ceo apartman",
+    "numberOfRooms": 2,
+    "numberOfGuests": 4,
+    "location": {
+      "latitude": 45.8187,
+      "longitude": 20.4515,
+      "address": {
+        "street": "Josipa Pancica",
+        "houseNumber": 4,
+        "populatedPlace": "Kikinda",
+        "zipCode": "23311",
+        "country": "Srbija"
+      }
+    },
+    "releaseDates": [
+      {
+        "startDate": "Sep 16, 2020 12:00:00 AM",
+        "endDate": "Oct 15, 2020 12:00:00 AM"
+      },
+      {
+        "startDate": "Oct 21, 2020 12:00:00 AM",
+        "endDate": "Oct 25, 2020 12:00:00 AM"
+      }
+    ],
+    "freeDates": [],
+    "host": "domacin1",
+    "comments": [],
+    "pictures": [],
+    "pricePerNight": 2500,
+    "checkInTime": "14:00",
+    "checkOutTime": "10:00",
+    "statusOfApartment": "Aktivan",
+    "amenities": [
+      {
+        "content": "sto",
+        "deleted": 0
+      },
+      {
+        "content": "stolica",
+        "deleted": 0
+      },
+      {
+        "content": "ogledalo",
+        "deleted": 0
+      },
+      {
+        "content": "lampa",
         "deleted": 0
       }
     ],

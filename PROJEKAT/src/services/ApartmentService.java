@@ -15,6 +15,7 @@ import com.google.gson.reflect.TypeToken;
 import beans.Amenities;
 import beans.Apartment;
 import beans.Host;
+import beans.PeriodOfRent;
 import dao.AdminDAO;
 import dao.ApartmentDAO;
 import dao.GuestDAO;
@@ -138,16 +139,34 @@ public class ApartmentService {
 				Boolean check = false;
 				
 				
+//				if(dateFrom != null) {
+//					if(a.getReleaseDates().get(0).compareTo(startDate) > 0) {
+//						continue;
+//					}
+//				}
+//				if(dateTo != null) {
+//					if(a.getReleaseDates().get(1).compareTo(endDate) < 0) {
+//						continue;
+//					}
+//				}
+				
+				
 				if(dateFrom != null) {
-					if(a.getReleaseDates().get(0).compareTo(startDate) > 0) {
-						continue;
+					for(PeriodOfRent periodOfRent : a.getReleaseDates()) {
+						if(periodOfRent.getStartDate().compareTo(startDate) > 0) {
+							continue;
+						}
 					}
 				}
+				
 				if(dateTo != null) {
-					if(a.getReleaseDates().get(1).compareTo(endDate) < 0) {
-						continue;
+					for(PeriodOfRent periodOfRent : a.getReleaseDates()) {
+						if(periodOfRent.getEndDate().compareTo(endDate) < 0) {
+							continue;
+						}
 					}
 				}
+				
 				// grad   drzava   oba
 				if(!city.equals("")) {
 					if(!a.getLocation().getAddress().getPopulatedPlace().equals(city)) {
@@ -280,10 +299,16 @@ public class ApartmentService {
 				endDate = sdf.parse(apartmentDTO.getReleaseDates().get(1));
 			}
 			
-			ArrayList<Date> releaseDates = new ArrayList<>();
-			releaseDates.add(startDate);
-			releaseDates.add(endDate);
+//			ArrayList<Date> releaseDates = new ArrayList<>();
+//			releaseDates.add(startDate);
+//			releaseDates.add(endDate);
 			
+			PeriodOfRent periodOfRent = new PeriodOfRent();
+			periodOfRent.setStartDate(startDate);
+			periodOfRent.setEndDate(endDate);
+			
+			ArrayList<PeriodOfRent> newPeriodsOfRentList  = new ArrayList<>();
+			newPeriodsOfRentList.add(periodOfRent);
 			
 			try {
 				apartment.setId(apartmentDTO.getId());
@@ -291,7 +316,7 @@ public class ApartmentService {
 				apartment.setNumberOfRooms(apartmentDTO.getNumberOfRooms());
 				apartment.setNumberOfGuests(apartmentDTO.getNumberOfGuests());
 				apartment.setLocation(apartmentDTO.getLocation());
-				apartment.setReleaseDates(releaseDates);
+				apartment.setReleaseDates(newPeriodsOfRentList);
 				apartment.setFreeDates(new ArrayList<Date>());
 				apartment.setHost(apartmentDTO.getHost());
 				apartment.setComments(apartmentDTO.getComments());
@@ -431,18 +456,34 @@ public class ApartmentService {
 				endDate = sdf.parse(apartmentDTO.getReleaseDates().get(1));
 			}
 			
-			ArrayList<Date> releaseDates = new ArrayList<>();
-			releaseDates.add(startDate);
-			releaseDates.add(endDate);
+//			ArrayList<Date> releaseDates = new ArrayList<>();
+//			releaseDates.add(startDate);
+//			releaseDates.add(endDate);
 			
+			PeriodOfRent periodOfRent = new PeriodOfRent();
+			periodOfRent.setStartDate(startDate);
+			periodOfRent.setEndDate(endDate);
 			
+			ArrayList<PeriodOfRent> oldPeriodsList = new ArrayList<>();
+			
+			for(Apartment ap : apartmentDAO.getApartmentsList()) {
+				if(ap.getId().equals(oldId)) {
+					for(PeriodOfRent p : ap.getReleaseDates()) {
+						oldPeriodsList.add(p);
+					}
+				}
+			}
+			
+			oldPeriodsList.add(periodOfRent);
+			
+		
 			try {
 				a.setId(apartmentDTO.getId());
 				a.setTypeOfApartment(apartmentDTO.getTypeOfApartment());
 				a.setNumberOfRooms(apartmentDTO.getNumberOfRooms());
 				a.setNumberOfGuests(apartmentDTO.getNumberOfGuests());
 				a.setLocation(apartmentDTO.getLocation());
-				a.setReleaseDates(releaseDates);
+				a.setReleaseDates(oldPeriodsList);
 				a.setFreeDates(new ArrayList<Date>());
 				a.setHost(apartmentDTO.getHost());
 				a.setComments(apartmentDTO.getComments());

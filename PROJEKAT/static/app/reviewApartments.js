@@ -38,8 +38,8 @@ Vue.component("reviewApartments", {
 			pictures : [],
 			filteredAmenitiesList : [],
 			activeApartmentsNOTCHANGEDlist : [],
-			statusOfApartmentFilter : 'Status'
-				
+			statusOfApartmentFilter : 'Status',
+			newApartment : null	
 			 
 			
 		}
@@ -252,10 +252,10 @@ Vue.component("reviewApartments", {
 	                        <label for="address">Adresa:</label>
 	                        <input  type="text" id="addressID" name="addressName" v-model="apAddress" placeholder="Unesite adresu apartmana..."  pattern="[A-Z][a-z A-Z]*[ ][1-9][0-9]*, [A-Z][a-z A-Z]* [0-9]{5}" title="Primer validne adrese: Cara Dusana 25, Novi Sad 21000">	
 
-	                        <label for="dateFromPublishing">Datum od kojeg se izdaje:</label><br/>
-	                        <vuejs-datepicker v-model="startDateModel" id="startDateID" name="startDate" type="date"  format="dd.MM.yyyy." :disabledDates="state.disabledDates" placeholder="Izaberite datum od kojeg se izdaje..." ></vuejs-datepicker>
+	                        <label for="dateFromPublishing">Novi datum od kojeg se izdaje:</label><br/>
+	                        <vuejs-datepicker v-model="startDateModel" id="startDateID" name="startDate" type="date"  format="dd.MM.yyyy." :disabledDates="disabledDates" placeholder="Izaberite datum od kojeg se izdaje..." ></vuejs-datepicker>
 							
-							<label for="dateToPublishing">Datum do kojeg se izdaje:</label><br/>
+							<label for="dateToPublishing">Novi datum do kojeg se izdaje:</label><br/>
 	                        <vuejs-datepicker v-model="endDateModel" id="endDateID" name="endDate" type="date"  format="dd.MM.yyyy."  :open-date="startDateModel" :disabledDates="newDateStart" v-bind:disabled="startDateModel === ''" placeholder="Izaberite datum do kojeg se izdaje..." ></vuejs-datepicker>
 
 	                        <label for="check-inTime">Vreme za prijavu:</label><br/>
@@ -368,7 +368,38 @@ Vue.component("reviewApartments", {
 			
 				
 			
-		}
+		},
+		
+		disabledDates() {
+
+			var startDateFromList = null;
+			var endDateFromList = null;
+			var listDates = [];
+			
+			for(period of this.newApartment.releaseDates){
+				
+				
+					startDateFromList = moment(period.startDate);
+					startDateFromList = new Date(startDateFromList);
+					
+					endDateFromList =  moment(period.endDate);
+					endDateFromList = new Date(endDateFromList);
+					
+					listDates.push({from: startDateFromList, to: endDateFromList});
+				
+		
+			}
+			  
+			var state = {
+					  disabledDates: {
+					    to: new Date(), 
+					    ranges: listDates
+					  }
+					}
+			
+			return state.disabledDates;
+		
+	}
 		
 	},
 
@@ -407,6 +438,9 @@ Vue.component("reviewApartments", {
 		},
 		changeApartment : function(a)
 		{
+			this.startDateModel = '';
+			this.endDateModel = '';
+			this.newApartment = a;
 			this.changeApartmentButtonClicked = true;
 			
 			this.oldId = a.id;
@@ -423,8 +457,8 @@ Vue.component("reviewApartments", {
 			this.apStartTime = a.checkInTime;
 			this.apEndTime = a.checkOutTime;
 			
-			this.startDateModel = a.releaseDates[0];
-			this.endDateModel = a.releaseDates[1];
+//			this.startDateModel = a.releaseDates[0];
+//			this.endDateModel = a.releaseDates[1];
 			
 			
 			this.comments = a.comments;

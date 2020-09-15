@@ -12,7 +12,7 @@ public class Apartment {
 	private int numberOfRooms;
 	private int numberOfGuests;
 	private Location location;
-	private ArrayList<Date> releaseDates;
+	private ArrayList<PeriodOfRent> releaseDates;
 	private ArrayList<Date> freeDates;
 	private String host;
 	private ArrayList<Comment> comments;
@@ -45,7 +45,7 @@ public class Apartment {
 		this.checkOutTime = checkOutTime;
 		this.statusOfApartment = statusOfApartment;
 		this.pictures = new ArrayList<String>();
-		this.releaseDates = new ArrayList<Date>();
+		this.releaseDates = new ArrayList<PeriodOfRent>();
 		this.freeDates = new ArrayList<Date>();
 		this.comments = new ArrayList<Comment>();
 		this.amenities = new ArrayList<Amenities>();
@@ -85,11 +85,11 @@ public class Apartment {
 		this.location = location;
 	}
 
-	public ArrayList<Date> getReleaseDates() {
+	public ArrayList<PeriodOfRent> getReleaseDates() {
 		return releaseDates;
 	}
 
-	public void setReleaseDates(ArrayList<Date> releaseDates) {
+	public void setReleaseDates(ArrayList<PeriodOfRent> releaseDates) {
 		this.releaseDates = releaseDates;
 	}
 
@@ -188,16 +188,6 @@ public class Apartment {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	@Override
-	public String toString() {
-		return "Apartment [id=" + id + ", typeOfApartment=" + typeOfApartment + ", numberOfRooms=" + numberOfRooms
-				+ ", numberOfGuests=" + numberOfGuests + ", location=" + location + ", releaseDates=" + releaseDates
-				+ ", freeDates=" + freeDates + ", host=" + host + ", comments=" + comments + ", pictures=" + pictures
-				+ ", pricePerNight=" + pricePerNight + ", checkInTime=" + checkInTime + ", checkOutTime=" + checkOutTime
-				+ ", statusOfApartment=" + statusOfApartment + ", amenities=" + amenities + ", reservations="
-				+ reservations + "]";
 	}
 
 
