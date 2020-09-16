@@ -9,7 +9,11 @@ Vue.component("amenitiesChange", {
 			amenityModel : '',
 			oldAmenityModel : '',
 			showManpulationPartForContent : false,
-			addAmenityInputField : ''
+			addAmenityInputField : '',
+			errorAddNewAmenity : false,
+			errorChangeAmenity : false,
+			emptyAddNewField : false,
+			emptyChange : false
 		}
 	},
 	template: 
@@ -59,7 +63,9 @@ Vue.component("amenitiesChange", {
 		            <h1>Dodaj novi sadržaj:</h1>
 		            <form id="formForSearch" action="#">
 		                <input v-model="addAmenityInputField" type="text" id="amenitiesID" name="amenitiesName" placeholder="Unesite naziv sadržaja...">
-		        
+		        		<label v-if="errorAddNewAmenity" style="color:red; font-size: 16px; margin-left: 20%;">Možete uneti samo slova!</label><br>
+		        		<label v-if="emptyAddNewField" style="color:red; font-size: 16px; margin-left: 20%;">Polje ne sme biti prazno!</label><br>
+		        		
 		                <div class="add-btn-amenities">
 		                    <button @click="addAmenity()" id="searchInUserReservationID" type="button">Dodaj</button>
 		                </div>
@@ -71,7 +77,9 @@ Vue.component("amenitiesChange", {
 		            <form id="formForSort" action="#">
 		                
 		                    <input v-model="amenityModel" type="text" id="amenitiesChangeID" name="amenitiesChangeName">
-		    
+		    				<label v-if="errorChangeAmenity" style="color:red; font-size: 16px; margin-left: 20%;">Možete uneti samo slova!</label><br>
+		    				<label v-if="emptyChange" style="color:red; font-size: 16px; margin-left: 20%;">Polje ne sme biti prazno!</label><br>
+		    				
 		                    <div class="search-btn-user-reservation">
 		                        <button @click="changeAmenities()" id="change-btn-in-admin-change-apartment" type="button">Izmeni</button>
 		                    </div>
@@ -163,41 +171,86 @@ Vue.component("amenitiesChange", {
 		},
 		
 		changeAmenities : function() {
-			console.log("Nova : " + this.amenityModel)
-			if(confirm('Da li ste sigurni da želite da izvršite izmenu?') == true){
-				this.showManpulationPartForContent = false;
-				axios.post('services/amenities/changeAmenity', {"content" : '' + this.amenityModel}, 
-						{params : {"oldAmenity" : this.oldAmenityModel}})
-				.then(response => {
-					if(response.status === 200){
-						toast('Sadržaj je uspšeno izmenjen!')
-						this.amenitiesList = response.data;
-					} else {
-						this.$router.push({name : 'badRequest'});
-					}
-				});
+			var empty = false;
+			this.errorChangeAmenity = false;
+			
+			this.emptyChange = false;
+			
+			if(this.amenityModel === null || this.amenityModel === '') {
+				var red = document.getElementById("amenitiesChangeID");
+				red.style.backgroundColor = "LightCoral"; 
+				empty = true;
+				this.emptyChange = true;
+			} else {
+				if(!document.getElementById("amenitiesChangeID").value.match(/^[A-Za-z ]+$/)){
+					this.errorChangeAmenity = true;
+					empty = true;
+				}
+				var red = document.getElementById("amenitiesChangeID");
+				red.style.backgroundColor = "white"; 
+			} 
+			
+			
+			if(empty === false){
+				if(confirm('Da li ste sigurni da želite da izvršite izmenu?') == true){
+					this.showManpulationPartForContent = false;
+					axios.post('services/amenities/changeAmenity', {"content" : '' + this.amenityModel}, 
+							{params : {"oldAmenity" : this.oldAmenityModel}})
+					.then(response => {
+						if(response.status === 200){
+							toast('Sadržaj je uspšeno izmenjen!')
+							this.amenitiesList = response.data;
+						} else {
+							this.$router.push({name : 'badRequest'});
+						}
+					});
+				}
 			}
+			
+			
 		},
 		
 		addAmenity : function() {
 			
-			if(confirm('Da li ste sigurni da želite da dodate ' + this.addAmenityInputField + '?') == true){
-				axios.post('services/amenities/addAmenity', {"content": '' + this.addAmenityInputField})
-				.then(response => {
-					if(response.status === 201) {
-						toast('Sadržaj je uspešno dodat!')
-						this.amenitiesList = response.data;
-					} else if(response.status === 200) {
-						toast('Sadržaj već postoji!')
-					} else {
-						toast('Sadržaj nije dodat!')
-						this.$router.push({ name : 'badRequest'});
-					}
-				});
-				
+			var empty = false;
+			this.errorAddNewAmenity = false;
+			this.emptyAddNewField = false;
+			
+			if(this.addAmenityInputField === null || this.addAmenityInputField === '') {
+				var red = document.getElementById("amenitiesID");
+				red.style.backgroundColor = "LightCoral"; 
+				empty = true;
+				this.emptyAddNewField = true;
+			} else {
+				if(!document.getElementById("amenitiesID").value.match(/^[A-Za-z ]+$/)){
+					this.errorAddNewAmenity = true;
+					empty = true;
+				}
+				var red = document.getElementById("amenitiesID");
+				red.style.backgroundColor = "white"; 
 			} 
 			
-			this.addAmenityInputField = '';
+			if(empty === false){
+				if(confirm('Da li ste sigurni da želite da dodate ' + this.addAmenityInputField + '?') == true){
+					axios.post('services/amenities/addAmenity', {"content": '' + this.addAmenityInputField})
+					.then(response => {
+						if(response.status === 201) {
+							toast('Sadržaj je uspešno dodat!')
+							this.amenitiesList = response.data;
+						} else if(response.status === 200) {
+							toast('Sadržaj već postoji!')
+						} else {
+							toast('Sadržaj nije dodat!')
+							this.$router.push({ name : 'badRequest'});
+						}
+					});
+					
+				} 
+				
+				this.addAmenityInputField = '';
+			}
+			
+			
 
 			
 		}

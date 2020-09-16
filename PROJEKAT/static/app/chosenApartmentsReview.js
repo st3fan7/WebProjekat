@@ -26,7 +26,10 @@ Vue.component("chosenApartmentsReview", {
 			searchedApartments : [],
 			checkIfImageExists : false,
 			imageCount : 0,
-			listOfPics : []
+			listOfPics : [],
+			errorNumberOfNight : false,
+			errorMessageForHost : false,
+			errorComment : false
 			
 		}
 	},
@@ -81,14 +84,15 @@ Vue.component("chosenApartmentsReview", {
                 <vuejs-datepicker v-model="startDateModel" id="startDateID" name="startDate" type="date"  format="dd.MM.yyyy."  :disabledDates="disabledDates"   placeholder="Izaberite početni datum..." ></vuejs-datepicker>
             
                 <label for="numberOfNight" id="labelNumberOfNight">Broj noćenja:</label>
-                <input type="text" v-model="numberOfNightsModel" id="numberOfNightID" name="numberOfNightName" placeholder="Unesite broj noćenja...">
-            
+                <input type="text" v-model="numberOfNightsModel" id="numberOfNightID" name="numberOfNightName" placeholder="Unesite broj noćenja..."  pattern="[1-9][0-9]*" title="Možete uneti samo brojeve počevši od 1!">
+            	<label v-if="errorNumberOfNight" style="color:#c63939; font-size: 16px; margin-left:5%;">Možete uneti samo brojeve počevši od 1!</label><br>
 
                 <label for="message" id="labelMessage">Poruka za domaćina:</label>
-                <input type="text" v-model="messageModel" id="messageID" name="messageName" placeholder="Unesite poruku za domaćina...">
+                <input type="text" v-model="messageModel" id="messageID" name="messageName" placeholder="Unesite poruku za domaćina..."  pattern="([A-Z].*)" title="Prvo slovo mora biti veliko!">
+            	<label v-if="errorMessageForHost" style="color:#c63939; font-size: 16px; margin-left:20%">Prvo slovo mora biti veliko!</label><br>
             
-                <label v-if="showNotificationForErrorReservation" style="color:#c63939; margin-left:0%; text-align:center;">Rezervaciju nije moguće <br> izvršiti za navedene datume!</label>
-                <label v-if="showNotificationForErrorReservationImput" style="color:#c63939; margin-left:0%; text-align:center;">Popunite sva potrebna polja za rezervaciju!</label>
+                <label v-if="showNotificationForErrorReservation" style="color:#c63939; margin-left:0%; text-align:center; font-size: 16px;">Rezervaciju nije moguće <br> izvršiti za navedene datume!</label>
+                <label v-if="showNotificationForErrorReservationImput" style="color:#c63939; margin-left:1%; text-align:center; font-size: 16px">Popunite sva potrebna polja za rezervaciju!</label>
                 
                 <div class="search-btn-user-overview">
                     <button type="button" @click="apartmanReservationClick()">Rezerviši</button>
@@ -129,7 +133,8 @@ Vue.component("chosenApartmentsReview", {
             <form id="formForSearch">
 
                 <input type="text" v-model="commentField" id="messageID" name="messageName" placeholder="Unesite komentar...">
-            	<label v-if="showNotificationForComment" style="color:#c63939; margin-left:12%;">Morate napisati neki komentar!</label>
+            	<label v-if="showNotificationForComment" style="color:#c63939; font-size: 16px; margin-left:15%;">Morate napisati neki komentar!</label>
+            	<label v-if="errorComment" style="color:#c63939; font-size: 16px; font-size: 16px; margin-left:20%;">Prvo slovo mora biti veliko!</label><br>
             	
                 <label id="labelForRole" for="role">Ocena:</label>
                 <select id="roleID" name="roleName" v-model="markForApartment" style="width:76.7%;margin-left:12%;">
@@ -140,7 +145,7 @@ Vue.component("chosenApartmentsReview", {
                     <option value="4">4 (četiri)</option>
                     <option value="5">5 (pet)</option>
                 </select>
-                <label v-if="showNotificationForMark" style="color:#c63939; margin-left:21%;">Morate izabrati ocenu!</label>
+                <label v-if="showNotificationForMark" style="color:#c63939; margin-left:25%; font-size: 16px;">Morate izabrati ocenu!</label>
             	
 
                 <div class="search-btn-user-overview" style="margin-top: 11%">
@@ -426,12 +431,17 @@ Vue.component("chosenApartmentsReview", {
 		
 		sendComment : function() {
 			var empty = false;
+			this.errorComment = false;
 			
 			
 			if(this.commentField.length === 0){
 				empty = true;
 				this.showNotificationForComment = true;
 			} else {
+				if(!this.commentField.match(/^([A-Z].*)$/)){
+					empty = true;
+					this.errorComment = true;
+				}
 				this.showNotificationForComment = false;
 			}
 			
@@ -464,6 +474,8 @@ Vue.component("chosenApartmentsReview", {
 			this.showNotificationForErrorReservation = false;
 			this.showNotificationForErrorReservationImput = false;
 			var newStartDate = null;
+			this.errorNumberOfNight = false;
+			this.errorMessageForHost = false;
 			
 			if(this.startDateModel.length === 0){
 				empty = true;
@@ -481,6 +493,10 @@ Vue.component("chosenApartmentsReview", {
 				empty = true;
 				this.showNotificationForErrorReservationImput = true;
 			} else {
+				if(!this.numberOfNightsModel.match(/^[1-9][0-9]*$/)){
+					empty = true;
+					this.errorNumberOfNight = true;
+				}
 				this.showNotificationForErrorReservationImput = false;
 			}
 			
@@ -488,6 +504,10 @@ Vue.component("chosenApartmentsReview", {
 				empty = true;
 				this.showNotificationForErrorReservationImput = true;
 			} else {
+				if(!this.messageModel.match(/^([A-Z].*)$/)){
+					empty = true;
+					this.errorMessageForHost = true;
+				}
 				this.showNotificationForErrorReservationImput = false;
 			}
 			

@@ -28,7 +28,12 @@ Vue.component("homePage", {
 		    city : '',
 		    country : '',
 		    address: '',
-		    addressModel : ''
+		    addressModel : '',
+		    errorPrice : false,
+		    errorRoom : false,
+		    errorGuest : false,
+		    errorLocation : false,
+		    searchModel : ''
 		}
 	},
 	template:`
@@ -76,7 +81,20 @@ Vue.component("homePage", {
 		    </div>
 	    </div>
 	
+	
 	    <div class="search">
+	    		<div>
+					<label v-if="errorPrice" style="color:white; font-size: 23px; margin-left: 30%; font-family: 'Bentham', serif;">Cena mora biti u trazenom formatu! Primer validne cene: 1000-2000</label><br>
+				</div>
+				<div>
+					<label v-if="errorRoom" style="color:white; font-size: 23px; margin-left: 29%; font-family: 'Bentham', serif;">Broj soba mora biti u trazenom formatu! Primer validnog broj soba: 1-2</label><br>
+				</div>
+				<div>
+					<label v-if="errorGuest" style="color:white; font-size: 23px; margin-left: 40%; font-family: 'Bentham', serif;">Za broj osoba morate uneti broj!</label><br>
+				</div>
+				<div>
+					<label v-if="errorLocation" style="color:white; font-size: 23px; margin-left: 41%; font-family: 'Bentham', serif;">Možete uneti samo slova!</label><br>
+				</div>
 	        <form>
 	            <h1>Gde putujete?</h1>
 	            <div class="form-box">
@@ -88,7 +106,7 @@ Vue.component("homePage", {
 	              -->
                    
                     
-                    <input type="search" style="margin-top:-0.9em; border-radius:25px; height:3.3em;" class="form-control" id="autocomplete-dataset"  placeholder="Grad i/ili država"></input>
+                    <input v-model="searchModel" type="search" style="margin-top:-0.9em; border-radius:25px; height:3.3em;" class="form-control" id="autocomplete-dataset"  placeholder="Grad i/ili država"></input>
                     <input id="city" hidden>
                     <input id="country" hidden>
                     
@@ -120,7 +138,11 @@ Vue.component("homePage", {
 		},
 		
 		search : function() {
-			
+			var regexError = false;
+			this.errorPrice = false;
+			this.errorRoom = false;
+			this.errorGuest = false;
+			this.errorLocation = false;
 			
 			this.city = toLatinConvert(document.querySelector('#city').value);
 			this.country = toLatinConvert(document.querySelector('#country').value);
@@ -137,22 +159,54 @@ Vue.component("homePage", {
 				this.city = "Beograd";
 			}
 			
+			if(this.priceModel.length !== 0){
+				if(!this.priceModel.match(/^[0-9]+[-][0-9]+$/)){
+					regexError = true;
+					this.errorPrice = true;
+				}
+			}
+			
+			if(this.roomsModel.length !== 0){
+				if(!this.roomsModel.match(/^[0-9]+[-][0-9]+$/)){
+					regexError = true;
+					this.errorRoom = true;
+				}
+			}
+			
+			if(this.guestsModel.length !== 0){
+				if(!this.guestsModel.match(/^[0-9][0-9]*$/)){
+					regexError = true;
+					this.errorGuest = true;
+				}
+			}
+			
+//			if(this.searchModel.length !== 0){
+//				if(!document.getElementById("autocomplete-dataset").value.match(/^[A-Za-z ,]+$/)){
+//					console.log('tu sam')
+//					regexError = true;
+//					this.errorLocation = true;
+//				}
+//			}
+			
+			
 			console.log(this.city)
 			console.log(this.country)
 			
+			if(regexError === false) {
+				axios.get('services/apartments/getSearchedApartments', {params : {"dateFrom" : this.dateFromModel, "dateTo" : this.dateToModel,
+					"city" : '' + this.city, "country" : '' + this.country, "price" : '' + this.priceModel, "rooms" : '' + this.roomsModel, "guests" : '' + this.guestsModel }})
+				.then(response => {
+					if(response.status === 200) {
+						this.searchedApartments = response.data;
+					} else {
+						this.searchedApartments = [];
+					}
+					
+					this.$router.push({ name: 'searchedApartments', params : {searchedApartments : this.searchedApartments}});
+					
+				});
+			} 
 			
-			axios.get('services/apartments/getSearchedApartments', {params : {"dateFrom" : this.dateFromModel, "dateTo" : this.dateToModel,
-				"city" : '' + this.city, "country" : '' + this.country, "price" : '' + this.priceModel, "rooms" : '' + this.roomsModel, "guests" : '' + this.guestsModel }})
-			.then(response => {
-				if(response.status === 200) {
-					this.searchedApartments = response.data;
-				} else {
-					this.searchedApartments = [];
-				}
-				
-				this.$router.push({ name: 'searchedApartments', params : {searchedApartments : this.searchedApartments}});
-				
-			});
 			
 			
 		}

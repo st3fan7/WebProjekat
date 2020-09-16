@@ -36,7 +36,13 @@ Vue.component("reviewInActiveApartments", {
 			oldId : '',
 			freeDates : [],
 			pictures : [],
-			newApartment : null
+			newApartment : null,
+			errorForNameOfApartment : false,
+		    errorNumberOfRoomsModel : false,
+		    errorNumberOfGuest : false,
+		    errorPriceForNight : false,
+		    errorLocation : false,
+		    errorAddress : false
 			 
 			
 		}
@@ -169,7 +175,8 @@ Vue.component("reviewInActiveApartments", {
 	                    <h1>Obavezni podaci:</h1>
 	                        <label for="apartmentName">Naziv apartmana (ID):</label>
 	                        <input type="text" id="aName" name="apartmentname"  v-model="apartmentId" placeholder="Unesite naziv apartmana...">
-	                    
+	                    	<label v-if="errorForNameOfApartment" style="color:red; font-size: 16px">Možete uneti slova i brojeve i prvo slovo mora biti veliko!</label><br>
+	                    	
 	                        <label for="typeOfApartment">Tip apartmana:</label>
 	                        <select id="typeOfApartmentID" name="typeOfApartmentName" v-model="apType">
 	                          <option value="Ceo apartman">Ceo apartman</option>
@@ -184,19 +191,24 @@ Vue.component("reviewInActiveApartments", {
 
 	                        <label for="numberOfRooms">Broj soba:</label>
 	                        <input type="text" id="numberOfRoomsID" name="numberOfRoomsName" v-model="apRooms" placeholder="Unesite broj soba...">
+							<label v-if="errorNumberOfRoomsModel" style="color:red; font-size: 16px">Možete uneti samo brojeve počevši od 1!</label><br>					
 
 	                        <label for="numberOfGuest">Broj gostiju:</label>
 	                        <input type="text" id="numberOfGuestID" name="numberOfGuestName" v-model="apNumberOfGuests"  placeholder="Unesite maksimalan broj gostiju...">
+							<label v-if="errorNumberOfGuest" style="color:red; font-size: 16px">Možete uneti samo brojeve počevši od 1!</label><br>
 
 	                        <label for="priceForNight">Cena po noći:</label>
 	                        <input type="text" id="priceForNightID" name="priceForNightName" v-model="apPriceForNightName" placeholder="Unesite cenu po noći...">
-
+							<label v-if="errorPriceForNight" style="color:red; font-size: 16px">Primer validne cene: a) 2500 b) 2199.99</label><br>
+							
 	                        <label for="location">Lokacija:</label>
 	                        <input type="text" id="locationID" name="locationName" v-model="apLocation" placeholder="Unesite GPS koordinate (lokacija)...">
+	                        <label v-if="errorLocation" style="color:red; font-size: 16px">Primeri validnih adresa: a) 2,52 b) 2.32,43.3</label><br>
 	                        
 	                        <label for="address">Adresa:</label>
 	                        <input  type="text" id="addressID" name="addressName" v-model="apAddress" placeholder="Unesite adresu apartmana..."  pattern="[A-Z][a-z A-Z]*[ ][1-9][0-9]*, [A-Z][a-z A-Z]* [0-9]{5}" title="Primer validne adrese: Cara Dusana 25, Novi Sad 21000">	
-
+							<label v-if="errorAddress" style="color:red; font-size: 16px">Primer validne adrese: Cara Dusana 1, Novi Sad 21000, Srbija</label><br>
+							
 	                        <label for="dateFromPublishing">Datum od kojeg se izdaje:</label><br/>
 	                        <vuejs-datepicker v-model="startDateModel" id="startDateID" name="startDate" type="date"  format="dd.MM.yyyy." :disabledDates="disabledDates" placeholder="Izaberite datum od kojeg se izdaje..." ></vuejs-datepicker>
 							
@@ -376,6 +388,12 @@ Vue.component("reviewInActiveApartments", {
 			
 			var empty = false;
 			this.showNotification = false;
+			this.errorForNameOfApartment = false;
+			this.errorNumberOfRoomsModel = false;
+			this.errorNumberOfGuest = false;
+			this.errorPriceForNight = false;
+		    this.errorLocation = false,
+		    this.errorAddress = false
 			
 			var newStartDate = null;
 			var newEndDate = null;
@@ -386,6 +404,10 @@ Vue.component("reviewInActiveApartments", {
 				red.style.backgroundColor = "LightCoral"; 
 				empty = true;
 			} else {
+				if(!document.getElementById("aName").value.match(/^[A-Z][A-Za-z0-9 ]*$/)){
+					this.errorForNameOfApartment = true;
+					empty = true;
+				}
 				var red = document.getElementById("aName");
 				red.style.backgroundColor = "white"; 
 			}
@@ -395,6 +417,10 @@ Vue.component("reviewInActiveApartments", {
 				red.style.backgroundColor = "LightCoral"; 
 				empty = true;
 			} else {
+				if(!document.getElementById("numberOfRoomsID").value.match(/^[1-9][0-9]*$/)){
+					this.errorNumberOfRoomsModel = true;
+					empty = true;
+				}
 				var red = document.getElementById("numberOfRoomsID");
 				red.style.backgroundColor = "white"; 
 			}
@@ -404,6 +430,11 @@ Vue.component("reviewInActiveApartments", {
 				red.style.backgroundColor = "LightCoral"; 
 				empty = true;
 			} else {
+				if(!document.getElementById("numberOfGuestID").value.match(/^[1-9][0-9]*$/)){
+					console.log('usao sam tu')
+					this.errorNumberOfGuest = true;
+					empty = true;
+				}
 				var red = document.getElementById("numberOfGuestID");
 				red.style.backgroundColor = "white"; 
 			}
@@ -413,6 +444,10 @@ Vue.component("reviewInActiveApartments", {
 				red.style.backgroundColor = "LightCoral"; 
 				empty = true;
 			} else {
+				if(!document.getElementById("priceForNightID").value.match(/^[1-9][0-9]*([.][0-9]+)?$/)){
+					this.errorPriceForNight = true;
+					empty = true;
+				}
 				var red = document.getElementById("priceForNightID");
 				red.style.backgroundColor = "white"; 
 			}
@@ -425,9 +460,14 @@ Vue.component("reviewInActiveApartments", {
 				var red = document.getElementById("locationID");
 				red.style.backgroundColor = "white";
 				
-				var locationLatAndLog = this.apLocation.split(',');
-				var Latitude = locationLatAndLog[0].trim();
-				var longitude = locationLatAndLog[1].trim();
+				if(!document.getElementById("locationID").value.match(/^[0-9]+(.[0-9]+)?,( )?[0-9]+(.[0-9]+)?$/)){
+					this.errorLocation = true;
+					empty = true;
+				} else {
+					var locationLatAndLog = this.apLocation.split(',');
+					var Latitude = locationLatAndLog[0].trim();
+					var longitude = locationLatAndLog[1].trim();
+				}	
 			}
 			
 			if(this.apAddress.length === 0) {
@@ -438,44 +478,61 @@ Vue.component("reviewInActiveApartments", {
 				var red = document.getElementById("addressID");
 				red.style.backgroundColor = "white"; 
 				
-				var fullAddress = this.apAddress.split(","); 
-				var streetAndNum = fullAddress[0].split(/(\d+)/);
-				var street = streetAndNum[0].trim();
-				var number = streetAndNum[1].trim();
-				
-				var cityAndZip = fullAddress[1].split(/(\d+)/);
-				var city = cityAndZip[0].trim();
-				var zip = cityAndZip[1].trim();
-				
-				var country = fullAddress[2].trim();
+				if(!document.getElementById("addressID").value.match(/^[A-Za-z ]+[0-9][0-9]*, [A-Za-z ]+[0-9][0-9]*, [A-Za-z ]+$/)){
+					this.errorAddress = true;
+					empty = true;
+				} else {
+					var fullAddress = this.apAddress.split(","); 
+					var streetAndNum = fullAddress[0].split(/(\d+)/);
+					var street = streetAndNum[0].trim();
+					var number = streetAndNum[1].trim();
+					
+					var cityAndZip = fullAddress[1].split(/(\d+)/);
+					var city = cityAndZip[0].trim();
+					var zip = cityAndZip[1].trim();
+					
+					var country = fullAddress[2].trim();
+				}
 			}
 			
-			if(this.startDateModel === null || this.startDateModel.length === 0) {
-				var red = document.getElementById("startDateID");
-				red.style.backgroundColor = "LightCoral"; 
-				empty = true;
-			} else {
-				var red = document.getElementById("startDateID");
-				red.style.backgroundColor = "white"; 
-				
-				let localStartDate = moment(this.startDateModel).format("YYYY-MM-DD");
-				newStartDate = new Date(localStartDate);
-
+//			if(this.startDateModel === null || this.startDateModel.length === 0) {
+//				var red = document.getElementById("startDateID");
+//				red.style.backgroundColor = "LightCoral"; 
+//				empty = true;
+//			} else {
+//				var red = document.getElementById("startDateID");
+//				red.style.backgroundColor = "white"; 
+//				
+//				let localStartDate = moment(this.startDateModel).format("YYYY-MM-DD");
+//				newStartDate = new Date(localStartDate);
+//
+//			}
+//			
+//			if(this.endDateModel === null || this.endDateModel.length === 0) {
+//				var red = document.getElementById("endDateID");
+//				red.style.backgroundColor = "LightCoral"; 
+//				empty = true;
+//			} else {
+//				var red = document.getElementById("endDateID");
+//				red.style.backgroundColor = "white"; 
+//				
+//				let localEndDate = moment(this.endDateModel).format("YYYY-MM-DD");
+//				newEndDate = new Date(localEndDate);
+//			}
+			
+			if(this.startDateModel !== null || this.startDateModel.length !== 0) {
+				if(this.endDateModel !== null || this.endDateModel.length !== 0){
+					let localStartDate = moment(this.startDateModel).format("YYYY-MM-DD");
+					newStartDate = new Date(localStartDate);
+					
+					let localEndDate = moment(this.endDateModel).format("YYYY-MM-DD");
+					newEndDate = new Date(localEndDate);
+				} else {
+					var red = document.getElementById("endDateID");
+					red.style.backgroundColor = "LightCoral"; 
+					empty = true;
+				}
 			}
-			
-			if(this.endDateModel === null || this.endDateModel.length === 0) {
-				var red = document.getElementById("endDateID");
-				red.style.backgroundColor = "LightCoral"; 
-				empty = true;
-			} else {
-				var red = document.getElementById("endDateID");
-				red.style.backgroundColor = "white"; 
-				
-				let localEndDate = moment(this.endDateModel).format("YYYY-MM-DD");
-				newEndDate = new Date(localEndDate);
-			}
-			
-			
 			
 			if(this.apType === null){
 				var red = document.getElementById("typeOfApartmentID");

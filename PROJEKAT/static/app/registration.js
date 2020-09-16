@@ -12,7 +12,12 @@ Vue.component("registration", {
 			showNotification : false,
 			passwordCheck : false,
 			gender : null,
-			genderCheck : false
+			genderCheck : false,
+			errorUsername : false,
+			errorName : false,
+			errorSurname : false,
+			errorPassword : false,
+			errorPassword2 : false
 		}
 	}, 
 	template:`
@@ -39,8 +44,11 @@ Vue.component("registration", {
             <form class="formReg" id="form" action="" onsubmit="return false;"  method = "POST">
                 <h1>Registracija</h1>
                 <input type="text" placeholder="Korisničko ime" id="username" v-model="username" />
+                 <label v-if="errorUsername" style="color:red">Polje ne sme biti prazno!</label>
                 <input type="text" placeholder="Ime" id="name" v-model="name"/>
+                 <label v-if="errorName" style="color:red">Polje ne sme biti prazno!</label>
                 <input type="text" placeholder="Prezime" id="surname" v-model="surname"/>
+                 <label v-if="errorSurname" style="color:red">Polje ne sme biti prazno!</label>
                 
                 <div class="divv">
                     <label class="radio">
@@ -54,14 +62,17 @@ Vue.component("registration", {
                      
                 </div>
                 
-                
+                 <label v-if="genderCheck" style="color:red">Odaberite pol!</label>
                  
                 
                 <input type="password" placeholder="Lozinka" id="password" v-model="password"/>
+                <label v-if="errorPassword" style="color:red">Polje ne sme biti prazno!</label><br>
                 <input type="password" placeholder="Ponovi lozinku" id="password2" v-model="password2"/>
+                <label v-if="errorPassword2" style="color:red">Polje ne sme biti prazno!</label><br>
                 <label v-if="passwordCheck" style="color:red">Lozinke se ne poklapaju!</label><br>
+                
                 <label v-if="showNotification" style="color:red">Korisničko ime već postoji!</label>
-                <label v-if="genderCheck" style="color:red">Odaberite pol!</label>
+               
                 <button type="submit" id="signInButton"  v-on:click="register">Registruj se</button>
                 
             </form>
@@ -87,11 +98,20 @@ Vue.component("registration", {
 			this.showNotification = false;
 			this.passwordCheck = false;
 			this.genderCheck = false;
+			this.errorUsername = false;
+			this.errorName = false;
+			this.errorSurname = false;
+			this.errorPassword = false;
+			this.errorPassword2 = false;
 			
 			if(this.username === null || this.username.length === 0) {	
 				var pocrveni = document.getElementById("username");
 				pocrveni.style.backgroundColor = "LightCoral"; 
 				empty = true;
+				this.errorUsername = true;
+			} else {
+				var pocrveni = document.getElementById("username");
+				pocrveni.style.backgroundColor = "#eee"; 
 			}
 			
 			
@@ -99,18 +119,29 @@ Vue.component("registration", {
 				var pocrveni = document.getElementById("name");
 				pocrveni.style.backgroundColor = "LightCoral"; 
 				empty = true;
-			} 
+				this.errorName = true;
+			}  else {
+				var pocrveni = document.getElementById("name");
+				pocrveni.style.backgroundColor = "#eee"; 
+			}
+			
 			
 			if(this.surname === null || this.surname.length === 0) {
 				var pocrveni = document.getElementById("surname");
 				pocrveni.style.backgroundColor = "LightCoral"; 
 				empty = true;
-			} 
+				this.errorSurname = true;
+			}  else {
+				var pocrveni = document.getElementById("surname");
+				pocrveni.style.backgroundColor = "#eee"; 
+			}
+			
 			
 			if(this.password === null || this.password.length === 0) {
 				var pocrveni = document.getElementById("password");
 				pocrveni.style.backgroundColor = "LightCoral";
 				empty = true;
+				this.errorPassword = true;
 			} else{
 				var pocrveni = document.getElementById("password");
 				pocrveni.style.backgroundColor = "#eee";
@@ -121,6 +152,7 @@ Vue.component("registration", {
 				var pocrveni = document.getElementById("password2");
 				pocrveni.style.backgroundColor = "LightCoral";
 				empty = true;
+				this.errorPassword2 = true;
 			}else{
 				var pocrveni = document.getElementById("password2");
 				pocrveni.style.backgroundColor = "#eee";
