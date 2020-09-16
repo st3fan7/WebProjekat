@@ -209,7 +209,7 @@ Vue.component("reviewInActiveApartments", {
 	                        <label v-if="errorLocation" style="color:red; font-size: 16px">Primeri validnih adresa: a) 2,52 b) 2.32,43.3</label><br>
 	                        
 	                        <label for="address">Adresa:</label>
-	                        <input  type="text" id="addressID" name="addressName" v-model="apAddress" placeholder="Unesite adresu apartmana..."  pattern="[A-Z][a-z A-Z]*[ ][1-9][0-9]*, [A-Z][a-z A-Z]* [0-9]{5}" title="Primer validne adrese: Cara Dusana 25, Novi Sad 21000">	
+	                        <input  type="text" id="addressID" name="addressName" v-model="apAddress" placeholder="Unesite adresu apartmana..."  pattern="[A-ZŠšĐđŽžČčĆć][a-z A-ZŠšĐđŽžČčĆć]*[ ][1-9][0-9]*, [A-ZŠšĐđŽžČčĆć][a-z A-ZŠšĐđŽžČčĆć]* [0-9]{5}" title="Primer validne adrese: Cara Dusana 25, Novi Sad 21000">	
 							<label v-if="errorAddress" style="color:red; font-size: 16px">Primer validne adrese: Cara Dusana 1, Novi Sad 21000, Srbija</label><br>
 							
 	                        <label for="dateFromPublishing">Datum od kojeg se izdaje:</label><br/>
@@ -437,7 +437,7 @@ Vue.component("reviewInActiveApartments", {
 				red.style.backgroundColor = "LightCoral"; 
 				empty = true;
 			} else {
-				if(!document.getElementById("aName").value.match(/^[A-Z][A-Za-z0-9 ]*$/)){
+				if(!document.getElementById("aName").value.match(/^[A-ZŠšĐđŽžČčĆć][A-Za-z0-9ŠšĐđŽžČčĆć ]*$/)){
 					this.errorForNameOfApartment = true;
 					empty = true;
 				}
@@ -511,7 +511,7 @@ Vue.component("reviewInActiveApartments", {
 				var red = document.getElementById("addressID");
 				red.style.backgroundColor = "white"; 
 				
-				if(!document.getElementById("addressID").value.match(/^[A-Za-z ]+[0-9][0-9]*, [A-Za-z ]+[0-9][0-9]*, [A-Za-z ]+$/)){
+				if(!document.getElementById("addressID").value.match(/^[A-Za-zŠšĐđŽžČčĆć ]+[0-9][0-9]*, [A-Za-zŠšĐđŽžČčĆć ]+[0-9][0-9]*, [A-Za-zŠšĐđŽžČčĆć ]+$/)){
 					this.errorAddress = true;
 					empty = true;
 				} else {

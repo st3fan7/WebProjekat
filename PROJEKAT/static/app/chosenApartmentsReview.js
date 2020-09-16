@@ -88,7 +88,7 @@ Vue.component("chosenApartmentsReview", {
             	<label v-if="errorNumberOfNight" style="color:#c63939; font-size: 16px; margin-left:5%;">Možete uneti samo brojeve počevši od 1!</label><br>
 
                 <label for="message" id="labelMessage">Poruka za domaćina:</label>
-                <input type="text" v-model="messageModel" id="messageID" name="messageName" placeholder="Unesite poruku za domaćina..."  pattern="([A-Z].*)" title="Prvo slovo mora biti veliko!">
+                <input type="text" v-model="messageModel" id="messageID" name="messageName" placeholder="Unesite poruku za domaćina..."  pattern="([A-ZŠšĐđŽžČčĆć].*)" title="Prvo slovo mora biti veliko!">
             	<label v-if="errorMessageForHost" style="color:#c63939; font-size: 16px; margin-left:20%">Prvo slovo mora biti veliko!</label><br>
             
                 <label v-if="showNotificationForErrorReservation" style="color:#c63939; margin-left:0%; text-align:center; font-size: 16px;">Rezervaciju nije moguće <br> izvršiti za navedene datume!</label>
@@ -224,10 +224,10 @@ Vue.component("chosenApartmentsReview", {
                 <label class="labelWithoutItalicFontStyle">{{this.apartment.location.latitude}}, {{this.apartment.location.longitude }}</label><br/><br/><br/>
 
                 <label class="labelFontSize">Datum od kojeg se izdaje:</label><br/><br/>
-                <label class="labelWithoutItalicFontStyle">{{this.apartment.releaseDates[0]}}</label><br/><br/><br/>
+                <label class="labelWithoutItalicFontStyle">{{this.apartment.releaseDates[0].startDate}}</label><br/><br/><br/>
 
                 <label class="labelFontSize">Datum do kojeg se izdaje:</label><br/><br/>
-                <label class="labelWithoutItalicFontStyle">{{this.apartment.releaseDates[1]}}</label><br/><br/><br/>
+                <label class="labelWithoutItalicFontStyle">{{this.apartment.releaseDates[0].endDate}}</label><br/><br/><br/>
 
                 <label class="labelFontSize">Vreme za prijavu:</label><br/><br/>
                 <label class="labelWithoutItalicFontStyle">{{this.apartment.checkInTime}}</label><br/><br/><br/>
@@ -447,7 +447,7 @@ Vue.component("chosenApartmentsReview", {
 				empty = true;
 				this.showNotificationForComment = true;
 			} else {
-				if(!this.commentField.match(/^([A-Z].*)$/)){
+				if(!this.commentField.match(/^([A-ZŠšĐđŽžČčĆć].*)$/)){
 					empty = true;
 					this.errorComment = true;
 				}
@@ -513,7 +513,7 @@ Vue.component("chosenApartmentsReview", {
 				empty = true;
 				this.showNotificationForErrorReservationImput = true;
 			} else {
-				if(!this.messageModel.match(/^([A-Z].*)$/)){
+				if(!this.messageModel.match(/^([A-ZŠšĐđŽžČčĆć].*)$/)){
 					empty = true;
 					this.errorMessageForHost = true;
 				}
@@ -522,7 +522,9 @@ Vue.component("chosenApartmentsReview", {
 			
 			var totalCost = this.apartment.pricePerNight * this.numberOfNightsModel;
 			
-			
+			if(this.apartment === null){
+				this.apartment.id = '';
+			}
 			
 			if(!empty){
 				axios.post('services/reservation/createReservation', {"apartment" : '' + this.apartment.id, "startDate" : newStartDate,
@@ -550,21 +552,27 @@ Vue.component("chosenApartmentsReview", {
 	},
 	
 	mounted() {
+		if(this.$route.params.apartment !== null){
+			console.log('usao')
+			this.apartment = this.$route.params.apartment;
+		} else {
+			this.apartment = null;
+		}
 		
-		this.apartment = this.$route.params.apartment;
 		this.startDateOfRent = this.apartment.releaseDates[0];
 		this.endDateOfRent = this.apartment.releaseDates[1];
-		this.searchedApartments = this.$route.params.activeApartmentsNOTCHANGEDlist;
 		
+		if(this.$route.params.activeApartmentsNOTCHANGEDlist !== null){
+			this.searchedApartments = this.$route.params.activeApartmentsNOTCHANGEDlist;
+		} else {
+			this.searchedApartments = null;
+		}
 		
-		console.log(this.apartment.id)
-		console.log(this.imageCount)
 		for(p of this.apartment.pictures){
 			this.listOfPics.push(p);
 			this.imageCount++;
 			console.log(p)
 		}
-		console.log(this.imageCount)
 		
 		if(this.listOfPics.length === 0){
 			this.checkIfImageExists = false;
@@ -600,32 +608,37 @@ Vue.component("chosenApartmentsReview", {
 		
 		axios.get('services/users/getActiveUser').then(response => {
 			this.activeUser = response.data;
-			
-			if (this.activeUser.role === "admin"){
-				this.activeAdmin = true;
-			}else{
-				this.activeAdmin = false;
-			}		
-												
-			if (this.activeUser.role === "domacin"){
-				this.activeHost = true;
-			}else{
-				this.activeHost = false;
+			if(this.activeUser !== null){
+				if (this.activeUser.role === "admin"){
+					this.activeAdmin = true;
+				}else{
+					this.activeAdmin = false;
+				}		
+													
+				if (this.activeUser.role === "domacin"){
+					this.activeHost = true;
+				}else{
+					this.activeHost = false;
+				}
+				
+				if (this.activeUser.role === "gost"){
+					this.activeGuest = true;
+					if(this.apartment !== null){
+						axios.get('services/reservations/checkGuestReservationsForChosenApartment', 
+								{params : {"apartmentID" : ''+ this.apartment.id, "guest" : '' + this.activeUser.username }}).then(response => {
+									if(response.status === 200){
+										this.showCommentsPart = true;
+									} else {
+										this.showCommentsPart = false;
+									}
+								});
+					}
+
+				}else{
+					this.activeGuest = false;
+				}
 			}
 			
-			if (this.activeUser.role === "gost"){
-				this.activeGuest = true;
-				axios.get('services/reservations/checkGuestReservationsForChosenApartment', 
-						{params : {"apartmentID" : ''+ this.apartment.id, "guest" : '' + this.activeUser.username }}).then(response => {
-							if(response.status === 200){
-								this.showCommentsPart = true;
-							} else {
-								this.showCommentsPart = false;
-							}
-						});
-			}else{
-				this.activeGuest = false;
-			}
 				
 		});	
 	}

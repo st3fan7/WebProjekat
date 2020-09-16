@@ -11,7 +11,11 @@ Vue.component("changeProfile", {
 			emptyField : false,
 			userPassword : '',
 			invalidOldPassword : false,
-			invalidNewAndControlPasswords : false
+			invalidNewAndControlPasswords : false,
+			errorName : false,
+			errorSurname : false,
+			errorNameRegex : false,
+			errorSurnameRegex : false
 		}
 	},
 	template:`
@@ -74,10 +78,13 @@ Vue.component("changeProfile", {
                         
                         <br><label for="name">Ime:</label>
                         <input type="text" id="nameID" name="nameName" v-model=activeUser.name>
+                        <label v-if="errorName" style="color:red; font-size: 16px">Polje ne sme biti prazno!</label><br>
+                        <label v-if="errorNameRegex" style="color:red; font-size: 16px">Možete uneti samo slova i prvo slovo mora biti veliko!</label>
                     
                         <br><label for="surname">Prezime:</label>
                         <input type="text" id="surnameID" name="surnameName" v-model=activeUser.surname>
-                			
+                        <label v-if="errorSurname" style="color:red; font-size: 16px">Polje ne sme biti prazno!</label><br>
+                		<label v-if="errorSurnameRegex" style="color:red; font-size: 16px">Možete uneti samo slova i prvo slovo mora biti veliko!</label>
                     
                         <br><label for="password">Stara lozinka:</label>
                         <input type="password" id="passwordID" name="passwordName" v-model="oldPassword"  placeholder="Unesite staru lozinku...">
@@ -88,7 +95,7 @@ Vue.component("changeProfile", {
 
                         <br><label for="password2">Kontrolna lozinka:</label>
                         <input type="password" id="passwor2dID" name="password2Name" v-model="newPassword2" placeholder="Unesite ponovo novu lozinku...">
-                    	<label style="color:red;" v-if="invalidNewAndControlPasswords"><br>Nova i kontrolna lozinka se ne poklapaju!</label>
+                    	<label style="color:red; font-size: 16px" v-if="invalidNewAndControlPasswords"><br>Nova i kontrolna lozinka se ne poklapaju!</label>
                     	
                         <br><label for="gender">Pol:</label>
                         <select id="genderID" name="genderName" v-model=activeUser.gender>
@@ -96,7 +103,6 @@ Vue.component("changeProfile", {
                           <option value="zensko">Žensko</option>
                         </select>
                         
-                        <label style="color:red;" v-if="emptyField"><br>Sva polja moraju biti popunjena!</br></label>
                         
                         <div class="change-btn">
                             <button type="submit" v-on:click="change(activeUser, newPassword)">Izmeni</button>
@@ -133,10 +139,13 @@ Vue.component("changeProfile", {
 		{
 			var empty = true;
 			document.getElementById("form").setAttribute("onsubmit","return false;");
-			
+			this.errorName = false;
+			this.errorSurname = false;
+			this.errorNameRegex = false;
+			this.errorSurnameRegex = false;
 			
 			//if(this.oldPassword.length === 0 || this.newPassword.length === 0 || this.newPassword2.length === 0 || this.activeUser.name.length === 0 || this.activeUser.surname.length === 0)
-			if(this.oldPassword.length === 0 || activeUser.name.length === 0 || activeUser.surname.length === 0)
+			if(this.oldPassword.length === 0 )
 			{
 				this.emptyField = true; 
 				empty = false;
@@ -144,6 +153,26 @@ Vue.component("changeProfile", {
 			else
 			{
 				this.emptyField = false;
+			}
+			
+			if(activeUser.name.length === 0){
+				this.emptyField = true; 
+				empty = false;
+				this.errorName = true;
+			} else {
+				if(!document.getElementById("nameID").value.match(/[A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff]+/g)){
+					this.errorNameRegex = true;
+				}
+			}
+			
+			if(activeUser.surname.length === 0){
+				this.emptyField = true; 
+				empty = false;
+				this.errorSurname = true;
+			} else {
+				if(!document.getElementById("surnameID").value.match(/[A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff]+/g)){
+					this.errorSurnameRegex = true;
+				}
 			}
 			
 			if(this.oldPassword != this.userPassword)

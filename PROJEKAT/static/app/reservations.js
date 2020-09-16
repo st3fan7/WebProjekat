@@ -127,10 +127,10 @@ Vue.component("reservations", {
 			                 <td>{{r.totalCost}}</td>	
 			                 <td>                        
 	                            <select v-model=r.status id="statusID" name="statusName">
-	                                <option v-bind:disabled="activeAdmin" v-if="r.status === 'Kreirana'" value="Kreirana">Kreirana</option>
-	                                <option v-bind:disabled="activeAdmin" v-if="r.status === 'Odbijena' || (r.status === 'Kreirana' && !(checkDate(r.startDate, r.numberOfNight))) || (r.status === 'Prihvacena' && !(activeGuest))" value="Odbijena">Odbijena</option>
-	                                <option v-bind:disabled="activeAdmin" v-if="r.status === 'Prihvacena' || (r.status === 'Kreirana' && !(checkDate(r.startDate, r.numberOfNight)))" value="Prihvacena">Prihvaćena</option>
-	                                <option v-bind:disabled="activeAdmin" v-if="r.status === 'Zavrsena' || ( r.status === 'Prihvacena' && checkDate(r.startDate, r.numberOfNight)) === true" value="Zavrsena">Završena</option>
+	                                <option v-bind:disabled="activeAdmin || activeGuest" v-if="r.status === 'Kreirana'" value="Kreirana">Kreirana</option>
+	                                <option v-bind:disabled="activeAdmin || activeGuest" v-if="r.status === 'Odbijena' || (r.status === 'Kreirana' && !(checkDate(r.startDate, r.numberOfNight))) || (r.status === 'Prihvacena' && !(activeGuest))" value="Odbijena">Odbijena</option>
+	                                <option v-bind:disabled="activeAdmin || activeGuest" v-if="r.status === 'Prihvacena' || (r.status === 'Kreirana' && !(checkDate(r.startDate, r.numberOfNight)))" value="Prihvacena">Prihvaćena</option>
+	                                <option v-bind:disabled="activeAdmin || activeGuest" v-if="r.status === 'Zavrsena' || ( r.status === 'Prihvacena' && checkDate(r.startDate, r.numberOfNight)) === true" value="Zavrsena">Završena</option>
 	                                <option v-bind:disabled="!activeGuest" v-if="(activeGuest && (r.status === 'Odustanak' || r.status === 'Prihvacena' || r.status === 'Kreirana')) || (!(activeGuest) && r.status === 'Odustanak')" value="Odustanak">Odustanak</option>
 	                            </select>
                         	</td>

@@ -182,7 +182,7 @@ Vue.component("amenitiesChange", {
 				empty = true;
 				this.emptyChange = true;
 			} else {
-				if(!document.getElementById("amenitiesChangeID").value.match(/^[A-Za-z ]+$/)){
+				if(!document.getElementById("amenitiesChangeID").value.match(/^[A-Za-zŠšĐđŽžČčĆć ]+$/)){
 					this.errorChangeAmenity = true;
 					empty = true;
 				}
@@ -222,7 +222,7 @@ Vue.component("amenitiesChange", {
 				empty = true;
 				this.emptyAddNewField = true;
 			} else {
-				if(!document.getElementById("amenitiesID").value.match(/^[A-Za-z ]+$/)){
+				if(!document.getElementById("amenitiesID").value.match(/^[A-Za-zŠšĐđŽžČčĆć ]+$/)){
 					this.errorAddNewAmenity = true;
 					empty = true;
 				}

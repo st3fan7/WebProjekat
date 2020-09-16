@@ -765,6 +765,7 @@ label {
     background-color: #afd0c7;
     margin-top: 22%;
     border-radius: 0px 0px 30px 30px;
+     margin-left: 70%;
 }
 
 .content-class {
@@ -792,6 +793,7 @@ label {
     margin-left: 18%;
     background-color: #afd0c7;
     margin-top: 4%;
+    z-index: 2;
 }
 
 .reservationForGuest {
@@ -802,6 +804,7 @@ label {
     -moz-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
     box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
     z-index: 4;
+    margin-left: 70%;
 }
 
 .sortAndFilterForUserReservation {
@@ -1540,7 +1543,7 @@ option {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 70%;
+    height: 77%;
     display: flex;
     width: 50%;
     margin-left: 50%;
@@ -1552,7 +1555,7 @@ option {
     background-color: #eee;
     border: none;
     padding: 12px 15px;
-    margin: 20px 0;
+    margin: 10px 0;
     width: 60%;
     font-size: 19px;
 

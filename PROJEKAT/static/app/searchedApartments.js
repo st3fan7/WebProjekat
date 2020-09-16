@@ -153,7 +153,7 @@ Vue.component("searchedApartments", {
 	 	 
 			 <div class="wrapper">
 		         <div class="product-img">
-		             <img src="http://bit.ly/2tMBBTd" height="420" width="327">
+		             <img src="./img/tower.png" height="420" width="327">
 		         </div>
 		         <div class="product-info">
 		             <div class="product-text">
@@ -270,25 +270,23 @@ Vue.component("searchedApartments", {
 		},
 		
 		viewApartment : function(apartment) {
-			router.push({ name: 'chosenApartmentsReview', params: { apartment: apartment, activeApartmentsNOTCHANGEDlist : this.activeApartmentsNOTCHANGEDlist} })
+			this.$router.push({ name: 'chosenApartmentsReview', params: { apartment: apartment, activeApartmentsNOTCHANGEDlist : this.activeApartmentsNOTCHANGEDlist} })
 		}
 		
 		
 	},
 	mounted() {
 		
-//		axios.get('services/apartments/getSearchedApartments').then(response => {
-//			if(response.status === 200){
-//				this.activeApartmentsForHost = response.data;
-//				this.activeApartmentsNOTCHANGEDlist = response.data;
-//			}else{
-//				toast('Trenutno ne postoje apartmani')
-//			}
-//			
-//		});	
+		if(this.$route.params.searchedApartments !== null){
+			this.activeApartmentsForHost = this.$route.params.searchedApartments;
+			this.activeApartmentsNOTCHANGEDlist = this.$route.params.searchedApartments;
+		} else {
+			this.activeApartmentsForHost = null;
+			this.activeApartmentsNOTCHANGEDlist = null;
+		}
 		
-		this.activeApartmentsForHost = this.$route.params.searchedApartments;
-		this.activeApartmentsNOTCHANGEDlist = this.$route.params.searchedApartments;
+		
+		
 		
 		axios.get('services/amenities/getAllAmenities').then(response => {
 			this.amenitiesList = response.data;			
@@ -297,23 +295,26 @@ Vue.component("searchedApartments", {
 		axios.get('services/users/getActiveUser').then(response => {
 			this.activeUser = response.data;
 			
-			if (this.activeUser.role === "admin"){
-				this.activeAdmin = true;
-			}else{
-				this.activeAdmin = false;
-			}		
-												
-			if (this.activeUser.role === "domacin"){
-				this.activeHost = true;
-			}else{
-				this.activeHost = false;
+			if(this.activeUser !== null){
+				if (this.activeUser.role === "admin"){
+					this.activeAdmin = true;
+				}else{
+					this.activeAdmin = false;
+				}		
+													
+				if (this.activeUser.role === "domacin"){
+					this.activeHost = true;
+				}else{
+					this.activeHost = false;
+				}
+				
+				if (this.activeUser.role === "gost"){
+					this.activeGuest = true;
+				}else{
+					this.activeGuest = false;
+				}
 			}
 			
-			if (this.activeUser.role === "gost"){
-				this.activeGuest = true;
-			}else{
-				this.activeGuest = false;
-			}
 				
 
 		});	

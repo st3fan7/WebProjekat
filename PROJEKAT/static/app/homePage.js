@@ -216,24 +216,26 @@ Vue.component("homePage", {
 
 			axios.get('services/users/getActiveUser').then(response => {
 				this.activeUser = response.data;
-				
-				if (this.activeUser.role === "admin"){
-					this.activeAdmin = true;
-				}else{
-					this.activeAdmin = false;
-				}		
-													
-				if (this.activeUser.role === "domacin"){
-					this.activeHost = true;
-				}else{
-					this.activeHost = false;
+				if(this.activeUser !== null){
+					if (this.activeUser.role === "admin"){
+						this.activeAdmin = true;
+					}else{
+						this.activeAdmin = false;
+					}		
+														
+					if (this.activeUser.role === "domacin"){
+						this.activeHost = true;
+					}else{
+						this.activeHost = false;
+					}
+					
+					if (this.activeUser.role === "gost"){
+						this.activeGuest = true;
+					}else{
+						this.activeGuest = false;
+					}
 				}
 				
-				if (this.activeUser.role === "gost"){
-					this.activeGuest = true;
-				}else{
-					this.activeGuest = false;
-				}
 					
 
 			});	

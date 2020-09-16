@@ -17,7 +17,7 @@ public class Apartment {
 	private String host;
 	private ArrayList<Comment> comments;
 	private ArrayList<String> pictures;
-	private int pricePerNight;
+	private double pricePerNight;
 	private String checkInTime; //inicijalno 2 PM
 	private String checkOutTime; //inicijalno 10 AM
 	private StatusOfApartment statusOfApartment;
@@ -31,7 +31,7 @@ public class Apartment {
 	}
 
 	public Apartment(String id, TypeOfApartment typeOfApartment, int numberOfRooms, int numberOfGuests, Location location,
-			String host, int pricePerNight, String checkInTime,
+			String host, double pricePerNight, String checkInTime,
 			String checkOutTime, StatusOfApartment statusOfApartment, int deleted) {
 		super();
 		this.id = id;
@@ -125,11 +125,11 @@ public class Apartment {
 		this.pictures = pictures;
 	}
 
-	public int getPricePerNight() {
+	public double getPricePerNight() {
 		return pricePerNight;
 	}
 
-	public void setPricePerNight(int pricePerNight) {
+	public void setPricePerNight(double pricePerNight) {
 		this.pricePerNight = pricePerNight;
 	}
 

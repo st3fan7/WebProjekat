@@ -139,7 +139,7 @@ Vue.component("addNewApartment", {
                 <div class="text-for-adding-apartment">
                     <h1>Obavezni podaci:</h1>
                         <label for="apartmentName">Naziv apartmana (ID):</label>
-                        <input v-model="nameOfApartment" type="text" id="aName" name="apartmentname" placeholder="Unesite naziv apartmana..." pattern="[A-Z][A-Za-z0-9 ]*" title="Možete uneti slova i brojeve i prvo slovo mora biti veliko!">
+                        <input v-model="nameOfApartment" type="text" id="aName" name="apartmentname" placeholder="Unesite naziv apartmana..." pattern="[A-ZŠšĐđŽžČčĆć][A-Za-z0-9 ŠšĐđŽžČčĆć]*" title="Možete uneti slova i brojeve i prvo slovo mora biti veliko!">
                     	<label v-if="errorForNameOfApartment" style="color:red; font-size: 16px">Možete uneti slova i brojeve i prvo slovo mora biti veliko!</label><br>
                     
                     
@@ -307,7 +307,7 @@ Vue.component("addNewApartment", {
 				red.style.backgroundColor = "LightCoral"; 
 				empty = true;
 			} else {
-				if(!this.nameOfApartment.match(/^[A-Z][A-Za-z0-9 ]*$/)){
+				if(!this.nameOfApartment.match(/^[A-ZŠšĐđŽžČčĆć][A-Za-z0-9 ŠšĐđŽžČčĆć]*$/)){
 					this.errorForNameOfApartment = true;
 					empty = true;
 				}

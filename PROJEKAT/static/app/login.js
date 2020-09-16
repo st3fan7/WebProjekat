@@ -83,10 +83,10 @@ Vue.component("login", {
 					this.returnData = "";
 					
 					if(this.$route.params.goToReservation === true) {
-						toast('Dobrodošli');
+						//toast('Dobrodošli', { timeOut: 500 });
 						router.push({ name: 'chosenApartmentsReview', params: { apartment: this.$route.params.apartment } })
 					} else {
-						toast('Dobrodošli');
+						//toast('Dobrodošli', { timeOut: 500 });
 						this.$router.push({ name: 'homePage' })
 					}
 					
