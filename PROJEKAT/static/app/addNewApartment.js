@@ -53,7 +53,11 @@ Vue.component("addNewApartment", {
 		    errorForNameOfApartment : false,
 		    errorNumberOfRoomsModel : false,
 		    errorNumberOfGuest : false,
-		    errorPriceForNight : false
+		    errorPriceForNight : false,
+		    imagesShow : [],
+		    sendImages : [],
+		    countImage : 0,
+		    disable5 : false
 		    
 		
 		}
@@ -213,8 +217,8 @@ Vue.component("addNewApartment", {
                         <input v-model="checkoutTimeModel" type="time" :hours-format="24" id="check-outTimeID"  name="check-outTimeName" placeholder="Izaberite inicijalno vreme za odjavu...">
 			
                         <label for="imagesForApartment">Slike:</label><br/>
-                        <input type="image" id="imagesForApartmentID" name="imagesForApartmentName">
-
+                        <input v-if="this.countImage <= 4" type="file"  id="imagesForApartmentID" @change="addImage" name="imagesForApartmentName">
+                        <input v-else type="file" disabled id="imagesForApartmentID" @change="addImage" name="imagesForApartmentName">
                         <h1>Ostali podaci:</h1>
                          
                         <span class="spanAmenities" v-for="a in amenitiesList">
@@ -442,7 +446,7 @@ Vue.component("addNewApartment", {
 					"address" : {"street" : this.street, "houseNumber" : this.number, "populatedPlace" : this.city, "zipCode" : this.zipCode, "country" : this.country } },					
 					"releaseDates" : [newStartDate, newEndDate], 
 					"checkInTime" : '' + this.checkinTimeModel, "checkOutTime" : '' + this.checkoutTimeModel, "host" : '' + this.activeUser.username,
-					"reservations" : [], "comments" : [], "amenities" : this.checkedAmenities, "pictures": []})
+					"reservations" : [], "comments" : [], "amenities" : this.checkedAmenities, "pictures": this.sendImages})
 					.then(response => {
 						if(response.status === 200){
 							toast('Apartman je uspešno dodat!')
@@ -459,7 +463,35 @@ Vue.component("addNewApartment", {
 			}
 			
 			
+		},
+		
+		addImage : function(e){
+			
+			const file = e.target.files[0];
+			this.createBase64Image(file);
+			this.countImage++;
+			if(this.countImge === 5){
+				this.disabled5 = true;
+			}
+			this.imagesShow.push(URL.createObjectURL(file)); //blob oblik za prikaz slike na frontu
+
+			
+		},
+		
+		createBase64Image : function(file){
+			
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				
+				let image = e.target.result;
+				this.sendImages.push(image);				
+				
+			}
+			
+			reader.readAsDataURL(file);
+			
 		}
+		
 
 
 

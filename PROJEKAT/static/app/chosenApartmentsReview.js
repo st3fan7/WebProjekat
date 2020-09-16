@@ -23,7 +23,10 @@ Vue.component("chosenApartmentsReview", {
 			showNotificationForErrorReservationImput : false,
 			maxIdNumberForReservation : '',
 			reservationsForApartmentList : [],
-			searchedApartments : []
+			searchedApartments : [],
+			checkIfImageExists : false,
+			imageCount : 0,
+			listOfPics : []
 			
 		}
 	},
@@ -160,15 +163,22 @@ Vue.component("chosenApartmentsReview", {
         <a class="previousInReservation" @click="previousButtonClicked()">&laquo; Nazad</a>
     </div> 
 
-    <div class="room-gallery">
-        <img class="gallery-hightlight" src="img/room1-big.jpeg" alt="room1" />
-        <div class="room-preview">
-          <img src="./img/room1-small.jpeg" class="room-active" alt="" />
-          <img src="./img/room2-small.jpeg" alt="" />
-          <img src="./img/room3-small.jpeg" alt="" />
-          <img src="./img/room2-small.jpeg" alt="" />
-        </div>
-    </div>
+    
+    <div v-if="this.checkIfImageExists === true" >
+	    <div class="room-gallery">
+	    <img class="gallery-hightlight" :src="this.listOfPics[0]" alt="room1" ></img>
+		    <div class="room-preview">
+		    	
+		       <div v-for="p in this.listOfPics" >
+		    	   <img :src="p"  class="room-active" alt=""></img>
+		      </div>
+		    </div>              
+	    </div>
+	  </div>  
+	 <div v-else>
+     </div>
+    
+    
 
     <div class="basicDataWrapper">
         <div class="filter-title">
@@ -516,6 +526,25 @@ Vue.component("chosenApartmentsReview", {
 		this.startDateOfRent = this.apartment.releaseDates[0];
 		this.endDateOfRent = this.apartment.releaseDates[1];
 		this.searchedApartments = this.$route.params.activeApartmentsNOTCHANGEDlist;
+		
+		
+		console.log(this.apartment.id)
+		console.log(this.imageCount)
+		for(p of this.apartment.pictures){
+			this.listOfPics.push(p);
+			this.imageCount++;
+			console.log(p)
+		}
+		console.log(this.imageCount)
+		
+		if(this.listOfPics.length === 0){
+			this.checkIfImageExists = false;
+		}else{
+			this.checkIfImageExists = true;
+			//this.imageCount = this.listOfPics.length;
+		}
+		
+		
 		
 		axios.post('services/comments/getVisibleComments', this.apartment.comments).then(response => {
 			if(response.status === 200){

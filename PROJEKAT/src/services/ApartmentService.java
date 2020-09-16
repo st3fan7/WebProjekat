@@ -310,7 +310,27 @@ public class ApartmentService {
 			ArrayList<PeriodOfRent> newPeriodsOfRentList  = new ArrayList<>();
 			newPeriodsOfRentList.add(periodOfRent);
 			
+			
+			
+			ArrayList<String> listForConvertImage = new ArrayList<String>();
+			
 			try {
+				
+				int i = 0;
+				for(String img : apartmentDTO.getPictures()){
+					String path = "/img/" + apartmentDTO.getId() + i + ".jpg";
+					
+					apartmentDAO.decodeImagesFromString(img, path);
+				 
+					String newPath = "./img/" + apartmentDTO.getId() + i + ".jpg";
+				 
+					listForConvertImage.add(newPath);
+					
+					i++;
+				}
+				
+				
+				
 				apartment.setId(apartmentDTO.getId());
 				apartment.setTypeOfApartment(apartmentDTO.getTypeOfApartment());
 				apartment.setNumberOfRooms(apartmentDTO.getNumberOfRooms());
@@ -320,7 +340,7 @@ public class ApartmentService {
 				apartment.setFreeDates(new ArrayList<Date>());
 				apartment.setHost(apartmentDTO.getHost());
 				apartment.setComments(apartmentDTO.getComments());
-				apartment.setPictures(apartmentDTO.getPictures());
+				apartment.setPictures(listForConvertImage);
 				apartment.setPricePerNight(apartmentDTO.getPricePerNight());
 				apartment.setCheckInTime(apartmentDTO.getCheckInTime());
 				apartment.setCheckOutTime(apartmentDTO.getCheckOutTime());

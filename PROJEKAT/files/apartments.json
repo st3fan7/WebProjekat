@@ -628,5 +628,45 @@
     ],
     "reservations": [],
     "deleted": 0
+  },
+  {
+    "id": "Beogradski sobe 25656456",
+    "typeOfApartment": "Ceo apartman",
+    "numberOfRooms": 3,
+    "numberOfGuests": 25,
+    "location": {
+      "latitude": 45.1113,
+      "longitude": 21.2899,
+      "address": {
+        "street": "Cara Lazara",
+        "houseNumber": 5,
+        "populatedPlace": "Vrsac Municipality",
+        "zipCode": "26300",
+        "country": "Srbija"
+      }
+    },
+    "releaseDates": [
+      {
+        "startDate": "Sep 16, 2020 12:00:00 AM",
+        "endDate": "Sep 17, 2020 12:00:00 AM"
+      }
+    ],
+    "freeDates": [],
+    "host": "domacin1",
+    "comments": [],
+    "pictures": [
+      "./img/Beogradski sobe 256564560.jpg",
+      "./img/Beogradski sobe 256564561.jpg",
+      "./img/Beogradski sobe 256564562.jpg",
+      "./img/Beogradski sobe 256564563.jpg",
+      "./img/Beogradski sobe 256564564.jpg"
+    ],
+    "pricePerNight": 1000,
+    "checkInTime": "14:00",
+    "checkOutTime": "10:00",
+    "statusOfApartment": "Aktivan",
+    "amenities": [],
+    "reservations": [],
+    "deleted": 0
   }
 ]
