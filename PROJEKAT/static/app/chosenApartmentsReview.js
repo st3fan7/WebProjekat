@@ -179,8 +179,17 @@ Vue.component("chosenApartmentsReview", {
 		      </div>
 		    </div>              
 	    </div>
-	  </div>  
+	</div>  
 	 <div v-else>
+	    <div class="room-gallery">
+	    	<img class="gallery-hightlight" src="./img/noimage.png" alt="room1" ></img>
+			    <div class="room-preview">
+			    	
+				       <div >
+				    	   <img class="room-active" alt=""></img>
+				      </div>
+			    </div>              
+	    </div>
      </div>
     
     

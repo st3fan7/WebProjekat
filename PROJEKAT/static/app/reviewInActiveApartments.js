@@ -42,7 +42,10 @@ Vue.component("reviewInActiveApartments", {
 		    errorNumberOfGuest : false,
 		    errorPriceForNight : false,
 		    errorLocation : false,
-		    errorAddress : false
+		    errorAddress : false,
+		    imagesShow : [],
+		    sendImages : [],
+		    countImage : 0
 			 
 			
 		}
@@ -222,7 +225,28 @@ Vue.component("reviewInActiveApartments", {
 	                        <input type="time" id="check-outTimeID" name="check-outTimeName" v-model="apEndTime" placeholder="Izaberite inicijalno vreme za odjavu...">
 
 	                        <label for="imagesForApartment">Slike:</label><br/>
-	                        <input type="image" id="imagesForApartmentID" name="imagesForApartmentName">
+	                        <input v-if="this.countImage <= 4" type="file"  id="imagesForApartmentID" @change="addImage" name="imagesForApartmentName">
+	                        <input v-else type="file" disabled id="imagesForApartmentID" @change="addImage" name="imagesForApartmentName">
+
+	                        <h1>Slike u apartmanu:</h1>
+	                        
+		                   	 
+		                     <div >
+		    			     <div >	    			             
+		    			             <div class="room-gallery" style="margin-left:-150px;">
+		    			 	    	
+			    			 			    <div class="room-preview">
+			    			 			    	
+					    			 			   <div v-for="(p,index) in this.imagesShow" >
+					    				    	   <img :src="p"  class="room-active"  alt=""></img>
+					    				    	   <br><button @click="deleteImage(index)">Obrisi sliku iznad</button>
+					    				    	   </div>
+			    			 			    </div>              
+			    			 	    </div>	    			             	    			             
+		    			     </div>	    			         	    			        
+		    			 </div>
+	                        
+	                        
 
 	                        <h1>Ostali podaci:</h1>
 	                        <span class="spanAmenities" v-for="a in amenitiesList">
@@ -362,6 +386,15 @@ Vue.component("reviewInActiveApartments", {
 			this.changeApartmentButtonClicked = true;
 			this.newApartment = a;
 			this.oldId = a.id;
+			
+			this.countImage = this.newApartment.pictures.length;
+			this.sendImages = this.newApartment.pictures;
+			
+			for(img of this.sendImages){
+				this.imagesShow.push(img);
+			}
+			
+			
 			
 			this.apartmentId = a.id;
 			this.apType = a.typeOfApartment;
@@ -648,7 +681,48 @@ Vue.component("reviewInActiveApartments", {
 				
 			}
 			
+		},
+		
+		deleteImage : function(index){
+			
+			this.imageCount--;
+			//this.newApartment.pictures.splice(index,1);
+			this.sendImages.splice(index, 1);
+			this.imagesShow.splice(index,1);
+			
+		},
+		
+		addImage : function(e){
+			
+			
+			const file = e.target.files[0];
+			this.createBase64Image(file);
+			this.countImage++;
+		
+			if(this.countImge === 5){
+				this.disabled5 = true;
+			}
+			this.imagesShow.push(URL.createObjectURL(file)); //blob oblik za prikaz slike na frontu
+
+			
+		},
+		
+		createBase64Image : function(file){
+			
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				
+				let image = e.target.result;
+				this.sendImages.push(image);				
+				
+			}
+			
+			reader.readAsDataURL(file);
+			
 		}
+		
+		
+		
 		
 	},
 	mounted() {

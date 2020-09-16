@@ -62,7 +62,9 @@
         "visibility": "Vidljiv"
       }
     ],
-    "pictures": [],
+    "pictures": [
+      "./img/Soba 240.jpg"
+    ],
     "pricePerNight": 1000,
     "checkInTime": "14:00",
     "checkOutTime": "10:00",
@@ -655,11 +657,10 @@
     "host": "domacin1",
     "comments": [],
     "pictures": [
-      "./img/Beogradski sobe 256564560.jpg",
-      "./img/Beogradski sobe 256564561.jpg",
       "./img/Beogradski sobe 256564562.jpg",
       "./img/Beogradski sobe 256564563.jpg",
-      "./img/Beogradski sobe 256564564.jpg"
+      "./img/Beogradski sobe 256564564.jpg",
+      "./img/Beogradski sobe 256564565.jpg"
     ],
     "pricePerNight": 1000,
     "checkInTime": "14:00",

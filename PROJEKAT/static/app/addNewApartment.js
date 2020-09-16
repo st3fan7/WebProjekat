@@ -219,6 +219,24 @@ Vue.component("addNewApartment", {
                         <label for="imagesForApartment">Slike:</label><br/>
                         <input v-if="this.countImage <= 4" type="file"  id="imagesForApartmentID" @change="addImage" name="imagesForApartmentName">
                         <input v-else type="file" disabled id="imagesForApartmentID" @change="addImage" name="imagesForApartmentName">
+                        
+                        <h1>Dodali ste ove slike:</h1>
+                        
+                        <div >	    			     
+	    			             <div class="room-gallery" style="margin-left:-150px;">	    			 	    	
+		    			 			    <div class="room-preview">		    			 			    	
+				    			 			   <div v-for="p in this.imagesShow" >
+				    				    	   <img :src="p" class="room-active" alt=""></img>				    				    	   
+				    				    	   </div>
+		    			 			    </div>              
+		    			 	    </div>    			        
+	    			 </div>
+                        
+                        
+                        
+                        
+                        
+                        
                         <h1>Ostali podaci:</h1>
                          
                         <span class="spanAmenities" v-for="a in amenitiesList">

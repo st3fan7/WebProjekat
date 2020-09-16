@@ -509,9 +509,63 @@ public class ApartmentService {
 				oldPeriodsList.add(periodOfRent);
 			}
 
+			/*
+			ArrayList<String> listForConvertImage = apartmentForSet.getPictures();
+
 			
+			if(listForConvertImage.isEmpty()){
+				listForConvertImage = new ArrayList<String>();
+			}
 		
+			int i = 0;
+			
+			if(listForConvertImage.size() != 0){
+				i = listForConvertImage.size();
+			}
+			*/
+			
+			ArrayList<String> listForConvertImage = new ArrayList<String>();
+			int i = 0;
+			
+			if(apartmentDTO.getPictures().size() != 0){
+				i = apartmentDTO.getPictures().size();
+			}
+			
 			try {
+				
+				/*
+				for(String img : apartmentDTO.getPictures()){
+					String path = "/img/" + apartmentDTO.getId() + i + ".jpg";
+					
+					apartmentDAO.decodeImagesFromString(img, path);
+				 
+					String newPath = "./img/" + apartmentDTO.getId() + i + ".jpg";
+				 
+					listForConvertImage.add(newPath);
+					
+					i++;
+				}
+				
+				*/
+				
+				for(String img : apartmentDTO.getPictures()){
+					
+					if(img.startsWith("data:image")){
+						String path = "/img/" + apartmentDTO.getId() + i + ".jpg";
+						apartmentDAO.decodeImagesFromString(img, path);
+						String newPath = "./img/" + apartmentDTO.getId() + i + ".jpg";
+						listForConvertImage.add(newPath);
+						
+					}else{
+						listForConvertImage.add(img);
+					}
+					
+					i++;
+				}
+				
+				
+				
+				
 				a.setId(apartmentDTO.getId());
 				a.setTypeOfApartment(apartmentDTO.getTypeOfApartment());
 				a.setNumberOfRooms(apartmentDTO.getNumberOfRooms());
@@ -525,7 +579,7 @@ public class ApartmentService {
 				a.setFreeDates(new ArrayList<Date>());
 				a.setHost(apartmentDTO.getHost());
 				a.setComments(apartmentDTO.getComments());
-				a.setPictures(apartmentDTO.getPictures());
+				a.setPictures(listForConvertImage);
 				a.setPricePerNight(apartmentDTO.getPricePerNight());
 				a.setCheckInTime(apartmentDTO.getCheckInTime());
 				a.setCheckOutTime(apartmentDTO.getCheckOutTime());
@@ -536,7 +590,9 @@ public class ApartmentService {
 			
 				
 			} catch (Exception e) {
-				System.out.println("Greska pri pravljenju apartmana");
+				System.out.println("Greska pri izmeni apartmana");
+				res.status(404);
+				return g.toJson("Greska pri izmeni apartmana");
 			}
 					
 		
