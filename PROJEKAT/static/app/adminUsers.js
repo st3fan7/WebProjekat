@@ -9,7 +9,8 @@ Vue.component("adminUsers",{
 			searchedUsers : null,
 			searchUsername : '',
 			selectedGender : 'pol',
-			selectedRole : 'uloga'
+			selectedRole : 'uloga',
+			addHostCheck : false
 			
 			
 		}
@@ -31,7 +32,7 @@ Vue.component("adminUsers",{
 				         <ul class="menu-contents">
 				            <li id="onlyHomePage"><a href="#/">Početna</a></li>
 				            <li v-if="activeHost"><a href="#/reviewApartments">Moji apartmani</a></li>
-				            <li v-if="activeAdmin"><a href="#">Apartmani</a></li>
+				            <li v-if="activeAdmin"><a href="#/amenitiesChange">Apartmani</a></li>
 			                <li v-if="activeHost || activeAdmin"><a href="#/reservations">Rezervacije</a></li>
 			                <li v-if="activeHost || activeAdmin"><a href="#/comments">Komentari</a></li>   
 			                <li v-if="activeHost || activeAdmin" class="active"><a href="#/adminUsers">Korisnici</a></li>   
@@ -54,8 +55,11 @@ Vue.component("adminUsers",{
 			
 			 <div class="sideComponents">      
 			     <ul class="ulForSideComponentsHostReservation">
-			         <div><li class="active"><a href="#">PREGLED KORISNIKA</a></li></div><br/>
-			     </ul>
+			         <div><li v-bind:class="{ active: this.addHostCheck === false}"><a href="#/adminUsers">PREGLED KORISNIKA</a></li></div><br/>
+			         <div v-if="activeAdmin"><li v-bind:class="{ active: this.addHostCheck}"><a href="#/addNewHost">DODAJ DOMAĆINA</a></li></div><br/>	
+			     </ul>			     
+		         	       
+			     
 			 </div>
 	
 			 <div class="sortAndFilterForUserOverview">

@@ -40,5 +40,15 @@
     "gender": "musko",
     "role": "domacin",
     "blocked": true
+  },
+  {
+    "apartmentsForRent": [],
+    "username": "domacinPerica",
+    "password": "111",
+    "name": "Perica",
+    "surname": "Popović",
+    "gender": "musko",
+    "role": "domacin",
+    "blocked": false
   }
 ]

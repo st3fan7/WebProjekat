@@ -13,6 +13,7 @@ const comments = {template: '<comments></comments>'}
 const searchedApartments = {template: '<searchedApartments></searchedApartments>'}
 const chosenApartmentsReview = {template: '<chosenApartmentsReview></chosenApartmentsReview>'}
 const forbidden = {template: '<forbidden></forbidden>'}
+const addNewHost = {template: '<addNewHost></addNewHost>'}
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -32,6 +33,7 @@ const router = new VueRouter({
 		  { path: '/searchedApartments', name:'searchedApartments', component: searchedApartments},
 		  { path: '/chosenApartmentsReview', name:'chosenApartmentsReview', component: chosenApartmentsReview},
 		  { path: '/forbidden', name:'forbidden', component: forbidden},
+		  { path: '/addNewHost', name:'addNewHost', component: addNewHost}
 	  ]
 });
 

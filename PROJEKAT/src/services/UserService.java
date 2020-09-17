@@ -46,6 +46,7 @@ public class UserService {
 		 getHostUsers();
 		 searchAdminUsersByRoleAndGender();
 		 checkForbiddenUser();
+		 addNewHost();
 	}
 	
 	private void blockUser() {
@@ -386,6 +387,39 @@ public class UserService {
 
 	}
 	
+	public void addNewHost() {
+		post("services/users/addNewHostByAdmin", (req, res) -> {
+			res.type("application/json");
+			String payload = req.body();
+			Host host = null;
+			
+			try {
+				host = g.fromJson(payload, Host.class);
+			}
+			catch(Exception e) {
+			
+				res.status(400);	
+				return g.toJson("Bad request");
+			}
+			
+			if(hostDAO.getHostID(host.getUsername()) != null){
+				res.status(201);
+				return g.toJson("Vec postoji!");				
+			}
+			
+			ArrayList<Host> hosts = hostDAO.getHostList();
+			hosts.add(host);
+			hostDAO.setHostList(hosts);
+			HostDAO.writeHostInFile(hostDAO.getHostList());
+			hostDAO.fillMapWithHosts();
+			res.status(200);
+			return g.toJson("Ok");
+
+		});
+	}
+	
+	
+	
 	public void checkForbiddenUser() {
 		post("services/users/forbiddenUser", (req, res) -> {
 			
@@ -442,7 +476,7 @@ public class UserService {
 			
 			
 		//za admina	
-		}else if(page.get("page").equals("amenitiesChange")){
+		}else if(page.get("page").equals("amenitiesChange") || page.get("page").equals("addNewHost") ){
 			
 			if (u == null) {			
 				return false;
