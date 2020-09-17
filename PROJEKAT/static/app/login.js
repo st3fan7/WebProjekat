@@ -57,6 +57,9 @@ Vue.component("login", {
 	,
 	methods: {
 		onSubmit : function() {
+			this.usernameInput = false;
+			this.passwordInput = false;	
+			this.notification = false;
 			
 			document.getElementById("form").setAttribute("onsubmit","return false;");
 			if(this.username.length === 0 ){
@@ -95,6 +98,8 @@ Vue.component("login", {
 				else if(response.data.toString() === ("204")){
 					this.notification = false;
 					this.returnData = "";
+				} else if(response.data.toString() === ("Vaš nalog je blokiran!")){
+					toast('Vaš nalog je blokiran, ne možete izvršiti prijavu!');
 				}
 				else{
 					this.notification = true;

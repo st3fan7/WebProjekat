@@ -28,7 +28,8 @@
     "name": "Mika",
     "surname": "Mikić",
     "gender": "musko",
-    "role": "gost"
+    "role": "gost",
+    "blocked": false
   },
   {
     "rentApartments": [
@@ -42,6 +43,7 @@
     "name": "Stefan",
     "surname": "Stefanović",
     "gender": "musko",
-    "role": "gost"
+    "role": "gost",
+    "blocked": true
   }
 ]

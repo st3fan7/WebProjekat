@@ -10,7 +10,14 @@ public abstract class User {
 	private String surname;
 	private Gender gender;
 	private Role role;
+	private Boolean blocked;
 	
+	public Boolean getBlocked() {
+		return blocked;
+	}
+	public void setBlocked(Boolean blocked) {
+		this.blocked = blocked;
+	}
 	public String getUsername() {
 		return username;
 	}

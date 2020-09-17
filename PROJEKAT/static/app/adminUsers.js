@@ -100,6 +100,7 @@ Vue.component("adminUsers",{
 			                     <th>Prezime</th>
 			                     <th>Pol</th>
 			                     <th>Uloga</th>
+			                     <th v-if="activeAdmin">Manipulacija nalogom</th>
 			                 </tr>
 			                 </thead>
 			                 <tbody>
@@ -109,7 +110,12 @@ Vue.component("adminUsers",{
 				                 <td>{{user.name}}</td>
 				                 <td>{{user.surname}}</td>
 				                 <td>{{user.gender}}</td>
-				                 <td>{{user.role}}</td>			                 
+				                 <td>{{user.role}}</td>		
+				                 <td v-if="activeAdmin">
+				                 	
+		                            <button style="width: 130px; height: 40px; font-size: 16px;" type="button" v-if="user.blocked === false && user.role !== 'admin'" @click="blockUser(user)">Blokiraj</button>
+		                            <button style="width: 130px; height: 40px; font-size: 16px;" type="button" v-if="user.blocked === true && user.role !== 'admin'" @click="blockUser(user)">Odblokiraj</button>
+                        		</td>	                 
 				                 </tr>
 			                 
 			                 </tbody>
@@ -179,6 +185,19 @@ Vue.component("adminUsers",{
 					}
 				});
 				}
+			},
+			
+			blockUser : function(user) {
+				if (confirm('Da li ste sigurni da želite da izvršite izmenu naloga?') == true) {
+					axios.post('services/users/blockUser', user.username).then(response => {
+						if(response.status === 200)
+						{
+							toast('Izmena je uspešno izvršena!')
+							this.allUsers = response.data;
+						}
+					});
+				}
+				
 			}
 				
 		

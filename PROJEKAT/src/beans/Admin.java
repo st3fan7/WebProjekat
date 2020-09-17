@@ -10,6 +10,7 @@ public class Admin extends User {
 		this.setSurname("");
 		this.setUsername("");
 		this.setPassword("");
+		this.setBlocked(false);
 		this.setGender(null);
 		this.setRole(Role.admin);
 	}
@@ -21,5 +22,6 @@ public class Admin extends User {
 		this.setPassword(admin.getPassword());
 		this.setGender(admin.getGender());
 		this.setRole(admin.getRole());
+		this.setBlocked(admin.getBlocked());
 	}
 }

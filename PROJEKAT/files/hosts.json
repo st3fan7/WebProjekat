@@ -26,7 +26,8 @@
     "name": "Lana",
     "surname": "Lanić",
     "gender": "zensko",
-    "role": "domacin"
+    "role": "domacin",
+    "blocked": false
   },
   {
     "apartmentsForRent": [
@@ -37,6 +38,7 @@
     "name": "Milan",
     "surname": "Milanić",
     "gender": "musko",
-    "role": "domacin"
+    "role": "domacin",
+    "blocked": true
   }
 ]

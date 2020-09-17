@@ -14,6 +14,7 @@ public class Host extends User {
 		this.setUsername("");
 		this.setPassword("");
 		this.setGender(null);
+		this.setBlocked(false);
 		this.setRole(Role.domacin);
 		this.apartmentsForRent = new ArrayList<String>();
 	}
@@ -25,6 +26,7 @@ public class Host extends User {
 		this.setPassword(host.getPassword());
 		this.setGender(host.getGender());
 		this.setRole(host.getRole());
+		this.setBlocked(host.getBlocked());
 		this.apartmentsForRent = host.apartmentsForRent;
 	}
 

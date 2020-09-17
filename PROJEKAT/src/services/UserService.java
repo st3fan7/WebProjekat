@@ -4,6 +4,7 @@ package services;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,11 +12,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import beans.Admin;
+import beans.Apartment;
+import beans.Comment;
 import beans.Guest;
 import beans.Host;
 import beans.Reservation;
 import beans.User;
 import dao.AdminDAO;
+import dao.ApartmentDAO;
 import dao.GuestDAO;
 import dao.HostDAO;
 import dao.ReservationDAO;
@@ -33,14 +37,103 @@ public class UserService {
 	ArrayList<User> allUsers = new ArrayList<User>();
 	
 	public UserService(){
-	 loginUsers();	
-	 logoutUser();
-	 register();
-	 changeProfile();
-	 getAllUsers();
-	 getHostUsers();
-	 searchAdminUsersByRoleAndGender();
-	 checkForbiddenUser();
+		blockUser();
+		 loginUsers();	
+		 logoutUser();
+		 register();
+		 changeProfile();
+		 getAllUsers();
+		 getHostUsers();
+		 searchAdminUsersByRoleAndGender();
+		 checkForbiddenUser();
+	}
+	
+	private void blockUser() {
+		post("services/users/blockUser", (req, res) -> {
+			res.type("application/json");
+			
+			String id = req.body();
+			
+			if(hostDAO.getHostsMap().get(id) != null) {
+				for(Host h : hostDAO.getHostList()) {
+					if(h.getUsername().equals(id)) {
+						if(h.getBlocked() == true) {
+							h.setBlocked(false);
+						} else {
+							h.setBlocked(true);
+						}
+						
+					}
+				}
+				for(Host h : hostDAO.getHostList()) {
+					System.out.println(h.getBlocked() + " " + h.getUsername());
+				}
+				
+				hostDAO.setHostList(hostDAO.getHostList());
+				HostDAO.writeHostInFile(hostDAO.getHostList());
+				hostDAO.fillMapWithHosts();
+				System.out.println("--------------");
+				for(Host h : hostDAO.getHostList()) {
+					System.out.println(h.getBlocked() + " " + h.getUsername());
+				}
+				
+				ArrayList<User> allUsers = new ArrayList<User>();
+				
+				for(Guest guest : guestDAO.getGuestList()){
+					allUsers.add(guest);
+				}
+				
+				for(Host h : hostDAO.getHostList()){
+					allUsers.add(h);
+				}
+				
+				for(Admin a : adminDAO.getAdminList()){
+					allUsers.add(a);
+				}
+				
+				res.status(200);
+				return g.toJson(allUsers);
+
+			}
+			
+			if(guestDAO.getGuestsMap().get(id) != null) {
+				for(Guest g : guestDAO.getGuestList()) {
+					if(g.getUsername().equals(id)) {
+						if(g.getBlocked() == true) {
+							g.setBlocked(false);
+						} else {
+							g.setBlocked(true);
+						}
+						
+					}
+				}
+				
+				guestDAO.setGuestList(guestDAO.getGuestList());
+				GuestDAO.writeGuestInFile(guestDAO.getGuestList());
+				guestDAO.fillMapWithGuests();
+				
+				ArrayList<User> allUsers = new ArrayList<User>();
+				
+				for(Guest guest : guestDAO.getGuestList()){
+					allUsers.add(guest);
+				}
+				
+				for(Host h : hostDAO.getHostList()){
+					allUsers.add(h);
+				}
+				
+				for(Admin a : adminDAO.getAdminList()){
+					allUsers.add(a);
+				}
+				
+				res.status(200);
+				return g.toJson(allUsers);
+			}
+			
+			res.status(204);
+			return g.toJson("No content");
+		});
+	
 	}
 	
 	public void loginUsers(){//FUNKCIJA 
@@ -80,6 +173,9 @@ public class UserService {
 			}else{
 				
 				if (u.getPassword().equals(password)) {
+					if(u.getBlocked().equals(true)) {
+						return ("Vaš nalog je blokiran!");
+					}
 					Session ss = req.session(true);
 					ss.attribute("user", u);
 					return ("200");
@@ -94,7 +190,7 @@ public class UserService {
 			res.type("application/json");
 			Session ss = req.session(true);			
 			User u = ss.attribute("user");
-
+	
 			return g.toJson(u);
 		});
 		

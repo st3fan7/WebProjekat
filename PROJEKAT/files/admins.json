@@ -5,6 +5,7 @@
     "name": "Pera",
     "surname": "Perić",
     "gender": "musko",
-    "role": "admin"
+    "role": "admin",
+    "blocked" : false
   }
 ]

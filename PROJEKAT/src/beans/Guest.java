@@ -17,6 +17,7 @@ public class Guest extends User {
 		this.setPassword("");
 		this.setGender(null);
 		this.setRole(Role.gost);
+		this.setBlocked(false);
 		this.rentApartments = new ArrayList<String>();
 		this.reservations = new ArrayList<String>();
 	}
@@ -28,6 +29,7 @@ public class Guest extends User {
 		this.setPassword(guest.getPassword());
 		this.setGender(guest.getGender());
 		this.setRole(guest.getRole());
+		this.setBlocked(guest.getBlocked());
 		this.rentApartments = guest.rentApartments;
 		this.reservations = guest.reservations;
 	}
