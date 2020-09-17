@@ -197,7 +197,11 @@ Vue.component("registration", {
 						else{
 							this.$router.push({ name: 'badRequest' })
 						}
-					});	
+					}).catch(error => {
+
+			            if(error.response.status === 400){
+			                this.$router.push({ name: 'badRequest' });
+			            }});
 				}
 
 		},

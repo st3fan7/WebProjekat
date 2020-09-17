@@ -1215,6 +1215,10 @@ option {
     margin-left: -20px;
 }
 
+#titleComments {
+    margin-left: 45px;
+}
+
 /* TABELA */
 .tdbreak {
   word-break: break-all;

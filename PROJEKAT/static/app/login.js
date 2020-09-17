@@ -146,7 +146,7 @@ Vue.component("login", {
 			
 			axios.get('services/users/getActiveUser').then(response => {
 				this.activeUser = response.data;
-				this.checkForbidden(response.data)
+				//this.checkForbidden(response.data)
 				
 				if (this.activeUser.role === "admin"){
 					this.activeAdmin = true;

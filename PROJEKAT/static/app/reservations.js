@@ -186,7 +186,11 @@ Vue.component("reservations", {
 			let lastDay =  moment(String(newDateObj)).format('DD.MM.YYYY. HH:mm')
 			console.log('Datum do kog vazi rezervacija: ' + lastDay)
 			
-			if(currentDateObj >= newDateObj) {
+			console.log('currentDateObj: ' + currentDateObj)
+			
+			console.log(currentDate + '   >=    ' + lastDay)
+			
+			if(currentDate >= lastDay) {
 				return true;
 			}
 				
@@ -269,7 +273,11 @@ Vue.component("reservations", {
 					this.listOfReservations = [];
 					toast("Nema rezervacija za izbrane filtere!");
 				}
-		   });
+		   }).catch(error => {
+
+	            if(error.response.status === 400){
+	                this.$router.push({ name: 'badRequest' });
+	            }});
 	   },
 		
 		checkForbidden : function(activeUser)

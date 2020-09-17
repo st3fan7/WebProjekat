@@ -52,6 +52,8 @@ public class ReservationService {
 			res.type("application/json");
 			String apartment = req.queryMap("apartmentID").value();
 			String wantedGuest = req.queryParams("guest");
+			GuestDAO guestDAO = new GuestDAO();
+			ReservationDAO reservationDAO = new ReservationDAO();
 			
 			Guest guest = null;
 			for(Guest g : guestDAO.getGuestList()) {
@@ -85,11 +87,20 @@ public class ReservationService {
             Session ss = req.session(true);
             Host host = ss.attribute("user");
             ArrayList<Reservation> reservations = new ArrayList<>();
-
+            ReservationDAO reservationDAO = new ReservationDAO();
+            ApartmentDAO apartmentDAO = new ApartmentDAO();
+            
             for(Reservation r : reservationDAO.getReservationsList() ) {
                 for(String apartment : host.getApartmentsForRent()) {
                     if(r.getApartment().equals(apartment)) {
-                        reservations.add(r);
+                    	for(Apartment a : apartmentDAO.getApartmentsList()) {
+                    		if(a.getId().equals(apartment) && a.getDeleted() == 0) {
+                    			reservations.add(r);
+                    		}
+                    	}
+                    	
+                    	
+                        
                     }
                 }
             }
@@ -111,6 +122,7 @@ public class ReservationService {
             ArrayList<Reservation> reservations = new ArrayList<>();
             ReservationDAO reservationDAO = new ReservationDAO();
             GuestDAO guestDAO = new GuestDAO();
+            ApartmentDAO apartmentDAO = new ApartmentDAO();
             
             for(Guest guestOne : guestDAO.getGuestList()){
             	if(guestOne.getUsername().equals(guest.getUsername())){
@@ -119,22 +131,14 @@ public class ReservationService {
             }
             
             
-            System.out.println("gost");
-            for(String s : guest.getReservations()){
-            	System.out.println(s);
-            }
-            
-            System.out.println("rez");
-            for(Reservation r : reservationDAO.getReservationsList()){
-            	System.out.println(r.getId());
-            }
-            
-            
             for(Reservation r : reservationDAO.getReservationsList()){
             	for(String rg : guest.getReservations()){
             		if(r.getId().equals(rg)){
-            			reservations.add(r);
-            			
+            			for(Apartment a : apartmentDAO.getApartmentsList()) {
+            				if(a.getId().equals(r.getApartment()) && a.getDeleted() == 0) {
+            					reservations.add(r);
+            				}
+            			}
             		}
             	}
             }
@@ -155,14 +159,32 @@ public class ReservationService {
 	private void getAllReservations() {
 		
 		get("services/reservations/getAllReservations", (req, res) -> {
+            ReservationDAO reservationDAO = new ReservationDAO();
+            ApartmentDAO apartmentDAO = new ApartmentDAO();
+            ArrayList<Reservation> reservations = new ArrayList<>();
             
 			if(reservationDAO.getReservationsList().isEmpty()) {
                 res.status(204);
                 return ("No content");
             }
+			
+			
+			for(Reservation r : reservationDAO.getReservationsList()) {
+				for(Apartment a : apartmentDAO.getApartmentsList()) {
+					if(r.getApartment().equals(a.getId()) && a.getDeleted() == 0) {
+						reservations.add(r);
+					}
+				}
+			}
+			
+			if(reservations.isEmpty()) {
+                res.status(204);
+                return ("No content");
+            }
+			
 
             res.status(200);
-            return g.toJson(reservationDAO.getReservationsList() );
+            return g.toJson(reservations );
         });
 
 
@@ -175,6 +197,7 @@ public class ReservationService {
 			ArrayList<Reservation> reservations = null; 
 			ArrayList<Reservation> allReservations = reservationDAO.getReservationsList(); 
 			ArrayList<Reservation> allReservationsEmpty = new ArrayList<Reservation>();
+			ReservationDAO reservationDAO = new ReservationDAO();
 			
 			try {
 				Type listType = new TypeToken<ArrayList<Reservation>>(){}.getType(); 
@@ -255,13 +278,14 @@ public class ReservationService {
 			Guest guest = ss.attribute("user");
 			ReservationDTO reservationDTO;
 			Reservation reservation = new Reservation();
+			GuestDAO guestDAO = new GuestDAO();
+			ReservationDAO reservationDAO = new ReservationDAO();
 			//System.out.println(payload);
 			
 			try {
 				reservationDTO = g.fromJson(payload, ReservationDTO.class);
 			}
 			catch(Exception e) {
-				System.out.println("ovde");
 				res.status(400);
 				return g.toJson("Bad request");
 			}
@@ -398,7 +422,7 @@ public class ReservationService {
 	private void getReservationID() {
 		get("services/reservations/getReservationID", (req, res) -> {
 			int maxID = 0;
-			
+			Reservation reservation = new Reservation();
 			
 			
 			for(int i = 0; i < reservationDAO.getReservationsList().size(); i++) {

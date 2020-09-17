@@ -474,7 +474,11 @@ Vue.component("chosenApartmentsReview", {
 						toast('Komentar nije uspešno ostavljen, pokušajte ponovo!')
 					}
 					
-				});
+				}).catch(error => {
+
+	                if(error.response.status === 400){
+	                    this.$router.push({ name: 'badRequest' });
+	                }});
 			}
 		},
 		
@@ -542,7 +546,11 @@ Vue.component("chosenApartmentsReview", {
 						toast('Rezervacija nije kreirana, pogresan unos datuma i noci!');
 					}
 					
-				});
+				}).catch(error => {
+
+	                if(error.response.status === 400){
+	                    this.$router.push({ name: 'badRequest' });
+	                }});
 			}
 			
 			
@@ -553,7 +561,6 @@ Vue.component("chosenApartmentsReview", {
 	
 	mounted() {
 		if(this.$route.params.apartment !== null){
-			console.log('usao')
 			this.apartment = this.$route.params.apartment;
 		} else {
 			this.apartment = null;
@@ -591,7 +598,11 @@ Vue.component("chosenApartmentsReview", {
 			}else {
 				this.commentsList = response.data;
 			}
-		});
+		}).catch(error => {
+
+            if(error.response.status === 400){
+                this.$router.push({ name: 'badRequest' });
+            }});
 		
 		axios.get('services/comments/getCommentID').then(response => {
 			this.maxIdNumber = response.data;

@@ -12,11 +12,8 @@
       "Apartmani 111"
     ],
     "reservations": [
-      "R1",
       "R4",
       "R6",
-      "R7",
-      "R8",
       "R7",
       "R8",
       "R9",
@@ -33,17 +30,17 @@
   },
   {
     "rentApartments": [
-      "Apartman3"
+      "Beogradski sobe 25656456"
     ],
     "reservations": [
-      "R3"
+      "R12"
     ],
-    "username": "stefan021",
-    "password": "123",
-    "name": "Stefan",
-    "surname": "Stefanović",
-    "gender": "musko",
+    "username": "gost2",
+    "password": "gost2",
+    "name": "Maja",
+    "surname": "Majin",
+    "gender": "zensko",
     "role": "gost",
-    "blocked": true
+    "blocked": false
   }
 ]

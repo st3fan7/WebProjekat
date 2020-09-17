@@ -9,15 +9,7 @@
       "Apartman 8",
       "Sobe 18",
       "Soba za izdavanje 1",
-      "Apa1",
-      "Apaa111",
-      "as1",
-      "As111",
-      "As11111",
       "Moj ap",
-      "Moj ap",
-      "Apartman za izdavanje 3",
-      "Apartman za izdavanje 5",
       "Novi apartman",
       "Beogradski sobe 25656456"
     ],
@@ -30,9 +22,7 @@
     "blocked": false
   },
   {
-    "apartmentsForRent": [
-      "Apartman3"
-    ],
+    "apartmentsForRent": [],
     "username": "domacin2",
     "password": "domacin2",
     "name": "Milan",

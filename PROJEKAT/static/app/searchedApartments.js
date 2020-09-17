@@ -266,10 +266,28 @@ Vue.component("searchedApartments", {
 						this.activeApartmentsForHost = [];
 						toast("Nema apartmana za izbrane filtere!");
 					}
-			   });
+			   }).catch(error => {
+
+		            if(error.response.status === 400){
+		                this.$router.push({ name: 'badRequest' });
+		            }});
 		},
 		
 		viewApartment : function(apartment) {
+			console.log(apartment.amenities)
+			
+			let newListAmenities = [];
+			for(a of apartment.amenities){
+				if(a.deleted === 0){
+					newListAmenities.push(a);
+				}
+			}
+			
+			apartment.amenities = [];
+			for(a of newListAmenities){
+				apartment.amenities.push(a);
+			}
+			
 			this.$router.push({ name: 'chosenApartmentsReview', params: { apartment: apartment, activeApartmentsNOTCHANGEDlist : this.activeApartmentsNOTCHANGEDlist} })
 		}
 		

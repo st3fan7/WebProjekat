@@ -7,5 +7,14 @@
     "gender": "musko",
     "role": "admin",
     "blocked" : false
+  },
+  {
+    "username": "admin2",
+    "password": "admin2",
+    "name": "Milica",
+    "surname": "Milić",
+    "gender": "zensko",
+    "role": "admin",
+    "blocked" : false
   }
 ]

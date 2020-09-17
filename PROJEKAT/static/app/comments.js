@@ -57,9 +57,9 @@ Vue.component("comments", {
     </div>
     
     <div class="titleForUserReservationSelectedA">
-		<h1 id="nameOfApartment2">Pregled komentara</h1>
-        <a v-if="activeHost" @click="cancelChangesButton" class="previousInComments">Poništi izmene</a>
-		<a v-if="!activeAdmin" @click="saveChangesButton" class="saveChangeInComments">Sačuvaj izmene</a>
+		<h1 id="titleComments">Pregled komentara</h1>
+        <a style="margin-left:-10.5%;" v-if="activeHost" @click="cancelChangesButton" class="previousInComments">Poništi izmene</a>
+		<a style="margin-left:25%;" v-if="!activeAdmin" @click="saveChangesButton" class="saveChangeInComments">Sačuvaj izmene</a>
     </div> 
 
     <div class="listOfApartments">

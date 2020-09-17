@@ -52,6 +52,9 @@ public class UserService {
 	private void blockUser() {
 		post("services/users/blockUser", (req, res) -> {
 			res.type("application/json");
+			HostDAO hostDAO = new HostDAO();
+			AdminDAO adminDAO = new AdminDAO();
+			GuestDAO guestDAO = new GuestDAO();
 			
 			String id = req.body();
 			
@@ -141,6 +144,9 @@ public class UserService {
 		
 		get("services/users/getUserByUsername", (req, res) -> {
 			res.type("application/json");
+			HostDAO hostDAO = new HostDAO();
+			AdminDAO adminDAO = new AdminDAO();
+			GuestDAO guestDAO = new GuestDAO();
 			
 			User u = null;
 			Host h = hostDAO.getHostID(req.queryMap("username").value());
@@ -211,6 +217,7 @@ public class UserService {
 	public void register() {
 		post("services/users/register", (req, res) -> {
 			res.type("application/json");
+			GuestDAO guestDAO = new GuestDAO();
 			String payload = req.body();
 			Guest guest;
 			
@@ -247,7 +254,10 @@ public class UserService {
 			Session ss = req.session(true);
 			String payload = req.body();
 			String username = req.queryMap("username").value();
-			String role = req.queryMap("role").value();		
+			String role = req.queryMap("role").value();	
+			HostDAO hostDAO = new HostDAO();
+			AdminDAO adminDAO = new AdminDAO();
+			GuestDAO guestDAO = new GuestDAO();
 		
 			if(role.equals("admin")){
 				Admin a = g.fromJson(payload, Admin.class);
@@ -282,7 +292,9 @@ public class UserService {
 	public void getAllUsers(){
 		
 		get("services/users/getAllUsers", (req,res) -> {	
-			
+			HostDAO hostDAO = new HostDAO();
+			AdminDAO adminDAO = new AdminDAO();
+			GuestDAO guestDAO = new GuestDAO();
 			allUsers = new ArrayList<User>();
 			
 			for(Guest guest : guestDAO.getGuestList()){
@@ -308,6 +320,8 @@ public class UserService {
 			Host host = ss.attribute("user");
 			allUsers = new ArrayList<User>();
 			ArrayList<Guest> guests = new ArrayList<>();
+			ReservationDAO reservationDAO = new ReservationDAO();
+			GuestDAO guestDAO = new GuestDAO();
 			
 			for(Guest guest : guestDAO.getGuestList()){
 				guests.add(guest);
@@ -392,6 +406,7 @@ public class UserService {
 			res.type("application/json");
 			String payload = req.body();
 			Host host = null;
+			HostDAO hostDAO = new HostDAO();
 			
 			try {
 				host = g.fromJson(payload, Host.class);

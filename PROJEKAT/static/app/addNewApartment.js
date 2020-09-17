@@ -126,7 +126,7 @@ Vue.component("addNewApartment", {
                 <button type="submit" v-on:click="addNewApartment">Dodaj</button>
             </div>
             <div class="cancel-btn">
-                <button type="button">Odustani</button>
+                <button type="button" @click="previousButtonClicked()">Odustani</button>
             </div>
             <label v-if="showNotification" style="color:red; margin-left: 10%; font-size: 20px">Morate popuniti sve obavezne podatke!</label>
         </div>
@@ -288,6 +288,33 @@ Vue.component("addNewApartment", {
 				//event.preventDefault();
 				this.$router.push({ name: 'addNewApartment' })
 			}
+			
+		},
+		
+		previousButtonClicked : function(){	
+			
+			if(this.activeHost) {
+				if(confirm('Da li ste sigurni da želite da se odustanete od dodavanja apartmana?') === true){ 
+					this.nameOfApartment = '';
+					this.numberOfRoomsModel = null;
+					this.numberOfGuestModel = null;
+					this.priceForNightModel = null;
+					this.locationModel = '';
+					this.addressModel = '';
+					this.startDateModel = '';
+					this.endDateModel = '';
+					this.checkinTimeModel = "14:00";
+					this.checkoutTimeModel = "10:00";
+					this.typeOfApartment = null;
+					this.statusOfApartment = 'Neaktivan';
+					this.checkedAmenities = [];
+					
+				}
+				
+			}
+			
+			
+			
 			
 		},
 		addNewApartment : function() {

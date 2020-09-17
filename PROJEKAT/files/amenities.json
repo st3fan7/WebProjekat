@@ -20,10 +20,6 @@
     "deleted": 0
   },
   {
-    "content": "pomoćni krevet",
-    "deleted": 0
-  },
-  {
     "content": "krevetac",
     "deleted": 0
   },
@@ -32,7 +28,7 @@
     "deleted": 0
   },
   {
-    "content": "tuš kabina",
+    "content": "sapun",
     "deleted": 0
   },
   {
@@ -61,6 +57,14 @@
   },
   {
     "content": "lampa",
+    "deleted": 0
+  },
+  {
+    "content": "pogled na planinu",
+    "deleted": 0
+  },
+  {
+    "content": "pogled na more",
     "deleted": 0
   }
 ]

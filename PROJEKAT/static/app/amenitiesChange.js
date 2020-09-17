@@ -151,21 +151,21 @@ Vue.component("amenitiesChange", {
 				.then(response => {
 					if(response.status === 200){
 						toast('Sadržaj je uspšeno obrisan!')
+						axios.get('services/amenities/getAllAmenities').then(response => {
+							if(response.status === 200){
+								this.amenitiesList = response.data;	
+							} else {
+								this.amenitiesList = response.data;	
+								toast('Trenutno nema sadržaja!')
+							}
+						});
 					} else if(response.status === 201){
 						toast('Neuspešno brisanje!')
 					} else {
 						toast('Greška!')
 					}
 				});
-				
-				axios.get('services/amenities/getAllAmenities').then(response => {
-					if(response.status === 200){
-						this.amenitiesList = response.data;	
-					} else {
-						this.amenitiesList = response.data;	
-						toast('Trenutno nema sadržaja!')
-					}
-				});
+			
 				
 			}
 		},
@@ -203,7 +203,11 @@ Vue.component("amenitiesChange", {
 						} else {
 							this.$router.push({name : 'badRequest' });
 						}
-					});
+					}).catch(error => {
+
+		                if(error.response.status === 400){
+		                    this.$router.push({ name: 'badRequest' });
+		                }});
 				}
 			}
 			
@@ -244,7 +248,11 @@ Vue.component("amenitiesChange", {
 							toast('Sadržaj nije dodat!')
 							this.$router.push({ name : 'badRequest'});
 						}
-					});
+					}).catch(error => {
+
+		                if(error.response.status === 400){
+		                    this.$router.push({ name: 'badRequest' });
+		                }});
 					
 				} 
 				

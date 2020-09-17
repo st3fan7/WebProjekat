@@ -1,45 +1,5 @@
 [
   {
-    "apartment": "Apartman2",
-    "startDate": "Sep 13, 2020 12:00:00 AM",
-    "numberOfNight": 21,
-    "totalCost": 44800.0,
-    "messageForReservation": "",
-    "guest": "gost1",
-    "status": "Odbijena",
-    "id": "R5"
-  },
-  {
-    "apartment": "Apartman1",
-    "startDate": "Sep 12, 2020 2:00:00 PM",
-    "numberOfNight": 10,
-    "totalCost": 14800.0,
-    "messageForReservation": "",
-    "guest": "gost1",
-    "status": "Kreirana",
-    "id": "R1"
-  },
-  {
-    "apartment": "Apartman1",
-    "startDate": "Aug 21, 2020 12:00:00 AM",
-    "numberOfNight": 6,
-    "totalCost": 14800.0,
-    "messageForReservation": "",
-    "guest": "gost1",
-    "status": "Prihvacena",
-    "id": "R2"
-  },
-  {
-    "apartment": "Apartman1",
-    "startDate": "Aug 27, 2020 12:00:00 AM",
-    "numberOfNight": 4,
-    "totalCost": 4800.0,
-    "messageForReservation": "",
-    "guest": "stefan021",
-    "status": "Odbijena",
-    "id": "R3"
-  },
-  {
     "apartment": "Soba 24",
     "startDate": "Nov 5, 2020 12:00:00 AM",
     "numberOfNight": 3,
@@ -108,5 +68,15 @@
     "guest": "gost1",
     "status": "Kreirana",
     "id": "R11"
+  },
+  {
+    "apartment": "Beogradski sobe 25656456",
+    "startDate": "Sep 16, 2020 12:00:00 AM",
+    "numberOfNight": 4,
+    "totalCost": 5000.0,
+    "messageForReservation": "Lepe slike!",
+    "guest": "gost2",
+    "status": "Prihvacena",
+    "id": "R12"
   }
 ]

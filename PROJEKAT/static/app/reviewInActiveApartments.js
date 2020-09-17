@@ -119,7 +119,7 @@ Vue.component("reviewInActiveApartments", {
 	 	 
 			 <div class="wrapper">
 		         <div class="product-img">
-		             <img src="http://bit.ly/2tMBBTd" height="420" width="327">
+		             <img src="./img/tower.png" height="420" width="327">
 		         </div>
 		         <div class="product-info">
 		             <div class="product-text">
@@ -651,32 +651,34 @@ Vue.component("reviewInActiveApartments", {
 				axios.post('services/apartments/deleteApartment', a.id).then(response => {
 					if(response.status === 200){
 						toast('Apartman je obrisan')
+						if(this.activeHost) {
+							
+							axios.get('services/apartments/getInActiveApratmentsForHost').then(response => {
+								if(response.status === 200){
+									toast('usao 1')
+									this.activeApartmentsForHost = response.data;
+								}else{
+									this.activeApartmentsForHost = response.data;
+									toast('Trenutno ne postoje neaktivni apartmani')
+								}
+								
+							});
+						} else if(this.activeAdmin) {
+							axios.get('services/apartments/getAllApartments').then(response => {
+								if(response.status === 200){
+									this.activeApartmentsForHost = response.data;
+								}else{
+									this.activeApartmentsForHost = response.data;
+									toast('Trenutno ne postoje apartmani')
+								}
+								
+							});	
+						}
 					}
 					
 				});
 				
-				if(this.activeHost) {
-					
-					axios.get('services/apartments/getInActiveApratmentsForHost').then(response => {
-						if(response.status === 200){
-							this.activeApartmentsForHost = response.data;
-						}else{
-							this.activeApartmentsForHost = response.data;
-							toast('Trenutno ne postoje neaktivni apartmani')
-						}
-						
-					});
-				} else if(this.activeAdmin) {
-					axios.get('services/apartments/getAllApartments').then(response => {
-						if(response.status === 200){
-							this.activeApartmentsForHost = response.data;
-						}else{
-							this.activeApartmentsForHost = response.data;
-							toast('Trenutno ne postoje apartmani')
-						}
-						
-					});	
-				}
+				
 				
 				
 			}

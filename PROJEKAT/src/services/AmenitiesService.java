@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 
 import beans.Amenities;
+import beans.Apartment;
 import dao.AmenitiesDAO;
+import dao.ApartmentDAO;
 
 
 public class AmenitiesService {
@@ -25,7 +27,7 @@ public class AmenitiesService {
 
 	public void getAllAmenities() {	
 		get("services/amenities/getAllAmenities", (req, res) -> {
-		
+			AmenitiesDAO amenitiesDAO = new AmenitiesDAO();
 			ArrayList<Amenities> allAmenities = amenitiesDAO.getAmenitiesList();
 			ArrayList<Amenities> allAmenitiesNotDeleted = new ArrayList<>();
 
@@ -50,21 +52,38 @@ public class AmenitiesService {
 		post("services/amenities/changeAmenity", (req, res) -> {
 			String payload = req.body();
 			String oldAmenity = req.queryMap("oldAmenity").value();
-			Amenities amenities = g.fromJson(payload, Amenities.class);
-	
-			if (amenities == null) {
+			Amenities amenities;
+			ApartmentDAO apartmentDAO = new ApartmentDAO();
+			AmenitiesDAO amenitiesDAO = new AmenitiesDAO();
+			
+			try {
+				amenities = g.fromJson(payload, Amenities.class);
+			} catch(Exception e) {
 				res.status(400);
 				return ("400 Bad Request");
 			}
 			
 			if (!amenitiesDAO.getAmenitiesMap().containsKey(oldAmenity.toLowerCase())) {
-				System.out.println("usao");
 				res.status(400);
 				return ("400 Bad Request");
 			}
 			
 			amenitiesDAO.editAmenity(amenities.getContent(), oldAmenity);
 			AmenitiesDAO.writeAmenitiesInFile(amenitiesDAO.getAmenitiesList());
+			amenitiesDAO.fillMapWithAmenities();
+			
+			// upis u apartmanu
+			for(Apartment a : apartmentDAO.getApartmentsList()) {
+				for(Amenities amenityForAp : a.getAmenities()) {
+					if(amenityForAp.getContent().equals(oldAmenity)) {
+						amenityForAp.setContent(amenities.getContent());
+					}
+				}
+			}
+			
+			apartmentDAO.setApartmentsList(apartmentDAO.getApartmentsList());
+			ApartmentDAO.writeApartmentsInFile(apartmentDAO.getApartmentsList());
+			apartmentDAO.fillMapWithApartments();
 			
 			ArrayList<Amenities> amenitiesNotDeleted = new ArrayList<>();
 			ArrayList<Amenities> amenitiesList = amenitiesDAO.getAmenitiesList();
@@ -86,14 +105,16 @@ public class AmenitiesService {
 		post("services/amenities/addAmenity", (req, res) -> {
 			res.type("application/json");
 			String payload = req.body();
-			Amenities amenities = g.fromJson(payload, Amenities.class);
+			Amenities amenities;
 			int check = 0;
+			AmenitiesDAO amenitiesDAO = new AmenitiesDAO();
 			
-			if(amenities == null) {
+			try {
+				amenities = g.fromJson(payload, Amenities.class);
+			} catch(Exception e) {
 				res.status(400);
 				return ("400 Bad Request");
 			}
-			
 			
 			
 			if(amenitiesDAO.getAmenitiesMap().containsKey(amenities.getContent().toLowerCase())) { // sto 1 ; sto 0
@@ -132,6 +153,8 @@ public class AmenitiesService {
 		post("services/amenities/deleteAmenity", (req, res) -> {
 			res.type("application/json");
 			String payload = req.body();
+			AmenitiesDAO amenitiesDAO = new AmenitiesDAO();
+			ApartmentDAO apartmentDAO = new ApartmentDAO();
 
 			for(Amenities a : amenitiesDAO.getAmenitiesList()){
 				if(a.getContent().equalsIgnoreCase(payload)){
@@ -140,6 +163,20 @@ public class AmenitiesService {
 				}
 			}
 			
+			for(Apartment a : apartmentDAO.getApartmentsList()) {
+				for(Amenities amenity : a.getAmenities()) {
+					if(amenity.getContent().equalsIgnoreCase(payload)) {
+						amenity.setDeleted(1);
+						break;
+					}
+				}
+			}
+			
+			apartmentDAO.setApartmentsList(apartmentDAO.getApartmentsList());
+			ApartmentDAO.writeApartmentsInFile(apartmentDAO.getApartmentsList());
+			apartmentDAO.fillMapWithApartments();
+			
+			amenitiesDAO.setAmenitiesList(amenitiesDAO.getAmenitiesList());
 			AmenitiesDAO.writeAmenitiesInFile(amenitiesDAO.getAmenitiesList());
 			amenitiesDAO.fillMapWithAmenities();
 			

@@ -16,12 +16,15 @@ import beans.Amenities;
 import beans.Apartment;
 import beans.Host;
 import beans.PeriodOfRent;
+import beans.Reservation;
 import dao.AdminDAO;
 import dao.ApartmentDAO;
 import dao.GuestDAO;
 import dao.HostDAO;
+import dao.ReservationDAO;
 import dto.ApartmentDTO;
 import enums.StatusOfApartment;
+import enums.StatusOfReservation;
 import spark.Session;
 
 public class ApartmentService {
@@ -48,7 +51,7 @@ public class ApartmentService {
 	private void getSearchedApartments() {
 		get("services/apartments/getSearchedApartments", (req, res) -> {
 			res.type("application/json");
-			
+			ApartmentDAO apartmentDAO = new ApartmentDAO();
 			String dateFrom = req.queryMap("dateFrom").value(); 
 			String dateTo = req.queryMap("dateTo").value();
 			String city = req.queryMap("city").value(); 
@@ -214,7 +217,7 @@ public class ApartmentService {
 				res.status(204);
 				return g.toJson(finalSearchedApartments);
 			}
-						
+			
 			res.status(200);
 			return g.toJson(finalSearchedApartments);
 			
@@ -248,7 +251,7 @@ public class ApartmentService {
 	public void getAllApartments() {
 		get("services/apartments/getAllApartments", (req, res) -> {
 			ArrayList<Apartment> apratments = new ArrayList<>();
-			apartmentDAO = new ApartmentDAO();
+			ApartmentDAO apartmentDAO = new ApartmentDAO();
 			for(Apartment a : apartmentDAO.getApartmentsList()){
 				if(a.getDeleted() == 0){
 					apratments.add(a);
@@ -279,13 +282,13 @@ public class ApartmentService {
 			String payload = req.body();
 			ApartmentDTO apartmentDTO;
 			Apartment apartment = new Apartment();
-			
+			ApartmentDAO apartmentDAO = new ApartmentDAO();
+			HostDAO hostDAO = new HostDAO();
 			
 			try {
 				apartmentDTO = g.fromJson(payload, ApartmentDTO.class); //uneo sva polja i dobio novi app
 			}
 			catch(Exception e) {
-				System.out.println("ovde");
 				res.status(400);
 				return g.toJson("Bad request");
 			}
@@ -395,7 +398,7 @@ public class ApartmentService {
 			Session ss = req.session(true);
 			Host h = ss.attribute("user");
 			//apartmentDAO = new ApartmentDAO();
-			
+			ApartmentDAO apartmentDAO = new ApartmentDAO();
 			ArrayList<Apartment> apratments = new ArrayList<>();
 			
 			
@@ -426,6 +429,7 @@ public class ApartmentService {
 			Session ss = req.session(true);
 			Host h = ss.attribute("user");
 			ArrayList<Apartment> apratments = new ArrayList<>();
+			ApartmentDAO apartmentDAO = new ApartmentDAO();
 			
 			for(Apartment a : apartmentDAO.getApartmentsList()){
 				if(a.getHost().equals(h.getUsername()) && (a.getStatusOfApartment().equals(StatusOfApartment.Neaktivan)) && a.getDeleted() == 0){
@@ -450,7 +454,7 @@ public class ApartmentService {
 	public void changeApartment(){
 		post("services/apartments/changeApartment", (req, res) -> {
 			res.type("application/json");
-			
+			ApartmentDAO apartmentDAO = new ApartmentDAO();
 			String payload = req.body();
 			String oldId = req.queryMap("oldId").value();
 
@@ -641,10 +645,11 @@ public class ApartmentService {
 	public void deleteApartment(){
 		post("services/apartments/deleteApartment", (req, res) -> {
 			res.type("application/json");
-			String payload = req.body();
-			Session ss = req.session(true);
-			Host host = ss.attribute("user");
+			String payload = req.body(); // id apartmana
+//			Session ss = req.session(true);
+//			Host host = ss.attribute("user");
 			//apartmentDAO = new ApartmentDAO();
+			ApartmentDAO apartmentDAO = new ApartmentDAO();
 			ArrayList<Apartment> apartments = apartmentDAO.getApartmentsList();
 			
 			for(Apartment a : apartments){
@@ -653,13 +658,32 @@ public class ApartmentService {
 					break;
 				}
 			}
-			
-			for(Host host1 : hostDAO.getHostList()){
-				if(host1.getUsername().equals(host.getUsername())){
-					host1.getApartmentsForRent().remove(payload);
+//			
+//			for(Host host1 : hostDAO.getHostList()){
+//				if(host1.getUsername().equals(host.getUsername())){
+//					host1.getApartmentsForRent().remove(payload);
+//				}
+//			}
+//			
+			HostDAO hostDAO = new HostDAO();
+			for(Host h : hostDAO.getHostList()) {
+				for(int i = 0; i < h.getApartmentsForRent().size(); i++) {
+					if(h.getApartmentsForRent().get(i).equals(payload)) {
+						h.getApartmentsForRent().remove(i);
+					}
 				}
 			}
 			
+			ReservationDAO reservationDAO = new ReservationDAO();
+			for(Reservation r : reservationDAO.getReservationsList()) {
+				if(r.getApartment().equals(payload) && !r.getStatus().equals(StatusOfReservation.Zavrsena ) && !r.getStatus().equals(StatusOfReservation.Odustanak )) {
+					r.setStatus(StatusOfReservation.Odbijena);
+				}
+			}
+		
+			reservationDAO.setReservationsList(reservationDAO.getReservationsList());
+			ReservationDAO.writeReservationsInFile(reservationDAO.getReservationsList());
+			reservationDAO.fillMapWithReservations();
 			
 			apartmentDAO.setApartmentsList(apartments);
 			ApartmentDAO.writeApartmentsInFile(apartmentDAO.getApartmentsList());

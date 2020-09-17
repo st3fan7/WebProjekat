@@ -26,7 +26,7 @@ Vue.component("addNewHost", {
 	template:`
 	<div>
 	 
-	    <div class="logoAndNameForLogin" style="margin-top:2%; margin-left:4.2%">
+	    <div class="logoAndNameForLogin" style="margin-top:2%; margin-left:5.1%">
 	        <div class="logo">        
 	            <img src="pictures/clipart302388.png"/>
 	        </div>
@@ -48,6 +48,21 @@ Vue.component("addNewHost", {
     </ul>
     </div>
     
+    <div class="dropdown">
+	        <button class="dropbtn">
+	        	<img id="menuIcon" src="pictures/menuIcon.png" />
+	        	<img id="userIcon" src="pictures/user.png" />
+	        </button>
+	        <div v-if="activeUser" class="dropdown-content">
+	             <router-link to="/changeProfile" > Moj nalog </router-link>
+	            <router-link to="/login" v-on:click.native="logOut($event)" > Odjavi se </router-link>            
+	        </div>
+		    <div v-else class="dropdown-content">
+		        <a href="#/registration">Registruj se</a>
+	            <a href="#/login">Prijavi se</a>
+		    </div>
+	    </div>
+    
     <div class="verticalLineReservation" style="margin-top:12%;"></div>
 	
 	 <div class="sideComponents">      
@@ -60,9 +75,9 @@ Vue.component("addNewHost", {
 	 </div>
 
     <div class="signIn">
-        <div class="form-container sign-in-container">
+        <div class="form-container sign-in-container" style="margin-left: 10%;">
             <form class="formReg" id="form" action="" onsubmit="return false;"  method = "POST">
-                <h1>Registracija domacina od strane admina:</h1>
+                <h1>Registracija domaćina:</h1>
                 <input type="text" placeholder="Korisničko ime" id="username" v-model="username" />
                  <label v-if="errorUsername" style="color:red">Polje ne sme biti prazno!</label>
                 <input type="text" placeholder="Ime" id="name" v-model="name"/>

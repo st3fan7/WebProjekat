@@ -174,7 +174,7 @@ Vue.component("reviewApartments", {
 	 	 
 			 <div class="wrapper">
 		         <div class="product-img">
-		             <img src="http://bit.ly/2tMBBTd" height="420" width="327">
+		            <img src="./img/tower.png" height="420" width="327">
 		         </div>
 		         <div class="product-info">
 		             <div class="product-text">
@@ -775,6 +775,7 @@ Vue.component("reviewApartments", {
 				if(confirm('Da li ste sigurni da želite da se vratite na pregled aktivnih apartmana?') === true){ 
 					this.showNotification = false;
 					this.changeApartmentButtonClicked = false;
+					this.filteredAmenitiesList = [];
 					axios.get('services/apartments/getActiveApratmentsForHost').then(response => {
 						if(response.status === 200){
 							this.activeApartmentsForHost = response.data;
@@ -846,34 +847,35 @@ Vue.component("reviewApartments", {
 				axios.post('services/apartments/deleteApartment', a.id).then(response => {
 					if(response.status === 200){
 						toast('Apartman je obrisan')
+						if(this.activeHost) {
+							
+							axios.get('services/apartments/getActiveApratmentsForHost').then(response => {
+								if(response.status === 200){
+									this.activeApartmentsForHost = response.data;
+								}else{
+									this.activeApartmentsForHost = response.data;
+									toast('Trenutno ne postoje aktivni apartmani')
+								}
+								
+							});
+						} else if(this.activeAdmin) {
+							axios.get('services/apartments/getAllApartments').then(response => {
+								if(response.status === 200){
+									this.activeApartmentsForHost = response.data;
+								}else{
+									this.activeApartmentsForHost = response.data;
+									toast('Trenutno ne postoje apartmani')
+								}
+								
+							});	
+						}
 					}else{					
 						toast('Trenutno ne postoje aktivni apartmani za brisanje')
 					}
 					
 				});
 				
-				if(this.activeHost) {
-					
-					axios.get('services/apartments/getActiveApratmentsForHost').then(response => {
-						if(response.status === 200){
-							this.activeApartmentsForHost = response.data;
-						}else{
-							this.activeApartmentsForHost = response.data;
-							toast('Trenutno ne postoje aktivni apartmani')
-						}
-						
-					});
-				} else if(this.activeAdmin) {
-					axios.get('services/apartments/getAllApartments').then(response => {
-						if(response.status === 200){
-							this.activeApartmentsForHost = response.data;
-						}else{
-							this.activeApartmentsForHost = response.data;
-							toast('Trenutno ne postoje apartmani')
-						}
-						
-					});	
-				}
+				
 				
 			}
 			
@@ -894,7 +896,11 @@ Vue.component("reviewApartments", {
 						this.activeApartmentsForHost = [];
 						toast("Nema apartmana za izbrane filtere!");
 					}
-			   });
+			   }).catch(error => {
+
+		            if(error.response.status === 400){
+		                this.$router.push({ name: 'badRequest' });
+		            }});
 		},
 		
 		deleteImage : function(index){

@@ -70,7 +70,7 @@ public class CommentService {
 	private void getCommentID() {
 		get("services/comments/getCommentID", (req, res) -> {
 			int maxID = 0;
-			
+			ApartmentDAO apartmentDAO = new ApartmentDAO();
 			
 			/*
 			for(int i = 0; i < commentDAO.getCommentsList().size(); i++) {
@@ -108,7 +108,7 @@ public class CommentService {
 		post("services/comments/addNewCommet", (req, res) -> {
 			res.type("application/json");
 			String payload = req.body();
-			
+			ApartmentDAO apartmentDAO = new ApartmentDAO();
 			Comment comment = null;
 			
 			
@@ -151,8 +151,7 @@ public class CommentService {
 			res.type("application/json");
 			String payload = req.body();
 			ArrayList<Comment> comments = null; 
-			ArrayList<Comment> allComments = new ArrayList<Comment>();
-			ArrayList<Comment> allCommentsEmpty = new ArrayList<Comment>();
+			ApartmentDAO apartmentDAO = new ApartmentDAO();
 			
 			try {
 				Type listType = new TypeToken<ArrayList<Comment>>(){}.getType(); 
@@ -190,6 +189,7 @@ public class CommentService {
 		get("services/comments/getAllCommentsForHost", (req, res) -> {
             Session ss = req.session(true);
             Host host = ss.attribute("user");
+            ApartmentDAO apartmentDAO = new ApartmentDAO();
             ArrayList<Comment> comments = new ArrayList<>();
             
             for(Apartment a : apartmentDAO.getApartmentsList()){
@@ -226,7 +226,7 @@ public class CommentService {
 	public void getAllComments() {
 		get("services/comments/getAllComments", (req, res) -> {
 			ArrayList<Comment> comments = new ArrayList<>();
-			
+			ApartmentDAO apartmentDAO = new ApartmentDAO();
 
 			for(Apartment a : apartmentDAO.getApartmentsList()){
 				for(Comment c : a.getComments()){
