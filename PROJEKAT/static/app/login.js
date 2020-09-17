@@ -113,11 +113,59 @@ Vue.component("login", {
 					this.$router.push({ name: 'registration' })
 				}
 				
-		}
 		},
+		
+		checkForbidden : function(activeUser)
+		{
+			if (activeUser !== null)
+			{				
+				this.$router.push({ name: 'forbidden' })
+				
+			}
+			else
+			{				
+			axios
+			.post('services/users/forbiddenUser', {'page': 'login'}).then(response => {
+				if(response.status !== 200)
+				{
+					this.$router.push({ name: 'forbidden' })
+				}
+			});
+			}
+		}
+		
+	},
 	mounted(){
 			this.usernameInput = false;
 			this.passwordInput = false;
+			
+			axios.get('services/users/getActiveUser').then(response => {
+				this.activeUser = response.data;
+				this.checkForbidden(response.data)
+				
+				if (this.activeUser.role === "admin"){
+					this.activeAdmin = true;
+					
+				}else{
+					this.activeAdmin = false;
+				}		
+													
+				if (this.activeUser.role === "domacin"){
+					this.activeHost = true;
+					
+				}else{
+					this.activeHost = false;
+				}
+				
+				if (this.activeUser.role === "gost"){
+					this.activeGuest = true;
+				}else{
+					this.activeGuest = false;
+				}
+					
+
+			});	
+			
 	}
 	
 });

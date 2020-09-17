@@ -12,6 +12,7 @@ const reviewInActiveApartments = {template: '<reviewInActiveApartments></reviewI
 const comments = {template: '<comments></comments>'}
 const searchedApartments = {template: '<searchedApartments></searchedApartments>'}
 const chosenApartmentsReview = {template: '<chosenApartmentsReview></chosenApartmentsReview>'}
+const forbidden = {template: '<forbidden></forbidden>'}
 
 const router = new VueRouter({
 	  mode: 'hash',
@@ -29,7 +30,8 @@ const router = new VueRouter({
 		  { path: '/reviewInActiveApartments', name:'reviewInActiveApartments', component: reviewInActiveApartments},
 		  { path: '/comments', name:'comments', component: comments},
 		  { path: '/searchedApartments', name:'searchedApartments', component: searchedApartments},
-		  { path: '/chosenApartmentsReview', name:'chosenApartmentsReview', component: chosenApartmentsReview}
+		  { path: '/chosenApartmentsReview', name:'chosenApartmentsReview', component: chosenApartmentsReview},
+		  { path: '/forbidden', name:'forbidden', component: forbidden},
 	  ]
 });
 

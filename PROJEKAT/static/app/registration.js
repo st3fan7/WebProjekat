@@ -176,7 +176,7 @@ Vue.component("registration", {
 
 			
 			if(empty === false){		
-				axios.post('services/users/register',  {"username": '' + this.username ,"password" : this.password,
+				axios.post('services/users/register',  { "username": '' + this.username ,"password" : this.password,
 							"name": '' + this.name, "surname" : this.surname, "gender" : this.gender, "role" : this.role},{
 								params:{username: this.username}		
 					}).then(response => {
@@ -208,9 +208,57 @@ Vue.component("registration", {
 			} else {
 				this.$router.push({ name: 'login' })
 			}
+		},
+		
+		checkForbidden : function(activeUser)
+		{
+			if (activeUser !== null)
+			{				
+				this.$router.push({ name: 'forbidden' })
+				
+			}
+			else
+			{				
+			axios
+			.post('services/users/forbiddenUser', {'page': 'registration'}).then(response => {
+				if(response.status !== 200)
+				{
+					this.$router.push({ name: 'forbidden' })
+				}
+			});
+			}
 		}
 	},
 	mounted() {
+		
+
+		axios.get('services/users/getActiveUser').then(response => {
+			this.activeUser = response.data;
+			this.checkForbidden(response.data)
+			
+			if (this.activeUser.role === "admin"){
+				this.activeAdmin = true;
+				
+			}else{
+				this.activeAdmin = false;
+			}		
+												
+			if (this.activeUser.role === "domacin"){
+				this.activeHost = true;
+				
+			}else{
+				this.activeHost = false;
+			}
+			
+			if (this.activeUser.role === "gost"){
+				this.activeGuest = true;
+			}else{
+				this.activeGuest = false;
+			}
+				
+
+		});	
+		
 		
 	}
 	

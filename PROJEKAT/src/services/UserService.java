@@ -5,8 +5,10 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import beans.Admin;
 import beans.Guest;
@@ -17,7 +19,9 @@ import dao.AdminDAO;
 import dao.GuestDAO;
 import dao.HostDAO;
 import dao.ReservationDAO;
+import enums.Role;
 import spark.Session;
+import spark.Request;
 
 public class UserService {
 	
@@ -36,6 +40,7 @@ public class UserService {
 	 getAllUsers();
 	 getHostUsers();
 	 searchAdminUsersByRoleAndGender();
+	 checkForbiddenUser();
 	}
 	
 	public void loginUsers(){//FUNKCIJA 
@@ -285,8 +290,98 @@ public class UserService {
 
 	}
 	
+	public void checkForbiddenUser() {
+		post("services/users/forbiddenUser", (req, res) -> {
+			
+			String payload = req.body();
+			HashMap<String, String> page = g.fromJson(payload, new TypeToken<HashMap<String, String>>() {
+			}.getType());
+			
+			
+			if (checkForbidden(page, req)) {
+				res.status(200);
+				return ("OK");
+			}
+			
+			res.status(403);
+			return ("Access forbidden");
+
+
+		});
+	}
 	
 	
+	public static boolean checkForbidden(HashMap<String, String> page, Request req){
+		Session ss = req.session(true);
+		User u = ss.attribute("user");
+		
+		//za domacina
+		if (page.get("page").equals("addNewApartment") || page.get("page").equals("reviewInActiveApartments") ) {
+			if (u == null) {
+			
+				return false;
+			}
+
+			if (u.getRole().equals(Role.domacin)) {
+				
+				return true;
+			} else {
+				
+				return false;
+			}
+			
+			
+		//za domacina i admina	
+		}else if(page.get("page").equals("adminUsers") || page.get("page").equals("comments") ||  page.get("page").equals("reviewApartments") ){
+			
+			if (u == null) {			
+				return false;
+			}
+			
+			if (u.getRole().equals(Role.gost)) {				
+					return false;
+			} else {				
+				return true;
+			}			
+			
+			
+		//za admina	
+		}else if(page.get("page").equals("amenitiesChange")){
+			
+			if (u == null) {			
+				return false;
+			}
+			
+			if (u.getRole().equals(Role.admin)) {				
+					return true;
+			} else {				
+				return false;
+			}
+			
+		//svi
+		}else if(page.get("page").equals("changeProfile") || page.get("page").equals("reservations")){
+			if (u == null) {			
+				return false;
+			}else{
+				return true;
+			}
+			
+			
+		//neulogovan	
+		}else if(page.get("page").equals("login") || page.get("page").equals("registration") ){
+			if(u == null){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
+		
+		
+		
+
+		return true;
+	}
 	
 }
 

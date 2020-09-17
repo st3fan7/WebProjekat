@@ -719,6 +719,29 @@ Vue.component("reviewInActiveApartments", {
 			
 			reader.readAsDataURL(file);
 			
+		},
+		
+		checkForbidden : function(activeUser)
+		{
+			if (activeUser === null)
+			{				
+				this.$router.push({ name: 'forbidden' })
+				
+			}else if(activeUser.role !== 'domacin'){
+						
+				this.$router.push({ name: 'forbidden' })
+			
+			}
+			else
+			{				
+			axios
+			.post('services/users/forbiddenUser', {'page': 'reviewInActiveApartments'}).then(response => {
+				if(response.status !== 200)
+				{
+					this.$router.push({ name: 'forbidden' })
+				}
+			});
+			}
 		}
 		
 		
@@ -729,6 +752,7 @@ Vue.component("reviewInActiveApartments", {
 		
 		axios.get('services/users/getActiveUser').then(response => {
 			this.activeUser = response.data;
+			this.checkForbidden(response.data)
 			
 			if (this.activeUser.role === "admin"){
 				this.activeAdmin = true;				

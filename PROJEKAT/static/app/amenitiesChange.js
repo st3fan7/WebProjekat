@@ -201,13 +201,14 @@ Vue.component("amenitiesChange", {
 							toast('Sadržaj je uspšeno izmenjen!')
 							this.amenitiesList = response.data;
 						} else {
-							this.$router.push({name : 'badRequest'});
+							this.$router.push({name : 'badRequest' });
 						}
 					});
 				}
 			}
 			
-			
+				
+	
 		},
 		
 		addAmenity : function() {
@@ -253,6 +254,30 @@ Vue.component("amenitiesChange", {
 			
 
 			
+			
+		},
+		
+		checkForbidden : function(activeUser)
+		{
+			if (activeUser === null)
+			{				
+				this.$router.push({ name: 'forbidden' })
+			}
+			else if(activeUser.role !== 'admin')
+			{				
+				this.$router.push({ name: 'forbidden' })
+			}
+			else
+			{
+				
+			axios
+			.post('services/users/forbiddenUser', {'page': 'amenitiesChange'}).then(response => {
+				if(response.status !== 200)
+				{
+					this.$router.push({ name: 'forbidden' })
+				}
+			});
+			}
 		}
 		
 		
@@ -262,6 +287,8 @@ Vue.component("amenitiesChange", {
 		
 		axios.get('services/users/getActiveUser').then(response => {
 			this.activeUser = response.data;
+			
+			this.checkForbidden(response.data)
 			
 			if (this.activeUser.role === "admin"){
 				this.activeAdmin = true;

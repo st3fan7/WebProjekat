@@ -90,7 +90,7 @@ Vue.component("comments", {
                         </td>
                         <td v-else>{{c.visibility}}</td>
                     </tr> 
-                    <tbody>
+                    </tbody>
                 </table>
             </div>
     </div>
@@ -136,12 +136,36 @@ Vue.component("comments", {
 					this.$router.go();
 				}
 				
-		   }
+		   },
+		   
+			
+		checkForbidden : function(activeUser)
+		{
+			if (activeUser === null)
+			{				
+				this.$router.push({ name: 'forbidden' })
+				
+			}else if(activeUser.role === 'gost'){
+				this.$router.push({ name: 'forbidden' })
+			}
+			else
+			{				
+			axios
+			.post('services/users/forbiddenUser', {'page': 'comments'}).then(response => {
+				if(response.status !== 200)
+				{
+					this.$router.push({ name: 'forbidden' })
+				}
+			});
+			}
+		}
+	   
 	},
 	
 	mounted() {
 		axios.get('services/users/getActiveUser').then(response => {
 			this.activeUser = response.data;
+			this.checkForbidden(response.data)
 			
 			if (this.activeUser.role === "admin"){
 				this.activeAdmin = true;

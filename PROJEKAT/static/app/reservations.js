@@ -264,13 +264,32 @@ Vue.component("reservations", {
 					toast("Rezervacije su uspešno filtrirane!");
 					this.listOfReservations = response.data;
 				} else if(response.data === 400) {
-					this.$router.push({name : 'badRequest'});
+					this.$router.push({name : 'badRequest'} );
 				} else{		
 					this.listOfReservations = [];
 					toast("Nema rezervacija za izbrane filtere!");
 				}
 		   });
-	   }
+	   },
+		
+		checkForbidden : function(activeUser)
+		{
+			if (activeUser === null)
+			{				
+				this.$router.push({ name: 'forbidden' })
+				
+			}
+			else
+			{				
+			axios
+			.post('services/users/forbiddenUser', {'page': 'reservations'}).then(response => {
+				if(response.status !== 200)
+				{
+					this.$router.push({ name: 'forbidden' })
+				}
+			});
+			}
+		}
 	   
 	   
 	},
@@ -293,6 +312,8 @@ Vue.component("reservations", {
 		
 		axios.get('services/users/getActiveUser').then(response => {
 			this.activeUser = response.data;
+			
+			this.checkForbidden(response.data)
 			
 			if (this.activeUser.role === "admin"){
 				this.activeAdmin = true;
